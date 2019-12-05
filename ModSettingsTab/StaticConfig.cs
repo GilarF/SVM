@@ -6,9 +6,20 @@ using Newtonsoft.Json.Linq;
 
 namespace ModSettingsTab
 {
+    /// <summary>
+    /// modification settings (config.json)
+    /// </summary>
     public class StaticConfig : INotifyPropertyChanged, IEnumerable
     {
+        /// <summary>
+        /// mod static parameter dictionary
+        /// </summary>
         private readonly Dictionary<string, JToken> _properties = new Dictionary<string, JToken>();
+
+        /// <summary>
+        /// json representation of parameters
+        /// (save to config.json)
+        /// </summary>
         private readonly JObject _config;
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -18,10 +29,7 @@ namespace ModSettingsTab
             return _config.ToString();
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return _properties.GetEnumerator();
-        }
+        public IEnumerator GetEnumerator() => _properties.GetEnumerator();
 
         public StaticConfig(JObject config)
         {
@@ -29,16 +37,38 @@ namespace ModSettingsTab
             ParseProperties(_config);
         }
 
+        /// <summary>
+        /// checks for a parameter
+        /// </summary>
+        /// <param name="key">
+        /// JToken.Path
+        /// The key is made up of property names and array indexes separated by periods, e.g. Manufacturers[0].Name.
+        /// </param>
+        /// <returns></returns>
         public bool ContainsKey(string key)
         {
             return _properties.ContainsKey(key);
         }
 
+        /// <summary>
+        /// hides the parameter from the page
+        /// </summary>
+        /// <param name="key">
+        /// JToken.Path
+        /// The key is made up of property names and array indexes separated by periods, e.g. Manufacturers[0].Name.
+        /// </param>
         public void Remove(string key)
         {
             _properties.Remove(key);
         }
 
+        /// <summary>
+        /// get or set a parameter by key
+        /// </summary>
+        /// <param name="key">
+        /// JToken.Path
+        /// The key is made up of property names and array indexes separated by periods, e.g. Manufacturers[0].Name.
+        /// </param>
         public JToken this[string key]
         {
             get => !_properties.ContainsKey(key) ? null : _properties[key];
