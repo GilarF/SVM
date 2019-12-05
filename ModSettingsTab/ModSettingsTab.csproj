@@ -8,7 +8,7 @@
         <OutputType>Library</OutputType>
         <AppDesignerFolder>Properties</AppDesignerFolder>
         <RootNamespace>ModSettingsTab</RootNamespace>
-        <AssemblyName>GilarF.ModSettingsTab</AssemblyName>
+        <AssemblyName>ModSettingsTab</AssemblyName>
         <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
     </PropertyGroup>
@@ -39,6 +39,10 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="Menu\BaseConfigPage.cs"/>
+        <Compile Include="Menu\DynamicConfigPage.cs"/>
+        <Compile Include="Menu\OptionsPage.cs"/>
+        <Compile Include="Menu\StaticConfigPage.cs"/>
         <Compile Include="ModEntry.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>

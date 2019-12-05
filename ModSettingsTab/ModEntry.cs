@@ -1,5 +1,6 @@
 ﻿using StardewModdingAPI;
 using StardewModdingAPI.Events;
+using StardewValley;
 using StardewValley.Menus;
 
 namespace ModSettingsTab
@@ -43,10 +44,25 @@ namespace ModSettingsTab
         /// <param name="e"></param>
         private void MenuChanged(object sender, MenuChangedEventArgs e)
         {
-            if (e.NewMenu is GameMenu menu)
+            if (!(e.NewMenu is GameMenu menu)) return;
+            int offset;
+            switch (LocalizedContentManager.CurrentLanguageCode)
             {
-//                menu.tabs.Insert(GameMenu.optionsTab, new OptionsPage());
+                case LocalizedContentManager.LanguageCode.ru:
+                    offset = 96;
+                    break;
+                case LocalizedContentManager.LanguageCode.fr:
+                case LocalizedContentManager.LanguageCode.tr:
+                    offset = 192;
+                    break;
+                default:
+                    offset = 0;
+                    break;
             }
+
+            menu.pages[GameMenu.optionsTab] = new OptionsPage(
+                menu.xPositionOnScreen, menu.yPositionOnScreen,
+                menu.width + offset, menu.height);
         }
     }
 }
