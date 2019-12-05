@@ -50,6 +50,8 @@
       <None Include="packages.config" />
     </ItemGroup>
     <ItemGroup>
+        <Content Include="assets\FilterTextBox.png"/>
+        <Content Include="assets\Tabs.png"/>
       <Content Include="manifest.json" />
     </ItemGroup>
     <ItemGroup>
