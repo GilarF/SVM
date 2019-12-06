@@ -1,4 +1,4 @@
-﻿using StardewModdingAPI;
+using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewValley;
 using StardewValley.Menus;
@@ -59,10 +59,12 @@ namespace ModSettingsTab
                     offset = 0;
                     break;
             }
-
-            menu.pages[GameMenu.optionsTab] = new OptionsPage(
-                menu.xPositionOnScreen, menu.yPositionOnScreen,
-                menu.width + offset, menu.height);
+            
+            menu.pages[GameMenu.optionsTab] = new Menu.OptionsPage(
+                menu.xPositionOnScreen, 
+                menu.yPositionOnScreen,
+                menu.width + offset, 
+                menu.height);
         }
     }
 }
