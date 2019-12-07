@@ -7,6 +7,12 @@ using StardewModdingAPI;
 
 namespace ModSettingsTab
 {
+    /// <summary>
+    /// main collection of modifications
+    /// </summary>
+    /// <remarks>
+    /// Dictionary&lt;uniqueId, Mod&gt;
+    /// </remarks>
     public class ModList : Dictionary<string, Mod>
     {
         public ModList()
