@@ -1,15 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
+using System.IO;
 using System.Linq;
+using System.Timers;
 using Newtonsoft.Json.Linq;
+using StardewModdingAPI;
 
 namespace ModSettingsTab
 {
     /// <summary>
     /// modification settings (config.json)
     /// </summary>
-    public class StaticConfig : INotifyPropertyChanged, IEnumerable
+    public class StaticConfig : IEnumerable
     {
         /// <summary>
         /// mod static parameter dictionary
@@ -22,7 +25,9 @@ namespace ModSettingsTab
         /// </summary>
         private readonly JObject _config;
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        private readonly Timer _saveTimer;
+        private readonly string _savePath;
+
 
         public override string ToString()
         {
@@ -31,9 +36,28 @@ namespace ModSettingsTab
 
         public IEnumerator GetEnumerator() => _properties.GetEnumerator();
 
-        public StaticConfig(JObject config)
+        public StaticConfig(string path, JObject config)
         {
+            _savePath = path;
             _config = config;
+
+            _saveTimer = new Timer(3000.0)
+            {
+                Enabled = false,
+                AutoReset = false
+            };
+            _saveTimer.Elapsed += async (t, e) =>
+            {
+                try
+                {
+                    using (var writer = File.CreateText(_savePath))
+                        await writer.WriteAsync(ToString());
+                }
+                catch (Exception ex)
+                {
+                    ModEntry.Console.Log(ex.Message, LogLevel.Error);
+                }
+            };
             ParseProperties(_config);
         }
 
@@ -65,6 +89,9 @@ namespace ModSettingsTab
         /// <summary>
         /// get or set a parameter by key
         /// </summary>
+        /// <remarks>
+        /// Automatically saves changes to config.json
+        /// </remarks>
         /// <param name="key">
         /// JToken.Path
         /// The key is made up of property names and array indexes separated by periods, e.g. Manufacturers[0].Name.
@@ -78,14 +105,9 @@ namespace ModSettingsTab
                     return;
                 _config.SelectToken(key).Replace(value);
                 _properties[key] = _config.SelectToken(key);
-                OnPropertyChanged(key);
+                _saveTimer.Stop();
+                _saveTimer.Start();
             }
-        }
-
-        private void OnPropertyChanged(string name)
-        {
-            var propertyChanged = PropertyChanged;
-            propertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
         private void ParseProperties(JToken obj)
