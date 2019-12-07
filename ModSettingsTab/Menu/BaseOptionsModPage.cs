@@ -33,7 +33,7 @@ namespace ModSettingsTab.Menu
         protected BaseOptionsModPage(int x, int y, int width, int height)
             : base(x, y, width, height)
         {
-            SlotSize = new Rectangle(0, 0, width - 32, (height - 128) / 7);
+            SlotSize = new Rectangle(0, 0, width - 32, (height - 128) / ItemsPerPage);
             _upArrow = new ClickableTextureComponent(
                 new Rectangle(xPositionOnScreen + width + 16, yPositionOnScreen + 64, 44, 48),
                 Game1.mouseCursors, new Rectangle(421, 459, 11, 12), 4f);
@@ -46,7 +46,7 @@ namespace ModSettingsTab.Menu
             _scrollBarRunner = new Rectangle(_scrollBar.bounds.X,
                 _upArrow.bounds.Y + _upArrow.bounds.Height + 4, _scrollBar.bounds.Width,
                 height - 128 - _upArrow.bounds.Height - 8);
-            for (var index = 0; index < 7; ++index)
+            for (var index = 0; index < ItemsPerPage; ++index)
                 _optionSlots.Add(
                     new ClickableComponent(
                         new Rectangle(xPositionOnScreen + 16,
@@ -54,7 +54,7 @@ namespace ModSettingsTab.Menu
                             SlotSize.Height + 4), string.Concat(index))
                     {
                         myID = index,
-                        downNeighborID = index < 6 ? index + 1 : -7777,
+                        downNeighborID = index < IndexOfGraphicsPage ? index + 1 : -7777,
                         upNeighborID = index > 0 ? index - 1 : -7777,
                         fullyImmutable = true
                     });
@@ -73,7 +73,7 @@ namespace ModSettingsTab.Menu
         protected override void customSnapBehavior(int direction, int oldRegion, int oldId)
         {
             base.customSnapBehavior(direction, oldRegion, oldId);
-            if (oldId == 6 && direction == 2 && _currentItemIndex < Math.Max(0, Options.Count - 7))
+            if (oldId == 6 && direction == 2 && _currentItemIndex < Math.Max(0, Options.Count - ItemsPerPage))
             {
                 DownArrowPressed();
                 Game1.playSound("shiny4");
@@ -102,9 +102,9 @@ namespace ModSettingsTab.Menu
             if (Options.Count <= 0)
                 return;
             _scrollBar.bounds.Y =
-                _scrollBarRunner.Height / Math.Max(1, Options.Count - 7 + 1) * _currentItemIndex +
+                _scrollBarRunner.Height / Math.Max(1, Options.Count - ItemsPerPage + 1) * _currentItemIndex +
                 _upArrow.bounds.Bottom + 4;
-            if (_currentItemIndex != Options.Count - 7)
+            if (_currentItemIndex != Options.Count - ItemsPerPage)
                 return;
             _scrollBar.bounds.Y = _downArrow.bounds.Y - _scrollBar.bounds.Height - 4;
         }
@@ -135,7 +135,7 @@ namespace ModSettingsTab.Menu
                 _scrollBar.bounds.Y =
                     Math.Min(yPositionOnScreen + height - 64 - 12 - _scrollBar.bounds.Height,
                         Math.Max(y, yPositionOnScreen + _upArrow.bounds.Height + 20));
-                _currentItemIndex = Math.Min(Options.Count - 7,
+                _currentItemIndex = Math.Min(Options.Count - ItemsPerPage,
                     Math.Max(0,
                         (int) (Options.Count *
                                ((y - _scrollBarRunner.Y) / (double) _scrollBarRunner.Height))));
@@ -149,7 +149,7 @@ namespace ModSettingsTab.Menu
             {
                 if (_optionsSlotHeld == -1 || _optionsSlotHeld + _currentItemIndex >= Options.Count)
                     return;
-                Options[_currentItemIndex + _optionsSlotHeld].leftClickHeld(
+                Options[_currentItemIndex + _optionsSlotHeld].LeftClickHeld(
                     x - _optionSlots[_optionsSlotHeld].bounds.X,
                     y - _optionSlots[_optionsSlotHeld].bounds.Y);
             }
@@ -175,10 +175,10 @@ namespace ModSettingsTab.Menu
                     (Game1.options.gamepadControls &&
                      Options.Count > _currentItemIndex + currentlySnappedComponent.myID) &&
                     _currentItemIndex + currentlySnappedComponent.myID >= 0)
-                    Options[_currentItemIndex + currentlySnappedComponent.myID].receiveKeyPress(key);
+                    Options[_currentItemIndex + currentlySnappedComponent.myID].ReceiveKeyPress(key);
                 else if (Options.Count > _currentItemIndex + _optionsSlotHeld &&
                          _currentItemIndex + _optionsSlotHeld >= 0)
-                    Options[_currentItemIndex + _optionsSlotHeld].receiveKeyPress(key);
+                    Options[_currentItemIndex + _optionsSlotHeld].ReceiveKeyPress(key);
             }
 
             base.receiveKeyPress(key);
@@ -196,7 +196,7 @@ namespace ModSettingsTab.Menu
             }
             else
             {
-                if (direction >= 0 || _currentItemIndex >= Math.Max(0, Options.Count - 7))
+                if (direction >= 0 || _currentItemIndex >= Math.Max(0, Options.Count - ItemsPerPage))
                     return;
                 DownArrowPressed();
                 Game1.playSound("shiny4");
@@ -210,7 +210,7 @@ namespace ModSettingsTab.Menu
             base.releaseLeftClick(x, y);
             _filterTextBox.Update();
             if (_optionsSlotHeld != -1 && _optionsSlotHeld + _currentItemIndex < Options.Count)
-                Options[_currentItemIndex + _optionsSlotHeld].leftClickReleased(
+                Options[_currentItemIndex + _optionsSlotHeld].LeftClickReleased(
                     x - _optionSlots[_optionsSlotHeld].bounds.X,
                     y - _optionSlots[_optionsSlotHeld].bounds.Y);
             _optionsSlotHeld = -1;
@@ -222,7 +222,7 @@ namespace ModSettingsTab.Menu
             _downArrow.scale = _downArrow.baseScale;
             ++_currentItemIndex;
             SetScrollBarToCurrentIndex();
-            //Main.CurrentTextBox?.Update();
+            ModData.CurrentTextBox?.Update();
         }
 
         private void UpArrowPressed()
@@ -230,14 +230,14 @@ namespace ModSettingsTab.Menu
             _upArrow.scale = _upArrow.baseScale;
             --_currentItemIndex;
             SetScrollBarToCurrentIndex();
-            //Main.CurrentTextBox?.Update();
+            ModData.CurrentTextBox?.Update();
         }
 
         public override void receiveLeftClick(int x, int y, bool playSound = true)
         {
             if (GameMenu.forcePreventClose)
                 return;
-            if (_downArrow.containsPoint(x, y) && _currentItemIndex < Math.Max(0, Options.Count - 7))
+            if (_downArrow.containsPoint(x, y) && _currentItemIndex < Math.Max(0, Options.Count - ItemsPerPage))
             {
                 DownArrowPressed();
                 Game1.playSound("shwip");
@@ -265,7 +265,7 @@ namespace ModSettingsTab.Menu
                     _currentItemIndex + index < Options.Count && Options[_currentItemIndex + index]
                         .Bounds.Contains(x - _optionSlots[index].bounds.X, y - _optionSlots[index].bounds.Y))
                 {
-                    Options[_currentItemIndex + index].receiveLeftClick(x - _optionSlots[index].bounds.X,
+                    Options[_currentItemIndex + index].ReceiveLeftClick(x - _optionSlots[index].bounds.X,
                         y - _optionSlots[index].bounds.Y);
                     _optionsSlotHeld = index;
                     break;
@@ -304,7 +304,7 @@ namespace ModSettingsTab.Menu
             for (var index = 0; index < _optionSlots.Count; ++index)
             {
                 if (_currentItemIndex >= 0 && _currentItemIndex + index < Options.Count)
-                    Options[_currentItemIndex + index].draw(b, _optionSlots[index].bounds.X,
+                    Options[_currentItemIndex + index].Draw(b, _optionSlots[index].bounds.X,
                         _optionSlots[index].bounds.Y);
             }
 
@@ -316,7 +316,7 @@ namespace ModSettingsTab.Menu
                 _upArrow.draw(b);
                 _filterTextBox.Draw(b);
                 _downArrow.draw(b);
-                if (Options.Count > 7)
+                if (Options.Count > ItemsPerPage)
                 {
                     drawTextureBox(b, Game1.mouseCursors, new Rectangle(403, 383, 6, 6),
                         _scrollBarRunner.X, _scrollBarRunner.Y, _scrollBarRunner.Width,
