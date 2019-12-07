@@ -1,11 +1,12 @@
-using StardewModdingAPI;
+﻿using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewValley;
 using StardewValley.Menus;
 
 namespace ModSettingsTab
 {
-    public class ModEntry : Mod
+    // ReSharper disable once ClassNeverInstantiated.Global
+    public class ModEntry : StardewModdingAPI.Mod
     {
         /// <summary>
         /// SMAPI helper
@@ -34,6 +35,8 @@ namespace ModSettingsTab
             I18N = helper.Translation;
 
             Helper.Events.Display.MenuChanged += MenuChanged;
+            // mod data initialization
+            Helper.Events.GameLoop.GameLaunched += (sender, args) => ModData.Init();
         }
 
         /// <summary>
@@ -42,7 +45,7 @@ namespace ModSettingsTab
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MenuChanged(object sender, MenuChangedEventArgs e)
+        private static void MenuChanged(object sender, MenuChangedEventArgs e)
         {
             if (!(e.NewMenu is GameMenu menu)) return;
             int offset;
@@ -59,11 +62,11 @@ namespace ModSettingsTab
                     offset = 0;
                     break;
             }
-            
+
             menu.pages[GameMenu.optionsTab] = new Menu.OptionsPage(
-                menu.xPositionOnScreen, 
+                menu.xPositionOnScreen,
                 menu.yPositionOnScreen,
-                menu.width + offset, 
+                menu.width + offset,
                 menu.height);
         }
     }
