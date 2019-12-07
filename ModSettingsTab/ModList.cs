@@ -17,7 +17,7 @@ namespace ModSettingsTab
     {
         public ModList()
         {
-            var path = Path.Combine(ModEntry.Helper.DirectoryPath, "..");
+            var path = ModEntry.Helper.DirectoryPath+ "/../";
             Parallel.ForEach(Directory.GetDirectories(path), directory =>
             {
                 try
@@ -29,7 +29,8 @@ namespace ModSettingsTab
                     var uniqueId = JObject.Parse(File.ReadAllText(manifestPath))["UniqueID"].ToString();
                     // check if the mod is loaded without errors
                     if (!ModEntry.Helper.ModRegistry.IsLoaded(uniqueId)) return;
-                    var jObj = JObject.Parse(configPath);
+                    // reading and parsing config.json
+                    var jObj = JObject.Parse(File.ReadAllText(configPath));
                     var staticConfig = new StaticConfig(configPath, jObj);
                     Add(uniqueId, new Mod(uniqueId, directory, staticConfig));
                 }
