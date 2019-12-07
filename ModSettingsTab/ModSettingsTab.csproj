@@ -11,6 +11,7 @@
         <AssemblyName>ModSettingsTab</AssemblyName>
         <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
+        <LangVersion>7.3</LangVersion>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
         <PlatformTarget>AnyCPU</PlatformTarget>
@@ -43,26 +44,37 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Framework\Interfaces\IModOption.cs"/>
-        <Compile Include="Menu\BaseConfigPage.cs"/>
-        <Compile Include="Menu\DynamicConfigPage.cs"/>
-        <Compile Include="Menu\OptionsPage.cs"/>
-        <Compile Include="Menu\StaticConfigPage.cs"/>
+        <Compile Include="FavoriteData.cs" />
+        <Compile Include="Framework\Components\FilterTextBox.cs" />
+        <Compile Include="Framework\Components\OptionsElement.cs" />
+        <Compile Include="Framework\Interfaces\IModOption.cs" />
+        <Compile Include="Framework\Interfaces\IOptionCheckBox.cs" />
+        <Compile Include="Framework\Interfaces\IOptionDropDown.cs" />
+        <Compile Include="Framework\Interfaces\IOptionInputListener.cs" />
+        <Compile Include="Framework\Interfaces\IOptionPlusMinus.cs" />
+        <Compile Include="Framework\Interfaces\IOptionSlider.cs" />
+        <Compile Include="Framework\Interfaces\IOptionTextBox.cs" />
+        <Compile Include="Menu\BaseOptionsModPage.cs" />
+        <Compile Include="Menu\FavoriteOptionsModPage.cs" />
+        <Compile Include="Menu\OptionsPage.cs" />
+        <Compile Include="Menu\OptionsModPage.cs" />
+        <Compile Include="ModData.cs" />
         <Compile Include="ModEntry.cs" />
-        <Compile Include="ModSettings.cs"/>
+        <Compile Include="Mod.cs" />
+        <Compile Include="ModList.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
-        <Compile Include="StaticConfig.cs"/>
+        <Compile Include="StaticConfig.cs" />
     </ItemGroup>
     <ItemGroup>
       <None Include="packages.config" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="assets\FilterTextBox.png"/>
-        <Content Include="assets\Tabs.png"/>
+        <Content Include="assets\FilterTextBox.png" />
+        <Content Include="assets\Tabs.png" />
       <Content Include="manifest.json" />
     </ItemGroup>
     <ItemGroup>
-        <Folder Include="Events"/>
+        <Folder Include="Events" />
       <Folder Include="_releases" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
