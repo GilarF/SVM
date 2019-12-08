@@ -33,9 +33,9 @@ namespace ModSettingsTab
             Helper = helper;
             Console = Monitor;
             I18N = helper.Translation;
-            ModData.Init();
 
             Helper.Events.Display.MenuChanged += MenuChanged;
+            Helper.Events.GameLoop.GameLaunched += (sender, args) => ModData.Init();
         }
 
         /// <summary>
