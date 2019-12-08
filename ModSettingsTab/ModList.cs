@@ -27,8 +27,6 @@ namespace ModSettingsTab
                     // necessary files exist
                     if (!File.Exists(configPath) || !File.Exists(manifestPath)) return;
                     var uniqueId = JObject.Parse(File.ReadAllText(manifestPath))["UniqueID"].ToString();
-                    // check if the mod is loaded without errors
-                    if (!ModEntry.Helper.ModRegistry.IsLoaded(uniqueId)) return;
                     // reading and parsing config.json
                     var jObj = JObject.Parse(File.ReadAllText(configPath));
                     var staticConfig = new StaticConfig(configPath, jObj);
