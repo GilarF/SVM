@@ -41,10 +41,12 @@ namespace ModSettingsTab
         /// <summary>
         /// initialization of master data
         /// </summary>
-        public static void Init()
+        public static async void Init()
         {
-            LoadOptionsAsync();
-            LoadIntegrationsAsync();
+            await LoadIntegrations();
+            ModEntry.Console.Log($"Load {PredefinedIntegration.Count} Integrations", LogLevel.Info);
+            await LoadOptions();
+            ModEntry.Console.Log($"Load {ModList.Count} mods and {Options.Count} Options", LogLevel.Info);
         }
 
         /// <summary>
@@ -60,17 +62,6 @@ namespace ModSettingsTab
             UpdateFavoriteOptionsAsync();
         }
 
-        private static async void LoadOptionsAsync()
-        {
-            await LoadOptions();
-            ModEntry.Console.Log($"Load {ModList.Count} mods and {Options.Count} Options", LogLevel.Info);
-        }
-
-        private static async void LoadIntegrationsAsync()
-        {
-            await LoadIntegrations();
-            ModEntry.Console.Log($"Load {PredefinedIntegration.Count} Integrations", LogLevel.Info);
-        }
 
         /// <summary>
         /// asynchronously updates the list of settings of selected mods
