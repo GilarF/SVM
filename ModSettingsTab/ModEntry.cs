@@ -1,4 +1,4 @@
-using StardewModdingAPI;
+﻿using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewValley;
 using StardewValley.Menus;
@@ -36,8 +36,6 @@ namespace ModSettingsTab
             ModData.Init();
 
             Helper.Events.Display.MenuChanged += MenuChanged;
-            // mod data initialization
-            Helper.Events.GameLoop.GameLaunched += (sender, args) => ModData.Init();
         }
 
         /// <summary>
