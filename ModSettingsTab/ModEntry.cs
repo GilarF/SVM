@@ -1,4 +1,4 @@
-﻿using StardewModdingAPI;
+using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewValley;
 using StardewValley.Menus;
@@ -33,6 +33,7 @@ namespace ModSettingsTab
             Helper = helper;
             Console = Monitor;
             I18N = helper.Translation;
+            ModData.Init();
 
             Helper.Events.Display.MenuChanged += MenuChanged;
             // mod data initialization
