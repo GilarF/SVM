@@ -47,6 +47,10 @@
         <Compile Include="FavoriteData.cs" />
         <Compile Include="Framework\Components\FilterTextBox.cs" />
         <Compile Include="Framework\Components\OptionsElement.cs" />
+        <Compile Include="Framework\Integration\Param.cs" />
+        <Compile Include="Framework\Integration\I18n.cs" />
+        <Compile Include="Framework\Integration\ModIntegrationSettings.cs" />
+        <Compile Include="Framework\Integration\ParamType.cs" />
         <Compile Include="Framework\Interfaces\IModOption.cs" />
         <Compile Include="Framework\Interfaces\IOptionCheckBox.cs" />
         <Compile Include="Framework\Interfaces\IOptionDropDown.cs" />
