@@ -27,13 +27,16 @@ namespace ModSettingsTab.Menu
         private readonly ClickableTextureComponent _scrollBar;
         private bool _scrolling;
         private Rectangle _scrollBarRunner;
-        protected Rectangle SlotSize;
+        public static Point SlotSize;
         private readonly FilterTextBox _filterTextBox;
 
+        static BaseOptionsModPage()
+        {
+            SlotSize = new Point( 800 + borderWidth * 2 - 32, (600 + borderWidth * 2 - 128) / ItemsPerPage);
+        }
         protected BaseOptionsModPage(int x, int y, int width, int height)
             : base(x, y, width, height)
         {
-            SlotSize = new Rectangle(0, 0, width - 32, (height - 128) / ItemsPerPage);
             _upArrow = new ClickableTextureComponent(
                 new Rectangle(xPositionOnScreen + width + 16, yPositionOnScreen + 64, 44, 48),
                 Game1.mouseCursors, new Rectangle(421, 459, 11, 12), 4f);
@@ -50,8 +53,8 @@ namespace ModSettingsTab.Menu
                 _optionSlots.Add(
                     new ClickableComponent(
                         new Rectangle(xPositionOnScreen + 16,
-                            yPositionOnScreen + 80 + 4 + index * SlotSize.Height, SlotSize.Width,
-                            SlotSize.Height + 4), string.Concat(index))
+                            yPositionOnScreen + 80 + 4 + index * SlotSize.Y, SlotSize.X,
+                            SlotSize.Y + 4), string.Concat(index))
                     {
                         myID = index,
                         downNeighborID = index < IndexOfGraphicsPage ? index + 1 : -7777,
