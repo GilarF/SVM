@@ -60,7 +60,7 @@ namespace ModSettingsTab.Menu
                 rightNeighborID = 0
             };
             _sideTabs.Add(modOptionsComponent);
-            _pagesCollections.Add(ModOptionsTab, new StardewValley.Menus.OptionsPage(x, y, width, height));
+            _pagesCollections.Add(ModOptionsTab, new OptionsModPage(x, y, width, height));
 
             // -------- favorite mod tab ---------
             var favoriteModComponent = new ClickableTextureComponent("",
