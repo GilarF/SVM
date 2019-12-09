@@ -11,7 +11,7 @@ using OptionsPage = ModSettingsTab.Menu.OptionsPage;
 
 namespace ModSettingsTab.Framework.Components
 {
-    public class FilterTextBox : TextBox
+    public class FilterTextBox : StardewValley.Menus.TextBox
   {
     private static readonly Texture2D SearchBox = ModEntry.Helper.Content.Load<Texture2D>("assets/FilterTextBox.png");
     private string _text = "";
