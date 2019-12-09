@@ -12,16 +12,17 @@ namespace ModSettingsTab.Framework.Components
 
         public OptionsTextBox(
             string name,
+            string modId,
             string label,
             StaticConfig config,
-            Rectangle slotSize,
+            Point slotSize,
             bool floatOnly = false,
             bool numbersOnly = false,
             bool numAsString = false)
-            : base(name, label, config, 32, slotSize.Height / 2 - 4, slotSize.Width / 2, 48)
+            : base(name, modId, label, config, 32, slotSize.Y / 2 - 4, slotSize.X / 2, 48)
         {
             // text field value
-            var str = config[name].ToString(Formatting.Indented);
+            var str = config[name].ToString();
             // if the string is short
             if (str.Length < 8) Bounds.Width /= 2;
 
@@ -33,7 +34,7 @@ namespace ModSettingsTab.Framework.Components
                 numbersOnly = numbersOnly,
                 NumAsString = numAsString,
                 FloatOnly = floatOnly,
-                Text = str
+                Text = !floatOnly ? str : config[name].ToString(Formatting.Indented)
             };
         }
 
