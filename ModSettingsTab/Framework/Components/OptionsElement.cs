@@ -32,6 +32,11 @@ namespace ModSettingsTab.Framework.Components
         /// Name by default
         /// </remarks>
         public string Label { get; set; }
+        
+        /// <summary>
+        /// settings for saving
+        /// </summary>
+        public StaticConfig Config { get; set; }
 
         /// <summary>
         /// inactive state
@@ -42,6 +47,7 @@ namespace ModSettingsTab.Framework.Components
             string name,
             string modId,
             string label,
+            StaticConfig config,
             int x = 32,
             int y = 16,
             int width = 36,
@@ -50,6 +56,7 @@ namespace ModSettingsTab.Framework.Components
             Bounds = new Rectangle(x, y, width, height);
             Name = name;
             ModId = modId;
+            Config = config;
             Label = !string.IsNullOrEmpty(label) ? label.Replace(".", " > ") : "";
         }
 
