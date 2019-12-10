@@ -21,7 +21,7 @@ namespace ModSettingsTab
             get => _favorite;
             set
             {
-                FavoriteData.ChangeStatus(Manifest.UniqueID, value);
+                FavoriteData.ChangeStatus(Manifest.UniqueID);
                 _favorite = value;
             }
         }

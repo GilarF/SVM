@@ -38,7 +38,7 @@ namespace ModSettingsTab
         /// <summary>
         /// list of favorite mod options
         /// </summary>
-        public static List<OptionsElement> FavoriteOptions;
+        public static List<Mod> FavoriteMod;
 
         /// <summary>
         /// initialization of master data
@@ -48,29 +48,16 @@ namespace ModSettingsTab
             await LoadIntegrations();
             ModEntry.Console.Log($"Load {PredefinedIntegration.Count} Integrations", LogLevel.Info);
             await LoadOptions();
-            ModEntry.Console.Log($"Load {ModList.Count} mods and {Options.Count} Options", LogLevel.Info);
+            ModEntry.Console.Log($"Load {ModList.Count} mods and {Options.Count} Options | {FavoriteMod.Count}",
+                LogLevel.Info);
         }
-
-        /// <summary>
-        /// Changes favorite mods
-        /// </summary>
-        /// <param name="uniqueId">
-        /// unique mod identifier
-        /// </param>
-        /// <param name="status"></param>
-        public static void ChangeFavoriteMod(string uniqueId, bool status)
-        {
-            ModList[uniqueId].Favorite = status;
-            UpdateFavoriteOptionsAsync();
-        }
-
 
         /// <summary>
         /// asynchronously updates the list of settings of selected mods
         /// </summary>
-        private static async void UpdateFavoriteOptionsAsync()
+        public static async void UpdateFavoriteOptionsAsync()
         {
-            await LoadFavoriteOptions();
+            await Task.Run(LoadFavoriteOptions);
         }
 
         private static Task LoadIntegrations()
@@ -89,18 +76,14 @@ namespace ModSettingsTab
             {
                 ModList = new ModList();
                 Options = ModList.SelectMany(mod => mod.Value.Options).ToList();
-                FavoriteOptions = ModList.Where(mod => mod.Value.Favorite)
-                    .SelectMany(mod => mod.Value.Options).ToList();
+                LoadFavoriteOptions();
             });
         }
 
-        private static Task LoadFavoriteOptions()
+        private static void LoadFavoriteOptions()
         {
-            return Task.Run(() =>
-            {
-                FavoriteOptions = ModList.Where(mod => mod.Value.Favorite)
-                    .SelectMany(mod => mod.Value.Options).ToList();
-            });
+            FavoriteMod = ModList.Where(mod => mod.Value.Favorite)
+                .Select(mod => mod.Value).ToList();
         }
     }
 }

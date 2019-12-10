@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Timers;
 
 namespace ModSettingsTab
@@ -11,7 +12,7 @@ namespace ModSettingsTab
         /// <summary>
         /// collection of selected mods
         /// </summary>
-        private static readonly Dictionary<string, bool> Favorite;
+        private static Queue<string> _favorite;
 
         /// <summary>
         /// save timer, anti-click protection
@@ -26,11 +27,16 @@ namespace ModSettingsTab
                 AutoReset = false
             };
             SaveTimer.Elapsed += (t, e) =>
-                ModEntry.Helper.Data.WriteJsonFile("favorite.json", Favorite);
+            {
+                ModEntry.Helper.Data.WriteJsonFile("data/favorite.json", _favorite);
+                ModData.UpdateFavoriteOptionsAsync();
+            };
 
-            Favorite =
-                ModEntry.Helper.Data.ReadJsonFile<Dictionary<string, bool>>("favorite.json")
-                ?? new Dictionary<string, bool>();
+            _favorite =
+                ModEntry.Helper.Data.ReadJsonFile<Queue<string>>("data/favorite.json")
+                ?? new Queue<string>(5);
+            if (_favorite.Count > 5)
+                _favorite = new Queue<string>(_favorite.Take(5));
         }
 
         /// <summary>
@@ -40,10 +46,7 @@ namespace ModSettingsTab
         /// unique mod identifier
         /// </param>
         /// <returns></returns>
-        public static bool IsFavorite(string uniqueId)
-        {
-            return Favorite.ContainsKey(uniqueId) && Favorite[uniqueId];
-        }
+        public static bool IsFavorite(string uniqueId) => _favorite.Contains(uniqueId);
 
         /// <summary>
         /// changes bookmark state
@@ -51,13 +54,19 @@ namespace ModSettingsTab
         /// <param name="uniqueId">
         /// unique mod identifier
         /// </param>
-        /// <param name="status"></param>
-        public static void ChangeStatus(string uniqueId, bool status)
+        public static void ChangeStatus(string uniqueId)
         {
-            if (Favorite.ContainsKey(uniqueId))
-                Favorite[uniqueId] = status;
+            if (IsFavorite(uniqueId))
+            {
+                var newFavorite = _favorite.Where(id => id != uniqueId);
+                _favorite = new Queue<string>(newFavorite);
+            }
             else
-                Favorite.Add(uniqueId, status);
+            {
+                _favorite.Enqueue(uniqueId);
+                if (_favorite.Count > 5) _favorite.Dequeue();
+            }
+
             SaveTimer.Stop();
             SaveTimer.Start();
         }
