@@ -25,8 +25,10 @@ namespace ModSettingsTab.Menu
         private int _currentTab;
         private int _value;
 
-        public OptionsPage(int x, int y, int width, int height) : base(x, y, width, height)
+        public OptionsPage(int x, int y, int width, int height) : base(x, y, width, height, true)
         {
+            // move close button left
+            upperRightCloseButton.bounds.X -= 42;
             // -------- standard options tab ---------
             var originalOptionsComponent = new ClickableTextureComponent("",
                 new Rectangle(
@@ -83,6 +85,8 @@ namespace ModSettingsTab.Menu
             base.customSnapBehavior(direction, oldRegion, oldId);
         }
 
+        public override bool shouldDrawCloseButton() => false;
+
         public override void receiveScrollWheelAction(int direction)
         {
             if (GameMenu.forcePreventClose)
@@ -109,6 +113,7 @@ namespace ModSettingsTab.Menu
         {
             if (GameMenu.forcePreventClose)
                 return;
+            base.receiveLeftClick(x, y, playSound);
             for (var index = 0; index < _sideTabs.Count; ++index)
             {
                 if (!_sideTabs[index].containsPoint(x, y) || _currentTab == index) continue;
@@ -130,6 +135,7 @@ namespace ModSettingsTab.Menu
 
         public override void performHoverAction(int x, int y)
         {
+            base.performHoverAction(x,y);
             _hoverText = "";
             _value = -1;
             using (var enumerator = _sideTabs.Where(sideTab => sideTab.containsPoint(x, y)).GetEnumerator())
@@ -165,6 +171,7 @@ namespace ModSettingsTab.Menu
 
         public override void draw(SpriteBatch b)
         {
+            upperRightCloseButton.draw(b);
             foreach (var sideTab in _sideTabs)
                 sideTab.draw(b);
             b.End();
