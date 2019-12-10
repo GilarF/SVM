@@ -284,9 +284,11 @@ namespace ModSettingsTab.Menu
         {
             if (_optionSlots.Where((t, index) =>
             {
-                if (_currentItemIndex >= 0 && _currentItemIndex + index < Options.Count)
-                    return Options[_currentItemIndex + index].Bounds.Contains(x - t.bounds.X, y - t.bounds.Y);
-                return false;
+                if (_currentItemIndex < 0 || _currentItemIndex + index >= Options.Count) return false;
+                if (!Options[_currentItemIndex + index].Bounds.Contains(x - t.bounds.X, y - t.bounds.Y))
+                    return false;
+                Options[_currentItemIndex + index].PerformHoverAction(x - t.bounds.X, y - t.bounds.Y);
+                return true;
             }).Any())
                 Game1.SetFreeCursorDrag();
             if (_scrollBarRunner.Contains(x, y))

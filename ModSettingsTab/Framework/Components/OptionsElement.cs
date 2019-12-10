@@ -68,6 +68,11 @@ namespace ModSettingsTab.Framework.Components
         {
         }
 
+        public virtual void PerformHoverAction(int x, int y)
+        {
+            
+        }
+
         public virtual void LeftClickReleased(int x, int y)
         {
         }
