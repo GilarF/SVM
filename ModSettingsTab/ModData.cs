@@ -15,6 +15,8 @@ namespace ModSettingsTab
         /// </summary>
         public static TextBox CurrentTextBox { get; set; }
 
+        public const int Offset = 192;
+
         /// <summary>
         /// collection of loaded mods, only those that have settings
         /// </summary>

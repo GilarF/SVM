@@ -1,4 +1,5 @@
-﻿using StardewModdingAPI;
+﻿using System;
+using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewValley;
 using StardewValley.Menus;
@@ -47,25 +48,11 @@ namespace ModSettingsTab
         private static void MenuChanged(object sender, MenuChangedEventArgs e)
         {
             if (!(e.NewMenu is GameMenu menu)) return;
-            int offset;
-            switch (LocalizedContentManager.CurrentLanguageCode)
-            {
-                case LocalizedContentManager.LanguageCode.ru:
-                    offset = 96;
-                    break;
-                case LocalizedContentManager.LanguageCode.fr:
-                case LocalizedContentManager.LanguageCode.tr:
-                    offset = 192;
-                    break;
-                default:
-                    offset = 0;
-                    break;
-            }
-
+            
             menu.pages[GameMenu.optionsTab] = new Menu.OptionsPage(
                 menu.xPositionOnScreen,
                 menu.yPositionOnScreen,
-                menu.width + offset,
+                menu.width + ModData.Offset,
                 menu.height);
         }
     }

@@ -32,7 +32,7 @@ namespace ModSettingsTab.Menu
 
         static BaseOptionsModPage()
         {
-            SlotSize = new Point( 800 + borderWidth * 2 - 32, (600 + borderWidth * 2 - 128) / ItemsPerPage);
+            SlotSize = new Point( 800 + borderWidth * 2- 32 + ModData.Offset, (600 + borderWidth * 2 - 128) / ItemsPerPage);
         }
         protected BaseOptionsModPage(int x, int y, int width, int height)
             : base(x, y, width, height)
