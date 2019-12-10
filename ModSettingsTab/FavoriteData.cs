@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Timers;
+using Microsoft.Xna.Framework;
+
 
 namespace ModSettingsTab
 {
@@ -64,7 +66,13 @@ namespace ModSettingsTab
             else
             {
                 _favorite.Enqueue(uniqueId);
-                if (_favorite.Count > 5) _favorite.Dequeue();
+                if (_favorite.Count > 5)
+                {
+                    _favorite.Dequeue();
+                    var t = new Queue<Rectangle>(ModData.FavoriteTabSource);
+                    t.Enqueue(t.Dequeue());
+                    ModData.FavoriteTabSource = t.ToList();
+                }
             }
 
             SaveTimer.Stop();

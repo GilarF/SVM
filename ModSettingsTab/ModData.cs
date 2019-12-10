@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using ModSettingsTab.Framework.Integration;
 using StardewModdingAPI;
 using StardewValley.Menus;
@@ -39,6 +41,25 @@ namespace ModSettingsTab
         /// list of favorite mod options
         /// </summary>
         public static List<Mod> FavoriteMod;
+        public static readonly Texture2D Tabs;
+        public static List<Rectangle> FavoriteTabSource;
+
+        public delegate void Update();
+
+        public static Update UpdateFavoriteMod;
+
+        static ModData()
+        {
+            Tabs = ModEntry.Helper.Content.Load<Texture2D>("assets/Tabs.png");
+            FavoriteTabSource = new List<Rectangle>()
+            {
+                new Rectangle(0,128,32,24),
+                new Rectangle(32,128,32,24),
+                new Rectangle(0,152,32,24),
+                new Rectangle(32,152,32,24),
+                new Rectangle(0,176,32,24),
+            };
+        }
 
         /// <summary>
         /// initialization of master data
@@ -58,6 +79,7 @@ namespace ModSettingsTab
         public static async void UpdateFavoriteOptionsAsync()
         {
             await Task.Run(LoadFavoriteOptions);
+            UpdateFavoriteMod();
         }
 
         private static Task LoadIntegrations()

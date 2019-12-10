@@ -46,7 +46,10 @@
     <ItemGroup>
         <Compile Include="FavoriteData.cs" />
         <Compile Include="Framework\Components\FilterTextBox.cs" />
+        <Compile Include="Framework\Components\OptionsCheckbox.cs" />
         <Compile Include="Framework\Components\OptionsElement.cs" />
+        <Compile Include="Framework\Components\OptionsHeading.cs" />
+        <Compile Include="Framework\Components\OptionsInputListener.cs" />
         <Compile Include="Framework\Components\OptionsTextBox.cs" />
         <Compile Include="Framework\Components\TextBox.cs" />
         <Compile Include="Framework\Integration\Param.cs" />
