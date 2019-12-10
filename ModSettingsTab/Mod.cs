@@ -1,15 +1,18 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using ModSettingsTab.Framework.Components;
+using ModSettingsTab.Menu;
+using Newtonsoft.Json.Linq;
 using StardewModdingAPI;
 
 namespace ModSettingsTab
 {
     public class Mod
     {
-        public List<OptionsElement> Options;
-        private StaticConfig _staticConfig;
+        public readonly List<OptionsElement> Options;
+        private readonly StaticConfig _staticConfig;
         private bool _favorite;
         public IManifest Manifest { get; }
 
@@ -25,6 +28,7 @@ namespace ModSettingsTab
 
         public Mod(string uniqueId, string directory, StaticConfig config)
         {
+            Options = new List<OptionsElement>();
             Manifest = ModEntry.Helper.ModRegistry.Get(uniqueId).Manifest;
             _staticConfig = config;
             _favorite = FavoriteData.IsFavorite(Manifest.UniqueID);
@@ -33,23 +37,85 @@ namespace ModSettingsTab
 
         private void InitOptions(string folder)
         {
-            var integrationPath = Path.Combine(folder, "settingsTab.json");
+            var uniqueId = Manifest.UniqueID;
 
-            try
+            Options.Add(new OptionsHeading(uniqueId, Manifest, BaseOptionsModPage.SlotSize));
+            foreach (KeyValuePair<string, JToken> param in _staticConfig)
             {
-                if (File.Exists(integrationPath))
+                StaticInit(param.Value, param.Key);
+            }
+
+            void StaticInit(JToken opt, string name)
+            {
+                switch (opt.Type)
                 {
-                    // read parameters from file
-                }
-                else
-                {
-                    // check for built-in support
+                    case JTokenType.Integer:
+                        Options.Add(new OptionsTextBox(name, uniqueId, name, _staticConfig, BaseOptionsModPage.SlotSize,
+                            false, true));
+                        break;
+                    case JTokenType.Float:
+                        Options.Add(new OptionsTextBox(name, uniqueId, name, _staticConfig, BaseOptionsModPage.SlotSize,
+                            true));
+                        break;
+                    case JTokenType.String:
+                        var str = opt.ToString().Trim();
+
+                        // check int
+                        if (int.TryParse(str, out _))
+                        {
+                            Options.Add(new OptionsTextBox(name, uniqueId, name, _staticConfig,
+                                BaseOptionsModPage.SlotSize, false, true, true));
+                            break;
+                        }
+
+                        // check button
+                        if (ButtonTryParse(str, out var btn))
+                        {
+                            Options.Add(new OptionsInputListener(name, uniqueId, name, _staticConfig,
+                                BaseOptionsModPage.SlotSize, btn));
+                            break;
+                        }
+
+                        // check bool
+                        if (str.ToLower().Equals("true") || str.ToLower().Equals("false"))
+                        {
+                            Options.Add(new OptionsCheckbox(name, uniqueId, name, _staticConfig,
+                                BaseOptionsModPage.SlotSize)
+                            {
+                                AsString = true
+                            });
+                            break;
+                        }
+
+                        // check float
+                        if (float.TryParse(str, NumberStyles.Any, CultureInfo.CreateSpecificCulture("en-US"), out _))
+                        {
+                            Options.Add(new OptionsTextBox(name, uniqueId, name, _staticConfig,
+                                BaseOptionsModPage.SlotSize, true, false, true));
+                            break;
+                        }
+
+                        Options.Add(
+                            new OptionsTextBox(name, uniqueId, name, _staticConfig, BaseOptionsModPage.SlotSize));
+                        break;
+                    case JTokenType.Boolean:
+                        Options.Add(new OptionsCheckbox(name, uniqueId, name, _staticConfig,
+                            BaseOptionsModPage.SlotSize));
+                        break;
                 }
             }
-            catch (Exception e)
+        }
+
+        private static bool ButtonTryParse(string str, out SButton btn)
+        {
+            if (!str.Contains(",") && Enum.TryParse<SButton>(str.Trim(), true, out var result))
             {
-                ModEntry.Console.Log(e.Message, LogLevel.Error);
+                btn = result;
+                return true;
             }
+
+            btn = SButton.None;
+            return false;
         }
     }
 }
