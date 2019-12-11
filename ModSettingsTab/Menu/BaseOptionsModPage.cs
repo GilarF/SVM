@@ -13,6 +13,7 @@ namespace ModSettingsTab.Menu
 {
     public abstract class BaseOptionsModPage : IClickableMenu
     {
+        private string _hoverTitle = "";
         private string _hoverText = "";
         private readonly List<ClickableComponent> _optionSlots = new List<ClickableComponent>();
 
@@ -285,17 +286,18 @@ namespace ModSettingsTab.Menu
             if (_optionSlots.Where((t, index) =>
             {
                 if (_currentItemIndex < 0 || _currentItemIndex + index >= Options.Count) return false;
-                if (!Options[_currentItemIndex + index].Bounds.Contains(x - t.bounds.X, y - t.bounds.Y))
+                if (!Options[_currentItemIndex + index].PerformHoverAction(x - t.bounds.X, y - t.bounds.Y))
                     return false;
-                Options[_currentItemIndex + index].PerformHoverAction(x - t.bounds.X, y - t.bounds.Y);
+                _hoverTitle = Options[_currentItemIndex + index].HoverTitle;
+                _hoverText = Options[_currentItemIndex + index].HoverText;
                 return true;
             }).Any())
                 Game1.SetFreeCursorDrag();
+            else _hoverText = "";
             if (_scrollBarRunner.Contains(x, y))
                 Game1.SetFreeCursorDrag();
             if (GameMenu.forcePreventClose)
                 return;
-            _hoverText = "";
             _upArrow.tryHover(x, y);
             _downArrow.tryHover(x, y);
             _scrollBar.tryHover(x, y);
@@ -332,7 +334,11 @@ namespace ModSettingsTab.Menu
 
             if (_hoverText.Equals(""))
                 return;
-            drawHoverText(b, _hoverText, Game1.smallFont);
+            if (_hoverTitle.Equals(""))
+                drawHoverText(b, _hoverText, Game1.smallFont);
+            else
+                drawToolTip(b,_hoverText,_hoverTitle,null);
+            
         }
     }
 }

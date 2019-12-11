@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -14,6 +15,9 @@ namespace ModSettingsTab.Framework.Components
         /// active zone
         /// </summary>
         public Rectangle Bounds;
+
+        private string _hoverText;
+        private string _hoverTitle;
 
         /// <summary>
         /// element name (JToken path)
@@ -32,7 +36,27 @@ namespace ModSettingsTab.Framework.Components
         /// Name by default
         /// </remarks>
         public string Label { get; set; }
-        
+
+
+        public string HoverTitle
+        {
+            get => _hoverTitle;
+            set
+            {
+                if (!string.IsNullOrEmpty(value))
+                    _hoverTitle = value.Length > 50 ? value.Substring(0, 50) : value;
+                else _hoverTitle = "";
+            }
+        }
+
+        public string HoverText
+        {
+            get => _hoverText;
+            set => _hoverText = !string.IsNullOrEmpty(value) 
+                ? Regex.Replace(value.Replace('\n', ' '), @"(.{0,50}[, .!:;])", "$1\n") 
+                : "";
+        }
+
         /// <summary>
         /// settings for saving
         /// </summary>
@@ -58,6 +82,8 @@ namespace ModSettingsTab.Framework.Components
             ModId = modId;
             Config = config;
             Label = !string.IsNullOrEmpty(label) ? label.Replace(".", " > ") : "";
+            _hoverText = "";
+            _hoverTitle = "";
         }
 
         public virtual void ReceiveLeftClick(int x, int y)
@@ -68,9 +94,9 @@ namespace ModSettingsTab.Framework.Components
         {
         }
 
-        public virtual void PerformHoverAction(int x, int y)
+        public virtual bool PerformHoverAction(int x, int y)
         {
-            
+            return false;
         }
 
         public virtual void LeftClickReleased(int x, int y)
