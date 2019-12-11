@@ -44,11 +44,21 @@ namespace ModSettingsTab
                     });
                 ModData.UpdateFavoriteOptionsAsync();
             };
+            
+            var freeBookmarks = new[]
+            {
+                new Rectangle(0, 128, 32, 24),
+                new Rectangle(32, 128, 32, 24),
+                new Rectangle(0, 152, 32, 24),
+                new Rectangle(32, 152, 32, 24),
+                new Rectangle(0, 176, 32, 24),
+            };
     
             var data = ModEntry.Helper.Data.ReadJsonFile<SaveData>("data/favorite.json");
             if (data == null)
             {
                 Favorite = new Queue<string>();
+                ModData.FreeFavoriteTabSource = new Queue<Rectangle>(freeBookmarks);
                 return;
             }
 
@@ -56,6 +66,10 @@ namespace ModSettingsTab
             ModData.FavoriteTabSource = data.Bookmarks;
             if (Favorite.Count > 5)
                 Favorite = new Queue<string>(Favorite.Take(5));
+            
+            // delete used free bookmarks
+            var bookmarks = data.Bookmarks.Select(b => b.Value).ToArray();
+            ModData.FreeFavoriteTabSource = new Queue<Rectangle>(freeBookmarks.Except(bookmarks));
         }
 
         /// <summary>

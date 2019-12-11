@@ -45,7 +45,7 @@ namespace ModSettingsTab
         public static readonly List<Mod> FavoriteMod;
         public static readonly Texture2D Tabs;
         public static Dictionary<string,Rectangle> FavoriteTabSource;
-        public static readonly Queue<Rectangle> FreeFavoriteTabSource;
+        public static Queue<Rectangle> FreeFavoriteTabSource;
 
         public delegate void Update();
 
@@ -55,14 +55,6 @@ namespace ModSettingsTab
         {
             FavoriteMod = new List<Mod>();
             Tabs = ModEntry.Helper.Content.Load<Texture2D>("assets/Tabs.png");
-            FreeFavoriteTabSource = new Queue<Rectangle>
-            (new[]{
-                new Rectangle(0,128,32,24),
-                new Rectangle(32,128,32,24),
-                new Rectangle(0,152,32,24),
-                new Rectangle(32,152,32,24),
-                new Rectangle(0,176,32,24),
-            });
             FavoriteTabSource = new Dictionary<string, Rectangle>();
         }
 
