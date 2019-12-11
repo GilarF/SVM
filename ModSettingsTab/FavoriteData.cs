@@ -13,7 +13,7 @@ namespace ModSettingsTab
     {
         private class SaveData
         {
-            public Queue<string> List;
+            public List<string> List;
             public Dictionary<string, Rectangle> Bookmarks;
         }
 
@@ -39,12 +39,12 @@ namespace ModSettingsTab
                 ModEntry.Helper.Data.WriteJsonFile("data/favorite.json",
                     new SaveData
                     {
-                        List = Favorite,
+                        List = Favorite.ToList(),
                         Bookmarks = ModData.FavoriteTabSource
                     });
                 ModData.UpdateFavoriteOptionsAsync();
             };
-            
+
             var freeBookmarks = new[]
             {
                 new Rectangle(0, 128, 32, 24),
@@ -53,7 +53,7 @@ namespace ModSettingsTab
                 new Rectangle(32, 152, 32, 24),
                 new Rectangle(0, 176, 32, 24),
             };
-    
+
             var data = ModEntry.Helper.Data.ReadJsonFile<SaveData>("data/favorite.json");
             if (data == null)
             {
@@ -62,11 +62,19 @@ namespace ModSettingsTab
                 return;
             }
 
-            Favorite = data.List;
+            // check if all mods are loaded
+            for (var i = data.List.Count - 1; i >= 0; i--)
+            {
+                if (ModEntry.Helper.ModRegistry.IsLoaded(data.List[i])) continue;
+                data.Bookmarks.Remove(data.List[i]);
+                data.List.RemoveAt(i);
+            }
+
+            Favorite = new Queue<string>(data.List);
             ModData.FavoriteTabSource = data.Bookmarks;
             if (Favorite.Count > 5)
                 Favorite = new Queue<string>(Favorite.Take(5));
-            
+
             // delete used free bookmarks
             var bookmarks = data.Bookmarks.Select(b => b.Value).ToArray();
             ModData.FreeFavoriteTabSource = new Queue<Rectangle>(freeBookmarks.Except(bookmarks));
