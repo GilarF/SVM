@@ -17,7 +17,7 @@ namespace ModSettingsTab
     {
         public ModList()
         {
-            var path = ModEntry.Helper.DirectoryPath+ "/../";
+            var path = Path.Combine(Constants.ExecutionPath,"Mods");
             Parallel.ForEach(Directory.GetDirectories(path), directory =>
             {
                 try

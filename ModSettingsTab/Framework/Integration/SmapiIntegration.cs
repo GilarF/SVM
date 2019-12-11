@@ -15,7 +15,7 @@ namespace ModSettingsTab.Framework.Integration
         
         public SmapiIntegration()
         {
-            var configPath = Path.Combine(ModEntry.Helper.DirectoryPath+ "/../../","smapi-internal/config.json");
+            var configPath = Path.Combine(Constants.ExecutionPath,"smapi-internal/config.json");
             if (!File.Exists(configPath))
             {
                 ModEntry.Console.Log("SMAPI Config not found? :)",LogLevel.Error);
