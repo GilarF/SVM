@@ -5,34 +5,27 @@ namespace ModSettingsTab.Framework.Integration
 {
     public class Param
     {
-        public string Name { get; set; }
-        public I18n Description { get; set; }
-        public ParamType Type { get; set; }
-        public I18n Label { get; set; }
-
-        // CheckBox
-        public bool CheckBoxIsChecked { get; set; }
+        public string Name { get; set; } = null;
+        public I18n Description { get; set; } = null;
+        public ParamType Type { get; set; } = ParamType.TextBox;
+        public I18n Label { get; set; } = null;
 
         // DropDown
-        public List<string> DropDownOptions { get; set; }
-        public int DropDownSelectedOption { get; set; }
+        public List<string> DropDownOptions { get; set; } = new List<string>{"EMPTY"};
 
         // InputListener
-        public SButton InputListenerButton { get; set; }
+        public SButton InputListenerButton { get; set; } = SButton.None;
 
         // PlusMinus
-        public List<string> PlusMinusOptions { get; set; }
-        public int PlusMinusSelectedOption { get; set; }
+        public List<string> PlusMinusOptions { get; set; } = new List<string>{"EMPTY"};
 
         // Slider
-        public int SliderValue { get; set; }
-        public int SliderMaxValue { get; set; }
-        public int SliderMinValue { get; set; }
-        public int SliderStep { get; set; }
+        public int SliderMaxValue { get; set; } = 100;
+        public int SliderMinValue { get; set; } = 0;
+        public int SliderStep { get; set; } = 1;
 
         // TextBox
-        public string TextBoxText { get; set; }
-        public bool TextBoxNumbersOnly { get; set; }
-        public bool TextBoxFloatOnly { get; set; }
+        public bool TextBoxNumbersOnly { get; set; } = false;
+        public bool TextBoxFloatOnly { get; set; }  = false;
     }
 }
