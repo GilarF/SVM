@@ -83,7 +83,7 @@ namespace ModSettingsTab.Menu
                 rightNeighborID = 0
             };
             _sideTabs.Add(smapiOptionsComponent);
-            _pagesCollections.Add(SmapiOptionsTab, new StardewValley.Menus.OptionsPage(x, y, width, height));
+            _pagesCollections.Add(SmapiOptionsTab, new SmapiOptionsPage(x, y, width, height));
 
             // -------- favorite mod tab ---------
             InitFavoriteTabs();

@@ -51,11 +51,13 @@
         <Compile Include="Framework\Components\OptionsHeading.cs" />
         <Compile Include="Framework\Components\OptionsInputListener.cs" />
         <Compile Include="Framework\Components\OptionsTextBox.cs" />
+        <Compile Include="Framework\Components\SmapiHeading.cs" />
         <Compile Include="Framework\Components\TextBox.cs" />
         <Compile Include="Framework\Integration\Param.cs" />
         <Compile Include="Framework\Integration\I18n.cs" />
         <Compile Include="Framework\Integration\ModIntegrationSettings.cs" />
         <Compile Include="Framework\Integration\ParamType.cs" />
+        <Compile Include="Framework\Integration\SmapiIntegration.cs" />
         <Compile Include="Framework\Interfaces\IModOption.cs" />
         <Compile Include="Framework\Interfaces\IOptionCheckBox.cs" />
         <Compile Include="Framework\Interfaces\IOptionDropDown.cs" />
@@ -67,6 +69,7 @@
         <Compile Include="Menu\FavoriteOptionsModPage.cs" />
         <Compile Include="Menu\OptionsPage.cs" />
         <Compile Include="Menu\OptionsModPage.cs" />
+        <Compile Include="Menu\SmapiOptionsPage.cs" />
         <Compile Include="ModData.cs" />
         <Compile Include="ModEntry.cs" />
         <Compile Include="Mod.cs" />

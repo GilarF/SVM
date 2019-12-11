@@ -37,6 +37,8 @@ namespace ModSettingsTab
         /// </summary>
         public static List<OptionsElement> Options;
 
+        public static SmapiIntegration SMAPI;
+
         /// <summary>
         /// list of favorite mod options
         /// </summary>
@@ -100,6 +102,7 @@ namespace ModSettingsTab
             return Task.Run(() =>
             {
                 ModList = new ModList();
+                SMAPI = new SmapiIntegration();
                 Options = ModList.SelectMany(mod => mod.Value.Options).ToList();
                 LoadFavoriteOptions();
             });
