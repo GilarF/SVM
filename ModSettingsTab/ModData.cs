@@ -40,9 +40,10 @@ namespace ModSettingsTab
         /// <summary>
         /// list of favorite mod options
         /// </summary>
-        public static List<Mod> FavoriteMod;
+        public static readonly List<Mod> FavoriteMod;
         public static readonly Texture2D Tabs;
-        public static List<Rectangle> FavoriteTabSource;
+        public static Dictionary<string,Rectangle> FavoriteTabSource;
+        public static readonly Queue<Rectangle> FreeFavoriteTabSource;
 
         public delegate void Update();
 
@@ -50,15 +51,17 @@ namespace ModSettingsTab
 
         static ModData()
         {
+            FavoriteMod = new List<Mod>();
             Tabs = ModEntry.Helper.Content.Load<Texture2D>("assets/Tabs.png");
-            FavoriteTabSource = new List<Rectangle>()
-            {
+            FreeFavoriteTabSource = new Queue<Rectangle>
+            (new[]{
                 new Rectangle(0,128,32,24),
                 new Rectangle(32,128,32,24),
                 new Rectangle(0,152,32,24),
                 new Rectangle(32,152,32,24),
                 new Rectangle(0,176,32,24),
-            };
+            });
+            FavoriteTabSource = new Dictionary<string, Rectangle>();
         }
 
         /// <summary>
@@ -104,8 +107,18 @@ namespace ModSettingsTab
 
         private static void LoadFavoriteOptions()
         {
-            FavoriteMod = ModList.Where(mod => mod.Value.Favorite)
-                .Select(mod => mod.Value).ToList();
+            FavoriteMod.Clear();
+            foreach (var id in FavoriteData.Favorite)
+            {
+                FavoriteMod.Add(ModList[id]);
+            }
+            for (var i = FavoriteMod.Count; i > 0 ; i--)
+            {
+                var id = FavoriteMod[i-1].Manifest.UniqueID;
+                if (!FavoriteTabSource.ContainsKey(id))
+                    FavoriteTabSource.Add(id, FreeFavoriteTabSource.Dequeue());
+            }
+            
         }
     }
 }

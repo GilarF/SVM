@@ -9,35 +9,42 @@ namespace ModSettingsTab.Framework.Components
 {
     public class OptionsHeading : OptionsElement
     {
-        private readonly IManifest _manifest;
+        public bool Favorite;
         private static readonly Rectangle Hl = new Rectangle(325, 318, 11, 18);
         private static readonly Rectangle Hc = new Rectangle(337, 318, 1, 18);
         private static readonly Rectangle Hr = new Rectangle(338, 318, 12, 18);
         private static readonly Rectangle Star0 = new Rectangle(310, 392, 16, 16);
         private static readonly Rectangle Star1 = new Rectangle(294, 392, 16, 16);
         private static Rectangle _boundsStar = new Rectangle(92, 36, 32, 32);
-        private bool _hover;
-        
+
 
         public OptionsHeading(string modId, IManifest manifest, Point slotSize)
             : base("", modId, "", null, 32, 16, slotSize.X, slotSize.Y + 4)
         {
-            _manifest = manifest;
             var length = manifest.Name.Length;
             Label = length * 2 <= 32 || length <= 25
                 ? $"{manifest.Name} v.{manifest.Version}"
                 : $"{manifest.Name.Substring(0, 25)}... v{manifest.Version}";
+            HoverTitle = manifest.Author;
+            HoverText = manifest.Description;
         }
 
-        public override void PerformHoverAction(int x, int y)
+        public override void ReceiveLeftClick(int x, int y)
         {
-            _hover = _boundsStar.Contains(x, y);
+            if (!_boundsStar.Contains(x,y)) return;
+            Game1.playSound("drumkit6");
+            base.ReceiveLeftClick(x, y);
+            Favorite = !Favorite;
+            FavoriteData.ChangeStatus(ModId);
+        }
+
+        public override bool PerformHoverAction(int x, int y)
+        {
+            return _boundsStar.Contains(x, y);
         }
 
         public override void Draw(SpriteBatch b, int slotX, int slotY)
         {
-            var star = ModData.ModList[ModId].Favorite ? Star1 : Star0;
-
             b.Draw(Game1.mouseCursors, new Rectangle(slotX + 32, slotY + Bounds.Y, 44, 72), Hl, Color.White);
             b.Draw(Game1.mouseCursors,
                 new Rectangle(slotX + 32 + 44, slotY + Bounds.Y, Bounds.Width - 64 - 48 - 44, 72), Hc, Color.White);
@@ -48,16 +55,9 @@ namespace ModSettingsTab.Framework.Components
             b.End();
             b.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied, SamplerState.PointClamp,
                 null, null, null, new Matrix?());
-            b.Draw(Game1.mouseCursors, new Rectangle(slotX + _boundsStar.X, slotY + _boundsStar.Y, _boundsStar.Width, _boundsStar.Height), star,
+            b.Draw(Game1.mouseCursors, new Rectangle(slotX + _boundsStar.X, slotY + _boundsStar.Y, _boundsStar.Width, _boundsStar.Height), Favorite ? Star1 : Star0,
                 Color.White);
-            b.End();
-            b.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null,
-                null, null, new Matrix?());
-            if (_hover)
-                IClickableMenu.drawToolTip(b,_manifest.Description,_manifest.Author,null);
-            b.End();
-            b.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied, SamplerState.PointClamp,
-                null, null, null, new Matrix?());
+            
         }
     }
 }

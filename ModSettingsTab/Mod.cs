@@ -22,7 +22,7 @@ namespace ModSettingsTab
             set
             {
                 _favorite = value;
-                FavoriteData.ChangeStatus(Manifest.UniqueID);
+                ((OptionsHeading) Options[0]).Favorite = value;
             }
         }
 
@@ -31,8 +31,8 @@ namespace ModSettingsTab
             Options = new List<OptionsElement>();
             Manifest = ModEntry.Helper.ModRegistry.Get(uniqueId).Manifest;
             _staticConfig = config;
-            _favorite = FavoriteData.IsFavorite(Manifest.UniqueID);
             InitOptions(directory);
+            Favorite = FavoriteData.IsFavorite(Manifest.UniqueID);
         }
 
         private void InitOptions(string folder)
