@@ -71,7 +71,7 @@ namespace ModSettingsTab.Menu
             // -------- SMAPI tab ---------
             var smapiOptionsComponent = new ClickableTextureComponent("",
                 new Rectangle(
-                    xPositionOnScreen - 48,
+                    xPositionOnScreen - 48 ,
                     yPositionOnScreen + height - DistanceFromMenuBottomBeforeNewPage,
                     64, 64), "",
                 "SMAPI", ModData.Tabs,
@@ -95,15 +95,19 @@ namespace ModSettingsTab.Menu
             _favoriteSideTabs.Clear();
             _favoritePagesCollections.Clear();
             var fModCount = ModData.FavoriteMod.Count;
+            if (fModCount == 0) return;
+            if (_currentTab != 0 || _currentTab != 1) ResetTab(1);
+            
             for (int i = fModCount, c = 0; i > 0; i--,c++)
             {
+                var manifest = ModData.FavoriteMod[i - 1].Manifest;
                 var favoriteModComponent = new ClickableTextureComponent("",
                     new Rectangle(
                         xPositionOnScreen - 48,
                         yPositionOnScreen + DistanceFromMenuBottomBeforeNewPage + TabHeight * 2 + 16 + FavoriteTabSize * c,
                         64, FavoriteTabSize), "",
-                    ModData.FavoriteMod[i-1].Manifest.Name, ModData.Tabs,
-                    ModData.FavoriteTabSource[i-1], 2f)
+                    manifest.Name, ModData.Tabs,
+                    ModData.FavoriteTabSource[manifest.UniqueID], 2f)
                 {
                     myID = RegionFavoriteOptionsMod + c,
                     upNeighborID = RegionFavoriteOptionsMod + c-1,
@@ -176,28 +180,35 @@ namespace ModSettingsTab.Menu
                 if (index < _sideTabs.Count)
                 {
                     if (!_sideTabs[index].containsPoint(x, y) || _currentTab == index) continue;
-                    ResetTab();
-                    _currentTab = index;
-                    _sideTabs[index].bounds.X += WidthToMoveActiveTab;
+                    ResetTab(index);
                     return;
                 }
                 if (!_favoriteSideTabs[index-_sideTabs.Count].containsPoint(x, y) || _currentTab == index) continue;
-                ResetTab();
-                _currentTab = index;
-                _favoriteSideTabs[index - _sideTabs.Count].bounds.X += WidthToMoveActiveTab;
+                ResetTab(index);
                 return;
             }
 
-            void ResetTab()
+            
+        }
+        private void ResetTab(int index)
+        {
+            if (_currentTab < _sideTabs.Count + _favoriteSideTabs.Count)
             {
                 if (_currentTab < _sideTabs.Count)
                     _sideTabs[_currentTab].bounds.X -= WidthToMoveActiveTab;
                 else
                     _favoriteSideTabs[_currentTab - _sideTabs.Count].bounds.X -= WidthToMoveActiveTab;
-                   
-                    
-                Game1.playSound("smallSelect");
             }
+            if (index < _sideTabs.Count)
+            {
+                _sideTabs[index].bounds.X += WidthToMoveActiveTab;
+            }
+            else
+            {
+                _favoriteSideTabs[index - _sideTabs.Count].bounds.X += WidthToMoveActiveTab;
+            }
+            _currentTab = index;
+            Game1.playSound("smallSelect");
         }
 
         public override void receiveRightClick(int x, int y, bool playSound = true)
