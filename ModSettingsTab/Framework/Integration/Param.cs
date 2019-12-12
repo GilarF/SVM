@@ -7,17 +7,18 @@ namespace ModSettingsTab.Framework.Integration
     {
         public string Name { get; set; } = null;
         public I18n Description { get; set; } = null;
-        public ParamType Type { get; set; } = ParamType.TextBox;
-        public I18n Label { get; set; } = null;
+        public ParamType Type { get; set; } = ParamType.None;
+        public string Label { get; set; } = null;
+        public bool Ignore { get; set; } = false;
 
         // DropDown
-        public List<string> DropDownOptions { get; set; } = new List<string>{"EMPTY"};
+        public List<string> DropDownOptions { get; set; } = new List<string>();
 
         // InputListener
         public SButton InputListenerButton { get; set; } = SButton.None;
 
         // PlusMinus
-        public List<string> PlusMinusOptions { get; set; } = new List<string>{"EMPTY"};
+        public List<string> PlusMinusOptions { get; set; } = new List<string>();
 
         // Slider
         public int SliderMaxValue { get; set; } = 100;
