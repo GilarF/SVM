@@ -28,6 +28,7 @@ namespace ModSettingsTab.Menu
         private const int SmapiOptionsTab = 2;
         private const int DistanceFromMenuBottomBeforeNewPage = 128;
         private int _currentTab;
+        private static int _savedTab;
         private int _value;
 
         public OptionsPage(int x, int y, int width, int height) : base(x, y, width, height, true)
@@ -88,6 +89,7 @@ namespace ModSettingsTab.Menu
             // -------- favorite mod tab ---------
             InitFavoriteTabs();
             ModData.UpdateFavoriteMod = InitFavoriteTabs;
+            ResetTab(_savedTab);
         }
 
         private void InitFavoriteTabs()
@@ -212,7 +214,7 @@ namespace ModSettingsTab.Menu
                 _favoriteSideTabs[index - _sideTabs.Count].bounds.X += WidthToMoveActiveTab;
             }
 
-            _currentTab = index;
+            _currentTab = _savedTab= index;
             Game1.playSound("smallSelect");
         }
 
