@@ -47,9 +47,11 @@
         <Compile Include="FavoriteData.cs" />
         <Compile Include="Framework\Components\FilterTextBox.cs" />
         <Compile Include="Framework\Components\OptionsCheckbox.cs" />
+        <Compile Include="Framework\Components\OptionsDropDown.cs" />
         <Compile Include="Framework\Components\OptionsElement.cs" />
         <Compile Include="Framework\Components\OptionsHeading.cs" />
         <Compile Include="Framework\Components\OptionsInputListener.cs" />
+        <Compile Include="Framework\Components\OptionsPlusMinus.cs" />
         <Compile Include="Framework\Components\OptionsTextBox.cs" />
         <Compile Include="Framework\Components\SmapiHeading.cs" />
         <Compile Include="Framework\Components\TextBox.cs" />
@@ -79,10 +81,16 @@
     </ItemGroup>
     <ItemGroup>
       <None Include="packages.config" />
-    </ItemGroup>
-    <ItemGroup>
+    </ItemGroup>    
+    <ItemGroup> 
         <Content Include="assets\FilterTextBox.png" />
         <Content Include="assets\Tabs.png" />
+        <Content Include="data\Integrations.json">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="data\SmapiIntegrations.json">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
       <Content Include="manifest.json" />
     </ItemGroup>
     <ItemGroup>
