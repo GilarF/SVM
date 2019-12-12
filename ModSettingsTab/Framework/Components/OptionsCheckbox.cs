@@ -1,3 +1,4 @@
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json.Linq;
@@ -12,7 +13,8 @@ namespace ModSettingsTab.Framework.Components
         public bool AsString { get; set; }
         private bool _isChecked;
 
-        public OptionsCheckbox(string name,
+        public OptionsCheckbox(
+            string name,
             string modId,
             string label,
             StaticConfig config,
@@ -20,6 +22,7 @@ namespace ModSettingsTab.Framework.Components
             : base(name, modId, label, config, 32, slotSize.Y / 2)
         {
             _isChecked = config[name].ToString().ToLower() == "true";
+            InfoIconBounds = new Rectangle(0,-8,0,0);
         }
 
         public override void ReceiveLeftClick(int x, int y)
@@ -33,6 +36,7 @@ namespace ModSettingsTab.Framework.Components
         public override void Draw(SpriteBatch b, int slotX, int slotY)
         {
             b.Draw(Game1.mouseCursors, new Vector2(slotX + Bounds.X, slotY + Bounds.Y), _isChecked ? SourceRectChecked : SourceRectUnchecked, Color.White * (GreyedOut ? 0.33f : 1f), 0.0f, Vector2.Zero, 4f, SpriteEffects.None, 0.4f);
+            base.Draw(b, slotX, slotY);
             Utility.drawTextWithShadow(b, Label, Game1.dialogueFont, new Vector2(slotX + Bounds.X + Bounds.Width + 8, slotY + Bounds.Y), GreyedOut ? Game1.textColor * 0.33f : Game1.textColor, 1f, 0.1f);
         }
     }

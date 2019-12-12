@@ -24,7 +24,7 @@ namespace ModSettingsTab.Framework.Components
             // text field value
             var str = config[name].ToString();
             // if the string is short
-            if (str.Length < 8) Bounds.Width /= 2;
+            if (str.Length < 12) Bounds.Width = Bounds.Width / 2 - 64;
 
             _textBox = new TextBox(name, config, TextBoxTexture, Game1.smallFont, Game1.textColor)
             {
@@ -45,8 +45,9 @@ namespace ModSettingsTab.Framework.Components
 
         public override void Draw(SpriteBatch b, int slotX, int slotY)
         {
+            base.Draw(b, slotX, slotY);
             Utility.drawTextWithShadow(b, Label, Game1.dialogueFont,
-                new Vector2(slotX + Bounds.X + _textBox.Width + 8, slotY + Bounds.Y + 8),
+                new Vector2(slotX + Bounds.X + 8 + _textBox.Width, slotY + Bounds.Y + 8),
                 GreyedOut ? Game1.textColor * 0.33f : Game1.textColor, 1f, 0.1f);
             _textBox.X = slotX + Bounds.X;
             _textBox.Y = slotY + Bounds.Y;

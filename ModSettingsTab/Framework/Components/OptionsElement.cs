@@ -1,8 +1,10 @@
+using System;
 using System.Text.RegularExpressions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using ModSettingsTab.Framework.Interfaces;
+using StardewValley;
 
 namespace ModSettingsTab.Framework.Components
 {
@@ -15,6 +17,10 @@ namespace ModSettingsTab.Framework.Components
         /// active zone
         /// </summary>
         public Rectangle Bounds;
+        
+        public static Rectangle InfoIcon = new Rectangle(240,192,16,16); 
+        private Rectangle _infoIconBounds;
+        
 
         private string _hoverText;
         private string _hoverTitle;
@@ -36,6 +42,8 @@ namespace ModSettingsTab.Framework.Components
         /// Name by default
         /// </remarks>
         public string Label { get; set; }
+        
+        public bool ShowTooltip { get; set; }
 
 
         public string HoverTitle
@@ -53,7 +61,7 @@ namespace ModSettingsTab.Framework.Components
         {
             get => _hoverText;
             set => _hoverText = !string.IsNullOrEmpty(value) 
-                ? Regex.Replace(value.Replace('\n', ' '), @"(.{0,50}[, .!:;])", "$1\n") 
+                ? Regex.Replace(value.Replace('\n', ' '), @"(.{0,50}[, .!:;，])", "$1\n") 
                 : "";
         }
 
@@ -66,6 +74,22 @@ namespace ModSettingsTab.Framework.Components
         /// inactive state
         /// </summary>
         public bool GreyedOut { get; set; }
+
+        public Rectangle InfoIconBounds
+        {
+            get => _infoIconBounds;
+            set
+            {
+                if (value.IsEmpty)
+                {
+                    _infoIconBounds = new Rectangle(Bounds.X + Bounds.Width + (int) Math.Ceiling(Game1.dialogueFont.MeasureString(Label).X) + 12,
+                        Bounds.Y + 8,32,32);
+                    return;
+                }
+                _infoIconBounds.X += value.X;
+                _infoIconBounds.Y += value.Y;
+            }
+        }
 
         protected OptionsElement(
             string name,
@@ -84,6 +108,7 @@ namespace ModSettingsTab.Framework.Components
             Label = !string.IsNullOrEmpty(label) ? label.Replace(".", " > ") : "";
             _hoverText = "";
             _hoverTitle = "";
+            InfoIconBounds = new Rectangle();
         }
 
         public virtual void ReceiveLeftClick(int x, int y)
@@ -96,7 +121,7 @@ namespace ModSettingsTab.Framework.Components
 
         public virtual bool PerformHoverAction(int x, int y)
         {
-            return false;
+            return ShowTooltip && InfoIconBounds.Contains(x, y);
         }
 
         public virtual void LeftClickReleased(int x, int y)
@@ -109,6 +134,9 @@ namespace ModSettingsTab.Framework.Components
 
         public virtual void Draw(SpriteBatch b, int slotX, int slotY)
         {
+            if (ShowTooltip)
+                b.Draw(Game1.mouseCursors, new Rectangle(slotX + InfoIconBounds.X , slotY + InfoIconBounds.Y, InfoIconBounds.Width, InfoIconBounds.Height), InfoIcon,
+                    Color.White);
         }
     }
 }
