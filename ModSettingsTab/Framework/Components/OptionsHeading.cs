@@ -52,11 +52,7 @@ namespace ModSettingsTab.Framework.Components
                 Color.White);
             SpriteText.drawString(b, Label, slotX + 32 + 44 + 64, slotY + Bounds.Y + 12, 999, Bounds.Width - 64 - 48,
                 72, 1f, 0.1f);
-            b.End();
-            b.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied, SamplerState.PointClamp,
-                null, null, null, new Matrix?());
-            b.Draw(Game1.mouseCursors, new Rectangle(slotX + _boundsStar.X, slotY + _boundsStar.Y, _boundsStar.Width, _boundsStar.Height), Favorite ? Star1 : Star0,
-                Color.White);
+            b.Draw(Game1.mouseCursors,new Vector2(slotX + _boundsStar.X,slotY + _boundsStar.Y),Favorite ? Star1 : Star0,Color.White,0f,Vector2.Zero, 2f,SpriteEffects.None,0.1f);
             
         }
     }
