@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ModSettingsTab.Framework.Interfaces;
 using ModSettingsTab.Menu;
 using StardewValley;
-using StardewValley.Menus;
-using OptionsPage = ModSettingsTab.Menu.OptionsPage;
 
 namespace ModSettingsTab.Framework.Components
 {

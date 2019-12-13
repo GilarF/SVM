@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using ModSettingsTab.Framework.Components;
-
 namespace ModSettingsTab.Menu
 {
     public class FavoriteOptionsModPage : BaseOptionsModPage

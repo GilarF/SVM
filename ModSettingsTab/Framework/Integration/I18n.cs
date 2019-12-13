@@ -1,4 +1,3 @@
-using System;
 using StardewValley;
 
 namespace ModSettingsTab.Framework.Integration

@@ -46,7 +46,7 @@ namespace ModSettingsTab.Framework.Components
         public override void Draw(SpriteBatch b, int slotX, int slotY)
         {
             base.Draw(b, slotX, slotY);
-            Utility.drawTextWithShadow(b, Label, Game1.dialogueFont,
+            Utility.drawTextWithShadow(b, Label, Game1.smallFont,
                 new Vector2(slotX + Bounds.X + 8 + _textBox.Width, slotY + Bounds.Y + 8),
                 GreyedOut ? Game1.textColor * 0.33f : Game1.textColor, 1f, 0.1f);
             _textBox.X = slotX + Bounds.X;

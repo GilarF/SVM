@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using ModSettingsTab.Framework.Components;
 using ModSettingsTab.Menu;
 using Newtonsoft.Json.Linq;

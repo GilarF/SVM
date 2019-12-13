@@ -26,7 +26,6 @@ namespace ModSettingsTab
         private readonly JObject _config;
 
         private readonly Timer _saveTimer;
-        private readonly string _savePath;
 
 
         public override string ToString()
@@ -38,7 +37,6 @@ namespace ModSettingsTab
 
         public StaticConfig(string path, JObject config)
         {
-            _savePath = path;
             _config = config;
 
             _saveTimer = new Timer(3000.0)
@@ -50,7 +48,7 @@ namespace ModSettingsTab
             {
                 try
                 {
-                    using (var writer = File.CreateText(_savePath))
+                    using (var writer = File.CreateText(path))
                         await writer.WriteAsync(ToString());
                 }
                 catch (Exception ex)

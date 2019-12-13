@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using StardewModdingAPI;
 using StardewValley;
 using StardewValley.BellsAndWhistles;
-using StardewValley.Menus;
 
 namespace ModSettingsTab.Framework.Components
 {

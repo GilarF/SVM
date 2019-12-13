@@ -1,8 +1,5 @@
-using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Text.RegularExpressions;
 using ModSettingsTab.Framework.Components;
 using ModSettingsTab.Menu;
@@ -98,7 +95,6 @@ namespace ModSettingsTab.Framework.Integration
                 switch (opt.Type)
                 {
                     case JTokenType.String:
-                        var str = opt.ToString().Trim();
                         Options.Add(
                             new OptionsTextBox(name, uniqueId, name, _staticConfig, BaseOptionsModPage.SlotSize));
                         break;
