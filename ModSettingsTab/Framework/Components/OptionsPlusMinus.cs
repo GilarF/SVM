@@ -30,8 +30,8 @@ namespace ModSettingsTab.Framework.Components
             _options = plusMinusOptions;
             _selectedOption = plusMinusOptions.FindIndex(s => s == config[name].ToString());
             var bWidth = Bounds.X + _options
-                            .Select(displayOption => (int) Game1.dialogueFont.MeasureString(displayOption).X + 28)
-                            .Concat(new[] {(int) Game1.dialogueFont.MeasureString(_options[0]).X + 28})
+                            .Select(displayOption => (int) Game1.smallFont.MeasureString(displayOption).X + 28)
+                            .Concat(new[] {(int) Game1.smallFont.MeasureString(_options[0]).X + 28})
                             .Max();
             Bounds = new Rectangle(Bounds.X, Bounds.Y,56 + bWidth, Bounds.Height);
             _minusButton = new Rectangle(Bounds.X, Bounds.Y, 28, 32);
@@ -91,7 +91,7 @@ namespace ModSettingsTab.Framework.Components
                 MinusButtonSource,
                 Color.White * (GreyedOut ? 0.33f : 1f) * (_selectedOption == 0 ? 0.5f : 1f), 0.0f, Vector2.Zero, 4f,
                 SpriteEffects.None, 0.4f);
-            b.DrawString(Game1.dialogueFont,
+            b.DrawString(Game1.smallFont,
                 _selectedOption >= _options.Count || _selectedOption == -1 ? "" : _options[_selectedOption],
                 new Vector2(slotX + _minusButton.X + _minusButton.Width + 4,
                     slotY + _minusButton.Y), GreyedOut ? Game1.textColor * 0.33f : Game1.textColor);
@@ -113,10 +113,6 @@ namespace ModSettingsTab.Framework.Components
                     _snapZoomPlus = false;
                 }
             }
-
-            Utility.drawTextWithShadow(b, Label, Game1.dialogueFont,
-                new Vector2(slotX + Bounds.X + Bounds.Width + 8, slotY + Bounds.Y),
-                GreyedOut ? Game1.textColor * 0.33f : Game1.textColor, 1f, 0.1f);
         }
     }
 }

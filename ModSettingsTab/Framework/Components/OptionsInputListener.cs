@@ -14,6 +14,18 @@ namespace ModSettingsTab.Framework.Components
         private string _listenerMessage;
         private bool _listening;
         private Rectangle _buttonBounds;
+        private readonly string _label;
+
+
+        private SButton Button
+        {
+            get => _button;
+            set
+            {
+                _button = value;
+                Label = $"{_label} : {_button}";
+            }
+        }
 
         public OptionsInputListener(
             string name,
@@ -24,8 +36,10 @@ namespace ModSettingsTab.Framework.Components
             SButton button = SButton.None)
             : base(name, modId, label, config, 32, slotSize.Y / 2, slotSize.X - 1, 44)
         {
-            _button = button;
+            _label = label;
+            Button = button;
             _buttonBounds = new Rectangle(Bounds.Width - 112, Bounds.Y - 12, 84, Bounds.Height);
+            Offset.X = -Bounds.Width - 8;
         }
 
         public override void ReceiveLeftClick(int x, int y)
@@ -54,10 +68,10 @@ namespace ModSettingsTab.Framework.Components
                     OptionsInputOnButtonPressed;
                 GameMenu.forcePreventClose = false;
             }
-            else if (!e.Button.Equals(_button))
+            else if (!e.Button.Equals(Button))
             {
                 Config[Name] = e.Button.ToString();
-                _button = e.Button;
+                Button = e.Button;
                 Game1.playSound("coin");
                 _listening = false;
                 ModEntry.Helper.Events.Input.ButtonPressed -= OptionsInputOnButtonPressed;
@@ -69,11 +83,7 @@ namespace ModSettingsTab.Framework.Components
 
         public override void Draw(SpriteBatch b, int slotX, int slotY)
         {
-            var text = $"{Label} : {_button}";
-            var dialogueFont = Game1.dialogueFont;
-            var position = new Vector2(Bounds.X + slotX, Bounds.Y + slotY);
-            var color = GreyedOut ? Game1.textColor * 0.33f : Game1.textColor;
-            Utility.drawTextWithShadow(b, text, dialogueFont, position, color, 1f, 0.15f);
+            base.Draw(b, slotX, slotY);
             Utility.drawWithShadow(b, Game1.mouseCursors,
                 new Vector2(_buttonBounds.X + slotX, _buttonBounds.Y + slotY),
                 SetButtonSource, Color.White, 0.0f, Vector2.Zero, 4f, false, 0.15f);

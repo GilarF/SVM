@@ -36,7 +36,6 @@ namespace ModSettingsTab.Framework.Components
         {
             b.Draw(Game1.mouseCursors, new Vector2(slotX + Bounds.X, slotY + Bounds.Y), _isChecked ? SourceRectChecked : SourceRectUnchecked, Color.White * (GreyedOut ? 0.33f : 1f), 0.0f, Vector2.Zero, 4f, SpriteEffects.None, 0.4f);
             base.Draw(b, slotX, slotY);
-            Utility.drawTextWithShadow(b, Label, Game1.dialogueFont, new Vector2(slotX + Bounds.X + Bounds.Width + 8, slotY + Bounds.Y), GreyedOut ? Game1.textColor * 0.33f : Game1.textColor, 1f, 0.1f);
         }
     }
 }

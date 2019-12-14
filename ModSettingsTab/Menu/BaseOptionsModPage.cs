@@ -337,8 +337,7 @@ namespace ModSettingsTab.Menu
             if (_hoverTitle.Equals(""))
                 drawHoverText(b, _hoverText, Game1.smallFont);
             else
-                drawToolTip(b,_hoverText,_hoverTitle,null);
-            
+                drawHoverText(b, _hoverText, Game1.smallFont, boldTitleText: _hoverTitle);
         }
     }
 }

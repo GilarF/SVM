@@ -35,6 +35,7 @@ namespace ModSettingsTab.Framework.Components
             _selectedOption = dropDownOptions.FindIndex(s => s == config[name].ToString());
             _dropDownBounds = new Rectangle(Bounds.X, Bounds.Y, Bounds.Width - 48,
                 Bounds.Height * _dropDownOptions.Count);
+            Offset.Y = 8;
         }
 
         public override void LeftClickHeld(int x, int y)
@@ -108,10 +109,6 @@ namespace ModSettingsTab.Framework.Components
             _recentSlotY = slotY;
             var num = GreyedOut ? 0.33f : 1f;
             base.Draw(b, slotX, slotY);
-            Utility.drawTextWithShadow(b, Label, Game1.dialogueFont,
-                new Vector2(slotX + Bounds.X + Bounds.Width + 8,
-                    slotY + Bounds.Y + 8), GreyedOut ? Game1.textColor * 0.33f : Game1.textColor,
-                1f, 0.1f);
             if (_clicked)
             {
                 IClickableMenu.drawTextureBox(b, Game1.mouseCursors, DropDownBgSource,

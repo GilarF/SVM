@@ -17,10 +17,10 @@ namespace ModSettingsTab.Framework.Components
         /// active zone
         /// </summary>
         public Rectangle Bounds;
-        
-        public static Rectangle InfoIcon = new Rectangle(240,192,16,16); 
+
+        public static Rectangle InfoIcon = new Rectangle(240, 192, 16, 16);
         private Rectangle _infoIconBounds;
-        
+
 
         private string _hoverText;
         private string _hoverTitle;
@@ -29,6 +29,8 @@ namespace ModSettingsTab.Framework.Components
         /// element name (JToken path)
         /// </summary>
         public string Name { get; set; }
+
+        public Point Offset = new Point();
 
         /// <summary>
         /// mod UniqueId
@@ -42,7 +44,7 @@ namespace ModSettingsTab.Framework.Components
         /// Name by default
         /// </remarks>
         public string Label { get; set; }
-        
+
         public bool ShowTooltip { get; set; }
 
 
@@ -60,8 +62,8 @@ namespace ModSettingsTab.Framework.Components
         public string HoverText
         {
             get => _hoverText;
-            set => _hoverText = !string.IsNullOrEmpty(value) 
-                ? Regex.Replace(value.Replace('\n', ' '), @"(.{0,50}[, .!:;，])", "$1\n") 
+            set => _hoverText = !string.IsNullOrEmpty(value)
+                ? Regex.Replace(value.Replace('\n', ' '), @"(.{0,50}[, .!:;，])", "$1\n")
                 : "";
         }
 
@@ -82,10 +84,12 @@ namespace ModSettingsTab.Framework.Components
             {
                 if (value.IsEmpty)
                 {
-                    _infoIconBounds = new Rectangle(Bounds.X + Bounds.Width + (int) Math.Ceiling(Game1.dialogueFont.MeasureString(Label).X) + 12,
-                        Bounds.Y + 8,32,32);
+                    _infoIconBounds = new Rectangle(
+                        Bounds.X + Bounds.Width + (int) Math.Ceiling(Game1.smallFont.MeasureString(Label).X) + 12,
+                        Bounds.Y + 8, 32, 32);
                     return;
                 }
+
                 _infoIconBounds.X += value.X;
                 _infoIconBounds.Y += value.Y;
             }
@@ -134,8 +138,13 @@ namespace ModSettingsTab.Framework.Components
 
         public virtual void Draw(SpriteBatch b, int slotX, int slotY)
         {
+            Utility.drawTextWithShadow(b, Label, Game1.smallFont,
+                new Vector2(slotX + Bounds.X + Bounds.Width + 8 + Offset.X, slotY + Bounds.Y + Offset.Y),
+                GreyedOut ? Game1.textColor * 0.33f : Game1.textColor, 1f, 0.1f);
             if (ShowTooltip)
-                b.Draw(Game1.mouseCursors, new Rectangle(slotX + InfoIconBounds.X , slotY + InfoIconBounds.Y, InfoIconBounds.Width, InfoIconBounds.Height), InfoIcon,
+                b.Draw(Game1.mouseCursors,
+                    new Rectangle(slotX + InfoIconBounds.X, slotY + InfoIconBounds.Y, InfoIconBounds.Width,
+                        InfoIconBounds.Height), InfoIcon,
                     Color.White);
         }
     }
