@@ -52,6 +52,7 @@
         <Compile Include="Framework\Components\OptionsHeading.cs" />
         <Compile Include="Framework\Components\OptionsInputListener.cs" />
         <Compile Include="Framework\Components\OptionsPlusMinus.cs" />
+        <Compile Include="Framework\Components\OptionsSlider.cs" />
         <Compile Include="Framework\Components\OptionsTextBox.cs" />
         <Compile Include="Framework\Components\SmapiHeading.cs" />
         <Compile Include="Framework\Components\TextBox.cs" />
