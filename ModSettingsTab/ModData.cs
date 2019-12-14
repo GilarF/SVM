@@ -12,11 +12,6 @@ namespace ModSettingsTab
 {
     public static class ModData
     {
-        /// <summary>
-        /// selected text field to reset and hold focus
-        /// </summary>
-        public static TextBox CurrentTextBox { get; set; }
-
         public const int Offset = 192;
 
         /// <summary>
