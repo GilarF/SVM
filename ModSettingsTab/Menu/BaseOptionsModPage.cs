@@ -8,6 +8,7 @@ using ModSettingsTab.Framework.Components;
 using StardewValley;
 using StardewValley.Menus;
 using OptionsElement = ModSettingsTab.Framework.Components.OptionsElement;
+using TextBox = ModSettingsTab.Framework.Components.TextBox;
 
 namespace ModSettingsTab.Menu
 {
@@ -29,7 +30,7 @@ namespace ModSettingsTab.Menu
         private bool _scrolling;
         private Rectangle _scrollBarRunner;
         public static Point SlotSize;
-        private readonly FilterTextBox _filterTextBox;
+        protected FilterTextBox FilterTextBox;
 
         static BaseOptionsModPage()
         {
@@ -62,8 +63,7 @@ namespace ModSettingsTab.Menu
                         upNeighborID = index > 0 ? index - 1 : -7777,
                         fullyImmutable = true
                     });
-            _filterTextBox =
-                new FilterTextBox(xPositionOnScreen + width / 2 + 100, yPositionOnScreen + 28, this);
+            
         }
 
         public override void snapToDefaultClickableComponent()
@@ -212,7 +212,7 @@ namespace ModSettingsTab.Menu
             if (GameMenu.forcePreventClose)
                 return;
             base.releaseLeftClick(x, y);
-            _filterTextBox.Update();
+            FilterTextBox.Update();
             if (_optionsSlotHeld != -1 && _optionsSlotHeld + _currentItemIndex < Options.Count)
                 Options[_currentItemIndex + _optionsSlotHeld].LeftClickReleased(
                     x - _optionSlots[_optionsSlotHeld].bounds.X,
@@ -226,7 +226,7 @@ namespace ModSettingsTab.Menu
             _downArrow.scale = _downArrow.baseScale;
             ++_currentItemIndex;
             SetScrollBarToCurrentIndex();
-            ModData.CurrentTextBox?.Update();
+            TextBox.GlobalUpdate();
         }
 
         private void UpArrowPressed()
@@ -234,7 +234,7 @@ namespace ModSettingsTab.Menu
             _upArrow.scale = _upArrow.baseScale;
             --_currentItemIndex;
             SetScrollBarToCurrentIndex();
-            ModData.CurrentTextBox?.Update();
+            TextBox.GlobalUpdate();
         }
 
         public override void receiveLeftClick(int x, int y, bool playSound = true)
@@ -321,7 +321,7 @@ namespace ModSettingsTab.Menu
             if (!GameMenu.forcePreventClose)
             {
                 _upArrow.draw(b);
-                _filterTextBox.Draw(b);
+                FilterTextBox.Draw(b);
                 _downArrow.draw(b);
                 if (Options.Count > ItemsPerPage)
                 {

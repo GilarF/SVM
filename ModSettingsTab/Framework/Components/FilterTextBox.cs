@@ -1,142 +1,92 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Timers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ModSettingsTab.Menu;
-using StardewValley;
 
 namespace ModSettingsTab.Framework.Components
 {
-    public class FilterTextBox : StardewValley.Menus.TextBox
-  {
-    private static readonly Texture2D SearchBox = ModEntry.Helper.Content.Load<Texture2D>("assets/FilterTextBox.png");
-    private string _text = "";
-    private readonly BaseOptionsModPage _optionsModPage;
-    private readonly List<OptionsElement> _options;
-
-    public FilterTextBox(int x, int y, BaseOptionsModPage optionsModPage)
-      : base(SearchBox, null, Game1.smallFont, Game1.textColor)
+    public class FilterTextBox
     {
-      _optionsModPage = optionsModPage;
-      _options = optionsModPage.Options;
-      Width = 268;
-      X = x;
-      Y = y;
-    }
-
-    private void BackspacePressed(TextBox _)
-    {
-      if (Text.Length <= 0)
-        return;
-      Text = Text.Substring(0, Text.Length - 1);
-      SetFilter();
-      if (Game1.gameMode == 3)
-        return;
-      Game1.playSound("tinyWhip");
-    }
-
-    public new void Update()
-    {
-      Selected = new Rectangle(X, Y, Width, Height).Contains(new Point(Game1.getMouseX(), Game1.getMouseY()));
-    }
-
-    public override void RecieveTextInput(string text)
-    {
-      if (!Selected || -textLimit != -1 && Text.Length >= textLimit)
-        return;
-      Text += text;
-      SetFilter();
-    }
-
-    public override void RecieveCommandInput(char command)
-    {
-      if (!Selected || command != '\b' || Text.Length <= 0)
-        return;
-      Text = Text.Substring(0, Text.Length - 1);
-      SetFilter();
-      if (Game1.gameMode == 3)
-        return;
-      Game1.playSound("tinyWhip");
-    }
-
-    private new string Text
-    {
-      get => _text;
-      set
-      {
-        _text = value ?? "";
-        if (_text == "")
-          return;
-        _text = Program.sdk.FilterDirtyWords(value?.Where(ch => _font.Characters.Contains(ch)).Aggregate("", (current, ch) => current + ch));
-        if (!limitWidth || _font.MeasureString(_text).X <= (double) (Width - 112))
-          return;
-        Text = _text.Substring(0, _text.Length - 1);
-      }
-    }
-
-    private void SetFilter()
-    {
-      if (Text.Length < 1 || Text.Trim() == string.Empty)
-      {
-        _optionsModPage.Options = _options;
-        _optionsModPage.SetScrollBarToCurrentIndex();
-      }
-      else
-      {
-        if (_optionsModPage.Options.Count > 0)
+        public enum FilterType
         {
-          _optionsModPage.snapToDefaultClickableComponent();
-          _optionsModPage.SetScrollBarToCurrentIndex();
+            Mod,
+            Options
         }
-        //_optionsModPage.Options = _options.Where(o => OptionsPage.ModList[o.Mod].Manifest.Name.Trim().ToLower().Contains(Text.Trim().ToLower())).ToList();
-      }
-    }
 
-    public override void RecieveTextInput(char inputChar)
-    {
-      if (!Selected || textLimit != -1 && Text.Length >= textLimit)
-        return;
-      Text += inputChar.ToString();
-      SetFilter();
-    }
+        private static readonly Rectangle Sl = new Rectangle(0, 200, 14, 36);
+        private static readonly Rectangle Sc = new Rectangle(14, 200, 4, 36);
+        private static readonly Rectangle Sr = new Rectangle(18, 200, 42, 36);
+        private readonly TextBox _textBox;
 
-    private new bool Selected
-    {
-      get => base.Selected;
-      set
-      {
-        if (base.Selected == value)
-          return;
-        base.Selected = value;
-        if (base.Selected)
-          ModData.CurrentTextBox =  this;
-        else if (ModData.CurrentTextBox == this)
-          ModData.CurrentTextBox =  null;
-      }
-    }
+        private readonly Timer _filterSetTimer = new Timer(1000.0)
+        {
+            Enabled = false,
+            AutoReset = false
+        };
 
-    public override void Draw(SpriteBatch spriteBatch, bool drawShadow = true)
-    {
-      bool flag = DateTime.UtcNow.Millisecond % 1000 >= 500;
-      string text = Text;
-      if (_textBoxTexture != null)
-      {
-        spriteBatch.Draw(_textBoxTexture, new Rectangle(X, Y, 28, Height), new Rectangle(0, 0, 28, Height), Color.White);
-        spriteBatch.Draw(_textBoxTexture, new Rectangle(X + 28, Y, Width - 112, Height), new Rectangle(28, 0, 8, Height), Color.White);
-        spriteBatch.Draw(_textBoxTexture, new Rectangle(X + Width - 84, Y, 84, Height), new Rectangle(_textBoxTexture.Bounds.Width - 84, 0, 84, Height), Color.White);
-      }
-      else
-        Game1.drawDialogueBox(X - 32, Y - 112 + 10, Width + 80, Height, false, true, null, false, false);
-      Vector2 vector2;
-      for (vector2 = _font.MeasureString(text); (double) vector2.X > (double) Width - 112.0; vector2 = _font.MeasureString(text))
-        text = text.Substring(1);
-      if (flag && Selected)
-        Utility.drawTextWithShadow(spriteBatch, "|", _font, new Vector2(X + 30 + (int) vector2.X + 2, Y + 18), Game1.textColor);
-      if (drawShadow)
-        Utility.drawTextWithShadow(spriteBatch, text, _font, new Vector2(X + 30, Y + 21), Game1.textColor);
-      else
-        spriteBatch.DrawString(_font, text, new Vector2(X + 30, Y + 21), Game1.textColor, 0.0f, Vector2.Zero, 1f, SpriteEffects.None, 0.99f);
+        public FilterTextBox(BaseOptionsModPage optionsModPage, FilterType filterType, int x, int y)
+        {
+            var options = optionsModPage.Options;
+            _filterSetTimer.Elapsed += (t, e) =>
+            {
+                var searchText = _textBox.Text.Trim().ToLower();
+                if (searchText.Length < 1 || searchText == string.Empty)
+                {
+                    optionsModPage.Options = options;
+                    optionsModPage.SetScrollBarToCurrentIndex();
+                }
+                else
+                {
+                    if (optionsModPage.Options.Count > 0)
+                    {
+                        optionsModPage.snapToDefaultClickableComponent();
+                        optionsModPage.SetScrollBarToCurrentIndex();
+                    }
+
+                    switch (filterType)
+                    {
+                        case FilterType.Mod:
+                            optionsModPage.Options =
+                                options.Where(o => ModData.ModList[o.ModId].Manifest.Name
+                                        .Trim().ToLower().Contains(searchText))
+                                    .ToList();
+                            break;
+                        case FilterType.Options:
+                            optionsModPage.Options = options.Where(o =>
+                                o.Label.Trim().ToLower().Contains(searchText)).ToList();
+                            break;
+                    }
+                }
+            };
+            _textBox = new TextBox(_ =>
+            {
+                _filterSetTimer.Stop();
+                _filterSetTimer.Start();
+            })
+            {
+                X = x,
+                Y = y,
+                TitleText = "",
+                Width = 192,
+                Height = 36 * 2,
+                Text = ""
+            };
+        }
+
+        public void Update() => _textBox.Update();
+
+        public void Draw(SpriteBatch b, bool drawShadow = true)
+        {
+            b.Draw(ModData.Tabs, new Rectangle(_textBox.X - 12, _textBox.Y - 12, Sl.Width * 2, Sl.Height * 2), Sl,
+                Color.White);
+            b.Draw(ModData.Tabs,
+                new Rectangle(_textBox.X - 12 + Sl.Width * 2, _textBox.Y - 12, _textBox.Width, Sc.Height * 2), Sc,
+                Color.White);
+            b.Draw(ModData.Tabs,
+                new Rectangle(_textBox.X - 12 + Sl.Width * 2 + _textBox.Width, _textBox.Y - 12, Sr.Width * 2,
+                    Sr.Height * 2), Sr, Color.White);
+            _textBox.Draw(b);
+        }
     }
-  }
 }
