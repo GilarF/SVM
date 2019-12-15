@@ -117,8 +117,30 @@ namespace ModSettingsTab
                         .ForEach(p => ParseProperties(p.Value));
                     break;
                 case JTokenType.Array:
-                    obj.Children().ToList().ForEach(ParseProperties);
+                {
+                    if (!obj.Children().Any())
+                    {
+                        _properties.Add(obj.Path, obj);
+                        break;
+                    }
+
+                    switch (obj.Children().First().Type)
+                    {
+                        case JTokenType.Object:
+                        case JTokenType.Array:
+                        case JTokenType.Boolean:
+                            obj.Children().ToList().ForEach(ParseProperties);
+                            break;
+
+                        case JTokenType.String:
+                        case JTokenType.Integer:
+                        case JTokenType.Float:
+                            _properties.Add(obj.Path, obj);
+                            break;
+                    }
+
                     break;
+                }
                 case JTokenType.Integer:
                 case JTokenType.Float:
                 case JTokenType.String:
