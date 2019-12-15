@@ -284,6 +284,14 @@ namespace ModSettingsTab.Menu
             base.receiveKeyPress(key);
         }
 
+        public void SetScrollBarToCurrentIndex()
+        {
+            if (_currentTab < _sideTabs.Count)
+                ((BaseOptionsModPage)_pagesCollections[_currentTab]).SetScrollBarToCurrentIndex();
+            else
+                ((BaseOptionsModPage)_favoritePagesCollections[_currentTab - _sideTabs.Count]).SetScrollBarToCurrentIndex();
+        }
+
         public override void draw(SpriteBatch b)
         {
             upperRightCloseButton.draw(b);
