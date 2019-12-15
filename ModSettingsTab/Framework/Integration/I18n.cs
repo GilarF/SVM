@@ -11,6 +11,7 @@ namespace ModSettingsTab.Framework.Integration
         public string hu { get; set; } = null;
         public string it { get; set; } = null;
         public string ja { get; set; } = null;
+        public string th { get; set; } = null;
         public string ko { get; set; } = null;
         public string pt { get; set; } = null;
         public string ru { get; set; } = null;
@@ -38,7 +39,7 @@ namespace ModSettingsTab.Framework.Integration
                     case LocalizedContentManager.LanguageCode.de:
                         return de;
                     case LocalizedContentManager.LanguageCode.th:
-                        return zh;
+                        return th;
                     case LocalizedContentManager.LanguageCode.fr:
                         return fr;
                     case LocalizedContentManager.LanguageCode.ko:
