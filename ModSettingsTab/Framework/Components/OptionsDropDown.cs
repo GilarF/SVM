@@ -114,7 +114,7 @@ namespace ModSettingsTab.Framework.Components
                 IClickableMenu.drawTextureBox(b, Game1.mouseCursors, DropDownBgSource,
                     slotX + _dropDownBounds.X, slotY + _dropDownBounds.Y, _dropDownBounds.Width,
                     _dropDownBounds.Height, Color.White * num, 4f, false);
-                for (var index = 0; index < _dropDownOptions.Count; ++index)
+                for (var index = 0; index < _dropDownOptions.Count && index< 7; ++index)
                 {
                     if (index == _selectedOption)
                         b.Draw(Game1.staminaRect,

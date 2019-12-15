@@ -33,7 +33,7 @@ namespace ModSettingsTab.Framework.Components
                             .Select(displayOption => (int) Game1.smallFont.MeasureString(displayOption).X + 28)
                             .Concat(new[] {(int) Game1.smallFont.MeasureString(_options[0]).X + 28})
                             .Max();
-            Bounds = new Rectangle(Bounds.X, Bounds.Y,56 + bWidth, Bounds.Height);
+            Bounds.Width += bWidth;
             _minusButton = new Rectangle(Bounds.X, Bounds.Y, 28, 32);
             _plusButton = new Rectangle(Bounds.Right - 32, Bounds.Y, 28, 32);
             InfoIconBounds = new Rectangle(bWidth,-8,0,0);
