@@ -37,7 +37,7 @@ namespace ModSettingsTab.Framework.Integration
         {
             const string uniqueId = "Pathoschild.SMAPI";
             var lang = LocalizedContentManager.CurrentLanguageCode;
-            var nI9NPath = Path.Combine(ModEntry.Helper.DirectoryPath, "data/I9N/SmapiIntegrations.json");
+            var nI9NPath = Path.Combine(ModEntry.Helper.DirectoryPath, "data/I9N/SmapiIntegration.json");
             ModIntegrationSettings nI9N = null;
             try
             {
