@@ -35,35 +35,37 @@ namespace ModSettingsTab.Framework.Components
             : base(name, modId, label, config, 32, slotSize.Y / 2 - 10, 48, 44)
         {
             _dropDownOptions = Config[Name].Children().Select(t => t.ToString()).ToList();
-            
+
             _numbersOnly = Config[Name].Children().Any() && Config[Name].Children().First().Type == JTokenType.Integer;
 
             _minusButtonBounds = new Rectangle(Bounds.X, Bounds.Y, MinusButtonSource.Width * 4, Bounds.Height);
 
             // dropdown bounds
             var ddWidth = _dropDownOptions
-                .Select(option => (int) Game1.smallFont.MeasureString(option).X + 28)
-                .Concat(new[] {(int) Game1.smallFont.MeasureString("Windowed Borderless Mod").X})
-                .Max() + 9 * 4;
+                              .Select(option => (int) Game1.smallFont.MeasureString(option).X + 28)
+                              .Concat(new[] {(int) Game1.smallFont.MeasureString("Windowed Borderless Mod").X})
+                              .Max() + 9 * 4;
 
             _dropDownBounds = new Rectangle(Bounds.X + _minusButtonBounds.Width - 4, Bounds.Y,
-                ddWidth, Bounds.Height * (_dropDownOptions.Count > 7 ? 7 
-                : _dropDownOptions.Count < 1 ? 1 :  _dropDownOptions.Count));
+                ddWidth, Bounds.Height * (_dropDownOptions.Count > 7 ? 7
+                             : _dropDownOptions.Count < 1 ? 1 : _dropDownOptions.Count));
 
             _plusButtonBounds = new Rectangle(Bounds.X - 8 + _minusButtonBounds.Width + _dropDownBounds.Width,
                 Bounds.Y, 10 * 4, Bounds.Height);
 
             Bounds.Width = _minusButtonBounds.Width + _dropDownBounds.Width + _plusButtonBounds.Width;
-            
+
             Offset.Y = 8;
-            InfoIconBounds = new Rectangle(Bounds.Width-40,0,0,0);
+            InfoIconBounds = new Rectangle(Bounds.Width - 40, 0, 0, 0);
         }
 
         public override void LeftClickHeld(int x, int y)
         {
             if (GreyedOut)
-                return; 
+                return;
             base.LeftClickHeld(x, y);
+            if (_minusButtonBounds.Contains(x, y)) return;
+            _del = false;
             _clicked = true;
             _dropDownBounds.Y = Math.Min(_dropDownBounds.Y,
                 Game1.viewport.Height - _dropDownBounds.Height - _recentSlotY);
@@ -79,8 +81,9 @@ namespace ModSettingsTab.Framework.Components
             Game1.activeClickableMenu = _gm;
             _gm = null;
             _clicked = false;
-            
-            (((GameMenu) Game1.activeClickableMenu).pages[GameMenu.optionsTab] as OptionsPage)?.SetScrollBarToCurrentIndex();
+
+            (((GameMenu) Game1.activeClickableMenu).pages[GameMenu.optionsTab] as OptionsPage)
+                ?.SetScrollBarToCurrentIndex();
             if (string.IsNullOrEmpty(s)) return;
             _dropDownOptions.Add(s);
             _selectedOption = _dropDownOptions.Count - 1;
@@ -93,9 +96,11 @@ namespace ModSettingsTab.Framework.Components
                 return;
             if (_minusButtonBounds.Contains(x, y))
             {
+                if (_dropDownOptions.Count < 1) return;
                 _del = true;
                 return;
             }
+
             if (_dropDownBounds.Contains(x, y))
             {
                 LeftClickHeld(x, y);
@@ -112,24 +117,24 @@ namespace ModSettingsTab.Framework.Components
 
         public override void LeftClickReleased(int x, int y)
         {
-            
             if (GreyedOut || _dropDownOptions.Count <= 0)
                 return;
-            
+
             _clicked = false;
             if (!_minusButtonBounds.Contains(x, y) || !_del) return;
             _dropDownOptions.RemoveAt(_selectedOption);
             _selectedOption = _dropDownOptions.Count - 1;
             Save();
             _del = false;
-
         }
+
         private void Save()
         {
-            _dropDownBounds.Height = _dropDownOptions.Count > 7 ? Bounds.Height * 7 
+            _dropDownBounds.Height = _dropDownOptions.Count > 7 ? Bounds.Height * 7
                 : _dropDownOptions.Count < 1 ? Bounds.Height : Bounds.Height * _dropDownOptions.Count;
             Config[Name] = new JArray(_dropDownOptions);
         }
+
         public override bool PerformHoverAction(int x, int y)
         {
             return ShowTooltip && InfoIconBounds.Contains(x, y);
@@ -139,7 +144,7 @@ namespace ModSettingsTab.Framework.Components
         public override void Draw(SpriteBatch b, int slotX, int slotY)
         {
             _recentSlotY = slotY;
-            base.Draw(b, slotX, slotY);            
+            base.Draw(b, slotX, slotY);
             var num = GreyedOut ? 0.33f : 1f;
             //draw minus
             b.Draw(ModData.Tabs,
@@ -152,14 +157,14 @@ namespace ModSettingsTab.Framework.Components
             if (_clicked)
             {
                 Helper.DrawTextureBox(b, Game1.mouseCursors, DropDownBgSource,
-                    slotX + _dropDownBounds.X, slotY + Bounds.Y, _dropDownBounds.Width-9*4,
-                    _dropDownBounds.Height, Color.White * num, 4f, false,0.7f);
-                for (var index = 0; index < _dropDownOptions.Count&& index< 7; ++index)
+                    slotX + _dropDownBounds.X, slotY + Bounds.Y, _dropDownBounds.Width - 9 * 4,
+                    _dropDownBounds.Height, Color.White * num, 4f, false, 0.7f);
+                for (var index = 0; index < _dropDownOptions.Count && index < 7; ++index)
                 {
                     if (index == _selectedOption)
                         b.Draw(Game1.staminaRect,
                             new Rectangle(slotX + _dropDownBounds.X,
-                                slotY + Bounds.Y + index * Bounds.Height, _dropDownBounds.Width-9*4,
+                                slotY + Bounds.Y + index * Bounds.Height, _dropDownBounds.Width - 9 * 4,
                                 Bounds.Height), new Rectangle(0, 0, 1, 1), Color.Wheat, 0.0f,
                             Vector2.Zero, SpriteEffects.None, 0.71f);
                     b.DrawString(Game1.smallFont, _dropDownOptions[index],
@@ -168,11 +173,23 @@ namespace ModSettingsTab.Framework.Components
                         Game1.textColor * num, 0.0f, Vector2.Zero, 1f, SpriteEffects.None, 0.72f);
                 }
             }
+            else if (_del)
+            {
+                b.Draw(Game1.staminaRect,
+                    new Rectangle(slotX + _dropDownBounds.X + 4,
+                        slotY + Bounds.Y , _dropDownBounds.Width - 9 * 4-8,
+                        Bounds.Height), new Rectangle(0, 0, 1, 1), Color.Brown, 0.0f,
+                    Vector2.Zero, SpriteEffects.None, 0.71f);
+                b.DrawString(Game1.smallFont, _dropDownOptions[_selectedOption],
+                    new Vector2(slotX + _dropDownBounds.X + 8,
+                        slotY + Bounds.Y + 8),
+                    Game1.textColor * num, 0.0f, Vector2.Zero, 1f, SpriteEffects.None, 0.72f);
+            }
             else
             {
                 Helper.DrawTextureBox(b, Game1.mouseCursors, DropDownBgSource,
-                    slotX +_dropDownBounds.X, slotY +Bounds.Y, _dropDownBounds.Width-9*4, Bounds.Height,
-                    Color.White * num, 4f, false,0.68f);
+                    slotX + _dropDownBounds.X, slotY + Bounds.Y, _dropDownBounds.Width - 9 * 4, Bounds.Height,
+                    Color.White * num, 4f, false, 0.68f);
                 b.DrawString(Game1.smallFont,
                     _selectedOption >= _dropDownOptions.Count || _selectedOption < 0
                         ? ""
@@ -180,7 +197,6 @@ namespace ModSettingsTab.Framework.Components
                     new Vector2(slotX + Bounds.X + _minusButtonBounds.X + 8, slotY + Bounds.Y + 8),
                     Game1.textColor * num, 0.0f, Vector2.Zero, 1f, SpriteEffects.None, 0.691f);
             }
-            
 
             //draw plus
             b.Draw(ModData.Tabs,
