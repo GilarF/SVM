@@ -3,9 +3,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ModSettingsTab.Framework;
 using ModSettingsTab.Framework.Integration;
 using StardewModdingAPI;
-using StardewValley.Menus;
+using Mod = ModSettingsTab.Framework.Mod;
 using OptionsElement = ModSettingsTab.Framework.Components.OptionsElement;
 
 namespace ModSettingsTab
@@ -13,6 +14,8 @@ namespace ModSettingsTab
     public static class ModData
     {
         public const int Offset = 192;
+
+        public static bool NeedReload;
 
         /// <summary>
         /// collection of loaded mods, only those that have settings

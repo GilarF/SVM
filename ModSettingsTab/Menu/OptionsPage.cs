@@ -15,6 +15,7 @@ namespace ModSettingsTab.Menu
         private readonly List<ClickableTextureComponent> _favoriteSideTabs = new List<ClickableTextureComponent>();
         private readonly Dictionary<int, IClickableMenu> _pagesCollections = new Dictionary<int, IClickableMenu>();
         private readonly List<IClickableMenu> _favoritePagesCollections = new List<IClickableMenu>();
+        private readonly ClickableTextureComponent _reloadIndicator;
 
 
         private const int TabHeight = 64;
@@ -35,6 +36,16 @@ namespace ModSettingsTab.Menu
         {
             // move close button left
             upperRightCloseButton.bounds.X -= 42;
+            
+            _reloadIndicator = new ClickableTextureComponent(
+                "",
+                new Rectangle(xPositionOnScreen + width - ModData.Offset, yPositionOnScreen + height - 20, 44, 56),
+                "",
+                "Need reload",
+                Game1.mouseCursors,
+                new Rectangle(383, 493, 11, 14),
+                4f);
+
             // -------- standard options tab ---------
             var originalOptionsComponent = new ClickableTextureComponent("",
                 new Rectangle(
@@ -93,12 +104,12 @@ namespace ModSettingsTab.Menu
         }
 
         private void InitFavoriteTabs()
-        { 
+        {
             var fModCount = ModData.FavoriteMod.Count;
             if (fModCount == 0) return;
             _favoriteSideTabs.Clear();
             _favoritePagesCollections.Clear();
-            
+
             if (_currentTab > 1) ResetTab(1);
 
             for (int i = fModCount, c = 0; i > 0; i--, c++)
@@ -214,7 +225,7 @@ namespace ModSettingsTab.Menu
                 _favoriteSideTabs[index - _sideTabs.Count].bounds.X += WidthToMoveActiveTab;
             }
 
-            _currentTab = _savedTab= index;
+            _currentTab = _savedTab = index;
             Game1.playSound("smallSelect");
         }
 
@@ -234,11 +245,17 @@ namespace ModSettingsTab.Menu
             base.performHoverAction(x, y);
             _hoverText = "";
             _value = -1;
+            
 
             if (_currentTab < _sideTabs.Count)
                 _pagesCollections[_currentTab].performHoverAction(x, y);
             else
                 _favoritePagesCollections[_currentTab - _sideTabs.Count].performHoverAction(x, y);
+            if (_reloadIndicator.containsPoint(x, y))
+            {
+                _hoverText = _reloadIndicator.hoverText;
+                return;
+            }
 
             using (var enumerator = _sideTabs.Where(sideTab => sideTab.containsPoint(x, y)).GetEnumerator())
             {
@@ -287,9 +304,10 @@ namespace ModSettingsTab.Menu
         public void SetScrollBarToCurrentIndex()
         {
             if (_currentTab < _sideTabs.Count)
-                ((BaseOptionsModPage)_pagesCollections[_currentTab]).SetScrollBarToCurrentIndex();
+                ((BaseOptionsModPage) _pagesCollections[_currentTab]).SetScrollBarToCurrentIndex();
             else
-                ((BaseOptionsModPage)_favoritePagesCollections[_currentTab - _sideTabs.Count]).SetScrollBarToCurrentIndex();
+                ((BaseOptionsModPage) _favoritePagesCollections[_currentTab - _sideTabs.Count])
+                    .SetScrollBarToCurrentIndex();
         }
 
         public override void draw(SpriteBatch b)
@@ -299,6 +317,7 @@ namespace ModSettingsTab.Menu
                 sideTab.draw(b);
             foreach (var sideTab in _favoriteSideTabs)
                 sideTab.draw(b);
+            if (ModData.NeedReload) _reloadIndicator.draw(b);
             b.End();
             b.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied, SamplerState.PointClamp,
                 null, null, null, new Matrix?());
