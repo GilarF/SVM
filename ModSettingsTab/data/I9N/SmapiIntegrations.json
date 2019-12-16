@@ -11,7 +11,8 @@
     "pt": "O mod loader para Stardew Valley",
     "ru": "Мод загрузчик для Stardew Valley",
     "es": "El mod loader para Stardew Valley",
-    "tr": "Stardew Valley için mod yükleyici"
+    "tr": "Stardew Valley için mod yükleyici",
+    "th": "โหลดเดอร์ mod สำหรับ Stardew Valley"
   },
   "Config": [
     {
@@ -28,7 +29,8 @@
         "pt": "Se o SMAPI deve registrar mais informações sobre o contexto do jogo.",
         "ru": "Должен ли SMAPI регистрировать больше информации об игровом контексте.",
         "es": "Si SMAPI debería registrar más información sobre el contexto del juego.",
-        "tr": "SMAPI'nin oyun içeriği hakkında daha fazla bilgi kaydetmesi gerekip gerekmediği."
+        "tr": "SMAPI'nin oyun içeriği hakkında daha fazla bilgi kaydetmesi gerekip gerekmediği.",
+        "th": "SMAPI ควรบันทึกข้อมูลเพิ่มเติมเกี่ยวกับบริบทของเกมหรือไม่"
       },
       "Type": "CheckBox",
       "Label": "Verbose Logging"
@@ -47,7 +49,8 @@
         "pt": "Se o SMAPI deve verificar se há versões mais recentes do SMAPI e mods ao carregar o jogo. Se novas versões estiverem disponíveis, um alerta será mostrado no console. Isso não afeta o tempo de carregamento, mesmo que sua conexão esteja offline ou lenta, porque ocorre em segundo plano.",
         "ru": "Должен ли SMAPI проверять наличие новых версий SMAPI и модов при загрузке игры. Если доступны новые версии, в консоли отобразится предупреждение. Это не влияет на время загрузки, даже если ваше соединение отключено или работает медленно, потому что это происходит в фоновом режиме.",
         "es": "Si SMAPI debería buscar versiones más recientes de SMAPI y modificaciones cuando cargues el juego. Si hay nuevas versiones disponibles, se mostrará una alerta en la consola. Esto no afecta el tiempo de carga, incluso si su conexión está fuera de línea o lenta, porque sucede en segundo plano.",
-        "tr": "Oyunu yüklediğinizde SMAPI'nin daha yeni SMAPI sürümlerini ve modları kontrol edip etmemesi gerektiği. Yeni sürümler mevcutsa, konsolda bir uyarı gösterilecektir. Bu, bağlantınız çevrimdışı olsa da veya yavaş olsa bile yükleme süresini etkilemez, çünkü arka planda gerçekleşir."
+        "tr": "Oyunu yüklediğinizde SMAPI'nin daha yeni SMAPI sürümlerini ve modları kontrol edip etmemesi gerektiği. Yeni sürümler mevcutsa, konsolda bir uyarı gösterilecektir. Bu, bağlantınız çevrimdışı olsa da veya yavaş olsa bile yükleme süresini etkilemez, çünkü arka planda gerçekleşir.",
+        "th": "SMAPI ควรตรวจสอบ SMAPI และ mods รุ่นใหม่กว่าหรือไม่เมื่อคุณโหลดเกม\nหากมีเวอร์ชั่นใหม่การแจ้งเตือนจะปรากฏในคอนโซล\nสิ่งนี้จะไม่มีผลกับความเร็วในการโหลดแม้ว่าการเชื่อมต่อของคุณจะออฟไลน์หรือช้าเพราะมันเกิดขึ้นในพื้นหลัง"
       },
       "Type": "CheckBox",
       "Label": "Check for updates"
@@ -66,7 +69,8 @@
         "pt": "Se é necessário ativar recursos destinados a desenvolvedores de mods. Atualmente, isso faz apenas as mensagens no nível TRACE aparecerem no console.",
         "ru": "Нужно ли включать функции, предназначенные для разработчиков модов. В настоящее время это только заставляет сообщения уровня TRACE появляться в консоли.",
         "es": "Ya sea para habilitar funciones destinadas a desarrolladores de mods. Actualmente, esto solo hace que los mensajes de nivel TRACE aparezcan en la consola.",
-        "tr": "Mod geliştiricileri için tasarlanan özelliklerin etkinleştirilip etkinleştirilmeyeceği. Şu anda bu sadece TRACE seviyesindeki mesajların konsolda görünmesini sağlıyor."
+        "tr": "Mod geliştiricileri için tasarlanan özelliklerin etkinleştirilip etkinleştirilmeyeceği. Şu anda bu sadece TRACE seviyesindeki mesajların konsolda görünmesini sağlıyor.",
+        "th": "เปิดใช้งานฟีเจอร์สำหรับนักพัฒนา mod หรือไม่ ปัจจุบันนี้ทำให้ข้อความระดับการสืบค้นกลับปรากฏขึ้นในคอนโซลเท่านั้น"
       },
       "Type": "CheckBox",
       "Label": "Developer Mode"
@@ -74,7 +78,7 @@
     {
       "Name": "ParanoidWarnings",
       "Description": {
-        "en": "Whether to add a section to the 'mod issues' list for mods which directly use potentially sensitive .NET APIs like file or shell access. ",
+          "en": "Whether to add a section to the 'mod issues' list for mods which directly use potentially sensitive .NET APIs like file or shell access. ",
         "zh": "是否在直接使用潛在敏感的.NET API（例如文件或外殼程序訪問權限）的mod的“ mod問題”列表中添加部分。",
         "fr": "Indique s'il faut ajouter une section à la liste des «problèmes de mod» pour les mods qui utilisent directement des API .NET potentiellement sensibles comme l'accès aux fichiers ou au shell.",
         "de": "Gibt an, ob der Liste \"Mod Issues\" ein Abschnitt für Mods hinzugefügt werden soll, die direkt potenziell sensible .NET-APIs wie Datei- oder Shell-Zugriff verwenden.",
@@ -85,7 +89,8 @@
         "pt": "Se uma seção será adicionada à lista 'problemas de mod' para mods que usam diretamente APIs .NET potencialmente sensíveis, como acesso a arquivos ou shell.",
         "ru": "Добавлять ли раздел в список «проблем с модами» для модов, которые напрямую используют потенциально чувствительные API .NET, такие как доступ к файлам или оболочке.",
         "es": "Ya sea para agregar una sección a la lista de 'problemas de mods' para mods que usan directamente API de .NET potencialmente confidenciales como acceso a archivos o shell.",
-        "tr": "Dosya veya kabuk erişimi gibi potansiyel olarak hassas .NET API'lerini doğrudan kullanan modlar için 'mod sorunları' listesine bir bölüm eklenip eklenmeyeceği."
+        "tr": "Dosya veya kabuk erişimi gibi potansiyel olarak hassas .NET API'lerini doğrudan kullanan modlar için 'mod sorunları' listesine bir bölüm eklenip eklenmeyeceği.",
+        "th": "ไม่ว่าจะเพิ่มส่วนในรายการ 'ปัญหาการแก้ไข' สำหรับ mods ซึ่งใช้. NET API ที่มีความอ่อนไหวโดยตรงเช่นการเข้าถึงไฟล์หรือเชลล์"
       },
       "Type": "CheckBox",
       "Label": "Paranoid Warnings"
@@ -104,7 +109,8 @@
         "pt": "Se o SMAPI deve mostrar as versões beta mais recentes como uma atualização disponível. Quando isso é comentado\nfora, será verdade se a versão atual do SMAPI for beta e, caso contrário, falsa.",
         "ru": "Должен ли SMAPI показывать более новые бета-версии в качестве доступного обновления. Когда это комментируется\nЭто будет правда, если текущая версия SMAPI бета, и ложь в противном случае.",
         "es": "Si SMAPI debería mostrar versiones beta más recientes como una actualización disponible. Cuando esto es comentado\nfuera, será cierto si la versión actual de SMAPI es beta, y falso en caso contrario.",
-        "tr": "SMAPI'nin daha yeni bir beta sürümü mevcut bir güncelleme olarak gösterip göstermemesi gerektiği. Bu yorum yapıldığında\nşu anki SMAPI sürümünün beta olması doğru, aksi takdirde yanlış olur."
+        "tr": "SMAPI'nin daha yeni bir beta sürümü mevcut bir güncelleme olarak gösterip göstermemesi gerektiği. Bu yorum yapıldığında\nşu anki SMAPI sürümünün beta olması doğru, aksi takdirde yanlış olur.",
+        "th": "SMAPI ควรแสดงเวอร์ชั่นเบต้าที่ใหม่กว่าว่าเป็นอัพเดตที่มีหรือไม่ เมื่อสิ่งนี้ถูกแสดงความคิดเห็น\nมันจะเป็นจริงถ้าเวอร์ชั่น SMAPI ปัจจุบันเป็นรุ่นเบต้าและไม่เช่นนั้นจะเป็นเท็จ"
       },
       "Type": "CheckBox",
       "Label": "Use Beta Channel"
@@ -135,7 +141,8 @@
         "pt": "Se o SMAPI deve registrar o tráfego de rede (pode ser muito detalhado). Melhor combinado com VerboseLogging, que inclui metadados de rede.",
         "ru": "Должен ли SMAPI регистрировать сетевой трафик (может быть очень многословным). Лучше всего сочетается с VerboseLogging, который включает сетевые метаданные.",
         "es": "Si SMAPI debe registrar el tráfico de red (puede ser muy detallado). Se combina mejor con VerboseLogging, que incluye metadatos de red.",
-        "tr": "SMAPI’nın ağ trafiğini günlüğe kaydetmesi gerekip gerekmediği En iyi ağ meta verilerini içeren VerboseLogging ile birlikte."
+        "tr": "SMAPI’nın ağ trafiğini günlüğe kaydetmesi gerekip gerekmediği En iyi ağ meta verilerini içeren VerboseLogging ile birlikte.",
+        "th": "SMAPI ควรบันทึกการรับส่งข้อมูลของเครือข่ายหรือไม่ (อาจจะละเอียดมาก) รวมกับ VerboseLogging ที่ดีที่สุดซึ่งรวมถึงข้อมูลเมตาของเครือข่าย"
       },
       "Type": "CheckBox",
       "Label": "Log Network Traffic"
@@ -154,7 +161,8 @@
         "pt": "Se um arquivo 'SMAPI-latest.metadata-dump.json' deve ser gerado na pasta de logs com o mod completo\nmetadados para mods detectados. Isso é necessário apenas para solucionar alguns casos.",
         "ru": "Создавать ли файл 'SMAPI-latest.metadata-dump.json' в папке журналов с полным модом\nметаданные для обнаруженных модов. Это необходимо только при устранении неполадок в некоторых случаях.",
         "es": "Si se debe generar un archivo 'SMAPI-latest.metadata-dump.json' en la carpeta de registros con el mod completo\nmetadatos para mods detectados. Esto solo es necesario para solucionar algunos casos.",
-        "tr": "Tam mod ile log klasöründe bir 'SMAPI-latest.metadata-dump.json' dosyası oluşturulup oluşturulmayacağı\nalgılanan modlar için meta veriler. Bu sadece bazı problemleri giderirken gereklidir."
+        "tr": "Tam mod ile log klasöründe bir 'SMAPI-latest.metadata-dump.json' dosyası oluşturulup oluşturulmayacağı\nalgılanan modlar için meta veriler. Bu sadece bazı problemleri giderirken gereklidir.",
+        "th": "ไม่ว่าจะสร้างไฟล์ 'SMAPI-latest.metadata-dump.json' ในโฟลเดอร์บันทึกด้วย mod แบบเต็ม\nข้อมูลเมตาสำหรับ mods ที่ตรวจพบ สิ่งนี้จำเป็นเฉพาะเมื่อแก้ไขปัญหาบางกรณี"
       },
       "Type": "CheckBox",
       "Label": "Dump Metadata"
@@ -173,7 +181,8 @@
         "pt": "As cores a serem usadas no texto gravado no console SMAPI.",
         "ru": "Цвета, используемые для текста, записанного на консоли SMAPI.",
         "es": "Los colores que se utilizarán para el texto escrito en la consola SMAPI.",
-        "tr": "SMAPI konsoluna yazılan metin için kullanılacak renkler."
+        "tr": "SMAPI konsoluna yazılan metin için kullanılacak renkler.",
+        "th": "Sสีที่ใช้สำหรับข้อความที่เขียนไปยังคอนโซล SMAPI."
       },
       "Type": "DropDown",
       "Label": "Use Scheme",
@@ -506,16 +515,9 @@
       ]
     },
     {
-      "Name": "SuppressUpdateChecks[0]",
-      "Type": "TextBox",
-      "Label": "Suppress Update Checks",
-      "Ignore": true
-    },
-    {
-      "Name": "SuppressUpdateChecks[1]",
-      "Type": "TextBox",
-      "Label": "Suppress Update Checks",
-      "Ignore": true
+      "Name": "SuppressUpdateChecks",
+      "Type": "List",
+      "Label": "Suppress Update Checks"
     }
   ]
 }
