@@ -6,6 +6,7 @@ namespace ModSettingsTab.Framework.Integration
         CheckBox,
         DropDown,
         InputListener,
+        List,
         PlusMinus,
         Slider,
         TextBox

@@ -6,16 +6,13 @@ namespace ModSettingsTab.Framework.Integration
     public class Param
     {
         public string Name { get; set; } = null;
-        public I18n Description { get; set; } = null;
+        public I18N Description { get; set; } = new I18N();
         public ParamType Type { get; set; } = ParamType.None;
         public string Label { get; set; } = null;
         public bool Ignore { get; set; } = false;
 
         // DropDown
         public List<string> DropDownOptions { get; set; } = new List<string>();
-
-        // InputListener
-        public SButton InputListenerButton { get; set; } = SButton.None;
 
         // PlusMinus
         public List<string> PlusMinusOptions { get; set; } = new List<string>();
@@ -26,7 +23,7 @@ namespace ModSettingsTab.Framework.Integration
         public int SliderStep { get; set; } = 1;
 
         // TextBox
-        public bool TextBoxNumbersOnly { get; set; } = false;
-        public bool TextBoxFloatOnly { get; set; }  = false;
+        public bool? TextBoxNumbersOnly { get; set; } = null;
+        public bool? TextBoxFloatOnly { get; set; }  = null;
     }
 }
