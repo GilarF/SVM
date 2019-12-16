@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Timers;
+using ModSettingsTab.Events;
 using Newtonsoft.Json.Linq;
 using StardewModdingAPI;
 using StardewValley;
@@ -28,12 +29,16 @@ namespace ModSettingsTab.Framework
 
         private readonly Timer _saveTimer;
 
-        private string _oldValue;
+        private readonly Dictionary<string, Value> _changedValues = new Dictionary<string, Value>();
+
+        private string _changedValue;
+        private string _changedNewValue;
 
         private void Save()
         {
             _saveTimer.Stop();
-            if (!string.Equals(_oldValue, ToString())) _saveTimer.Start();
+            if (_changedValues[_changedValue].OldValue != _changedNewValue) _saveTimer.Start();
+            else _changedValues.Remove(_changedValue);
         }
 
 
@@ -44,7 +49,7 @@ namespace ModSettingsTab.Framework
 
         public IEnumerator GetEnumerator() => _properties.GetEnumerator();
 
-        public StaticConfig(string path, JObject config)
+        public StaticConfig(string path, JObject config, string uniqueId)
         {
             _config = config;
 
@@ -59,8 +64,10 @@ namespace ModSettingsTab.Framework
                 {
                     using (var writer = File.CreateText(path))
                         await writer.WriteAsync(ToString());
-                    _oldValue = null;
                     ModData.NeedReload = true;
+                    if (ModData.Api.ApiList.ContainsKey(uniqueId))
+                        ModData.Api.ApiList[uniqueId].Send(_config, _changedValues);
+                    _changedValues.Clear();
                     Game1.addHUDMessage(new HUDMessage("Settings saved", 2));
                 }
                 catch (Exception ex)
@@ -114,12 +121,15 @@ namespace ModSettingsTab.Framework
             {
                 if (!_properties.ContainsKey(key))
                     return;
-                if (string.IsNullOrEmpty(_oldValue))
+                if (!_changedValues.ContainsKey(key))
                 {
-                    _oldValue = ToString();
+                    _changedValues.Add(key, new Value {OldValue = _properties[key].ToString()});
                 }
+
                 _config.SelectToken(key).Replace(value);
                 _properties[key] = _config.SelectToken(key);
+                _changedValue = key;
+                _changedValues[key].NewValue = _changedNewValue = value.ToString();
                 Save();
             }
         }
