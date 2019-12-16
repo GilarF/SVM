@@ -28,7 +28,7 @@ namespace ModSettingsTab.Framework.Integration
             var json = File.ReadAllText(configPath);
             json = Regex.Replace(json, "\\/{2}\"(ParanoidWarnings|UseBetaChannel)\": true,", "\"$1\": false,");
             var jObj = JObject.Parse(json);
-            _staticConfig = new StaticConfig(configPath, jObj);
+            _staticConfig = new StaticConfig(configPath, jObj,"Pathoschild.SMAPI");
 
             InitOptions();
         }
