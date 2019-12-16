@@ -44,6 +44,8 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="Api.cs" />
+        <Compile Include="Events\OptionsChangedEventArgs.cs" />
         <Compile Include="Framework\Components\FilterTextBox.cs" />
         <Compile Include="Framework\Components\OptionsCheckbox.cs" />
         <Compile Include="Framework\Components\OptionsDropDown.cs" />
@@ -71,8 +73,10 @@
         <Compile Include="Framework\Interfaces\IOptionPlusMinus.cs" />
         <Compile Include="Framework\Interfaces\IOptionSlider.cs" />
         <Compile Include="Framework\Interfaces\IOptionTextBox.cs" />
+        <Compile Include="Framework\Interfaces\ISettingsTabApi.cs" />
         <Compile Include="Framework\Mod.cs" />
         <Compile Include="Framework\ModList.cs" />
+        <Compile Include="Framework\SettingsTabApi.cs" />
         <Compile Include="Framework\StaticConfig.cs" />
         <Compile Include="Menu\BaseOptionsModPage.cs" />
         <Compile Include="Menu\FavoriteOptionsModPage.cs" />
@@ -94,7 +98,6 @@
       <Content Include="manifest.json" />
     </ItemGroup>
     <ItemGroup>
-        <Folder Include="Events" />
       <Folder Include="_releases" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

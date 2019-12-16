@@ -17,6 +17,8 @@ namespace ModSettingsTab
 
         public static bool NeedReload;
 
+        public static readonly Api Api;
+
         /// <summary>
         /// collection of loaded mods, only those that have settings
         /// </summary>
@@ -51,6 +53,7 @@ namespace ModSettingsTab
 
         static ModData()
         {
+            Api = new Api();
             FavoriteMod = new List<Mod>();
             Tabs = ModEntry.Helper.Content.Load<Texture2D>("assets/Tabs.png");
             FavoriteTabSource = new Dictionary<string, Rectangle>();
