@@ -19,18 +19,12 @@ namespace ModSettingsTab
 
         public static readonly Api Api;
 
+        public static TabConfig Config;
+
         /// <summary>
         /// collection of loaded mods, only those that have settings
         /// </summary>
         public static ModList ModList { get; private set; }
-
-        /// <summary>
-        /// predefined collection of mod settings
-        /// </summary>
-        /// <remarks>
-        /// Dictionary&lt;string:UniqueId, ModIntegrationSettings&gt;
-        /// </remarks>
-        public static Dictionary<string, ModIntegrationSettings> PredefinedIntegration;
 
         /// <summary>
         /// list of all modification settings
@@ -54,6 +48,7 @@ namespace ModSettingsTab
         static ModData()
         {
             Api = new Api();
+            Config = ModEntry.Helper.ReadConfig<TabConfig>();
             FavoriteMod = new List<Mod>();
             Tabs = ModEntry.Helper.Content.Load<Texture2D>("assets/Tabs.png");
             FavoriteTabSource = new Dictionary<string, Rectangle>();
@@ -64,10 +59,8 @@ namespace ModSettingsTab
         /// </summary>
         public static async void Init()
         {
-            await LoadIntegrations();
-            ModEntry.Console.Log($"Load {PredefinedIntegration.Count} Integrations", LogLevel.Info);
             await LoadOptions();
-            ModEntry.Console.Log($"Load {ModList.Count} mods and {Options.Count} Options | {FavoriteMod.Count}",
+            ModEntry.Console.Log($"Load {ModList.Count} mods and {Options.Count} Options",
                 LogLevel.Info);
         }
 
@@ -78,16 +71,6 @@ namespace ModSettingsTab
         {
             await Task.Run(LoadFavoriteOptions);
             UpdateFavoriteMod();
-        }
-
-        private static Task LoadIntegrations()
-        {
-            return Task.Run(() =>
-            {
-                PredefinedIntegration =
-                    ModEntry.Helper.Data.ReadJsonFile<Dictionary<string, ModIntegrationSettings>>(
-                        "data/integration.json") ?? new Dictionary<string, ModIntegrationSettings>();
-            });
         }
 
         private static Task LoadOptions()

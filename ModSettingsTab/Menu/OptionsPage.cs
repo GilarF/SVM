@@ -316,7 +316,7 @@ namespace ModSettingsTab.Menu
                 sideTab.draw(b);
             foreach (var sideTab in _favoriteSideTabs)
                 sideTab.draw(b);
-            if (ModData.NeedReload) _reloadIndicator.draw(b);
+            if (ModData.NeedReload && ModData.Config.ShowReloadIcon) _reloadIndicator.draw(b);
             b.End();
             b.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied, SamplerState.PointClamp,
                 null, null, null, new Matrix?());

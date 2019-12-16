@@ -86,12 +86,19 @@
         <Compile Include="ModData.cs" />
         <Compile Include="ModEntry.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
+        <Compile Include="TabConfig.cs" />
     </ItemGroup>
     <ItemGroup>
       <None Include="packages.config" />
     </ItemGroup>    
     <ItemGroup>
         <Content Include="assets\Tabs.png" />
+        <Content Include="data\favorite.json">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="data\I9N\GilarF.ModSettingsTab.json">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
         <Content Include="data\I9N\SmapiIntegration.json">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>

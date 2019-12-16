@@ -36,9 +36,14 @@ namespace ModSettingsTab
             I18N = helper.Translation;
 
             Helper.Events.Display.MenuChanged += MenuChanged;
+            
+            ModData.Api.GetMod("GilarF.ModSettingsTab").OptionsChanged += (o, eventArgs) =>
+                ModData.Config = Helper.ReadConfig<TabConfig>();
+            
             Helper.Events.GameLoop.GameLaunched += (sender, args) => ModData.Init();
             Helper.Events.GameLoop.GameLaunched += (sender, args) =>
                 LocalizedContentManager.OnLanguageChange += code => ModData.Init();
+            
         }
 
         public override object GetApi()
