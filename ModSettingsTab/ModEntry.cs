@@ -7,7 +7,7 @@ using StardewValley.Menus;
 namespace ModSettingsTab
 {
     // ReSharper disable once ClassNeverInstantiated.Global
-    public class ModEntry : StardewModdingAPI.Mod
+    public class ModEntry : Mod
     {
         /// <summary>
         /// SMAPI helper
@@ -37,8 +37,13 @@ namespace ModSettingsTab
 
             Helper.Events.Display.MenuChanged += MenuChanged;
             Helper.Events.GameLoop.GameLaunched += (sender, args) => ModData.Init();
-            Helper.Events.GameLoop.GameLaunched += (sender, args) => 
-                LocalizedContentManager.OnLanguageChange+= code => ModData.Init();
+            Helper.Events.GameLoop.GameLaunched += (sender, args) =>
+                LocalizedContentManager.OnLanguageChange += code => ModData.Init();
+        }
+
+        public override object GetApi()
+        {
+            return ModData.Api;
         }
 
         /// <summary>
@@ -50,7 +55,6 @@ namespace ModSettingsTab
         private static void MenuChanged(object sender, MenuChangedEventArgs e)
         {
             if (!(e.NewMenu is GameMenu menu)) return;
-            
             menu.pages[GameMenu.optionsTab] = new Menu.OptionsPage(
                 menu.xPositionOnScreen,
                 menu.yPositionOnScreen,
