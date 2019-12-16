@@ -105,12 +105,11 @@ namespace ModSettingsTab.Menu
 
         private void InitFavoriteTabs()
         {
-            var fModCount = ModData.FavoriteMod.Count;
-            if (fModCount == 0) return;
             _favoriteSideTabs.Clear();
             _favoritePagesCollections.Clear();
-
             if (_currentTab > 1) ResetTab(1);
+            var fModCount = ModData.FavoriteMod.Count;
+            if (fModCount == 0) return;
 
             for (int i = fModCount, c = 0; i > 0; i--, c++)
             {
