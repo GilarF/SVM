@@ -28,7 +28,11 @@ namespace ModSettingsTab.Framework.Components
             // text field value
             var str = config[name].ToString();
             // if the string is short
-            if (str.Length < 12) Bounds.Width /= 2 ;
+            if (str.Length < 12)
+            {
+                Bounds.Width /= 2;
+                InfoIconBounds = new Rectangle();
+            }
             Offset.Y = 8;
 
             _textBox = new TextBox(SaveState)
