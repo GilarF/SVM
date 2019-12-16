@@ -24,7 +24,7 @@ namespace ModSettingsTab.Framework.Components
         private bool _clicked;
         private bool _del;
         private IClickableMenu _gm;
-        private bool _numbersOnly;
+        private readonly bool _numbersOnly;
 
         public OptionsList(
             string name,
@@ -35,12 +35,16 @@ namespace ModSettingsTab.Framework.Components
             : base(name, modId, label, config, 32, slotSize.Y / 2 - 10, 48, 44)
         {
             _dropDownOptions = Config[Name].Children().Select(t => t.ToString()).ToList();
+            
             _numbersOnly = Config[Name].Children().Any() && Config[Name].Children().First().Type == JTokenType.Integer;
 
             _minusButtonBounds = new Rectangle(Bounds.X, Bounds.Y, MinusButtonSource.Width * 4, Bounds.Height);
 
             // dropdown bounds
-            var ddWidth = (int) Game1.smallFont.MeasureString("Windowed Borderless").X + 9 * 4;
+            var ddWidth = _dropDownOptions
+                .Select(option => (int) Game1.smallFont.MeasureString(option).X + 28)
+                .Concat(new[] {(int) Game1.smallFont.MeasureString("Windowed Borderless Mod").X})
+                .Max() + 9 * 4;
 
             _dropDownBounds = new Rectangle(Bounds.X + _minusButtonBounds.Width - 4, Bounds.Y,
                 ddWidth, Bounds.Height * (_dropDownOptions.Count > 7 ? 7 
