@@ -1,5 +1,7 @@
-﻿using StardewModdingAPI;
+﻿using Microsoft.Xna.Framework;
+using StardewModdingAPI;
 using StardewModdingAPI.Events;
+using StardewValley;
 using StardewValley.Menus;
 
 namespace ModSettingsTab
@@ -35,6 +37,8 @@ namespace ModSettingsTab
 
             Helper.Events.Display.MenuChanged += MenuChanged;
             Helper.Events.GameLoop.GameLaunched += (sender, args) => ModData.Init();
+            Helper.Events.GameLoop.GameLaunched += (sender, args) => 
+                LocalizedContentManager.OnLanguageChange+= code => ModData.Init();
         }
 
         /// <summary>
