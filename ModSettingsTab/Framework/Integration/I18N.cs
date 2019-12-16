@@ -1,8 +1,10 @@
 using StardewValley;
+// ReSharper disable InconsistentNaming
+// ReSharper disable MemberCanBePrivate.Global
 
 namespace ModSettingsTab.Framework.Integration
 {
-    public class I18n
+    public class I18N
     {
         public string en { get; set; } = null;
         public string zh { get; set; } = null;
@@ -27,31 +29,31 @@ namespace ModSettingsTab.Framework.Integration
                     case LocalizedContentManager.LanguageCode.en:
                         return en;
                     case LocalizedContentManager.LanguageCode.ja:
-                        return ja;
+                        return ja ?? en;
                     case LocalizedContentManager.LanguageCode.ru:
-                        return ru;
+                        return ru ?? en;
                     case LocalizedContentManager.LanguageCode.zh:
-                        return zh;
+                        return zh ?? en;
                     case LocalizedContentManager.LanguageCode.pt:
-                        return pt;
+                        return pt ?? en;
                     case LocalizedContentManager.LanguageCode.es:
-                        return es;
+                        return es ?? en;
                     case LocalizedContentManager.LanguageCode.de:
-                        return de;
+                        return de ?? en;
                     case LocalizedContentManager.LanguageCode.th:
-                        return th;
+                        return th ?? en;
                     case LocalizedContentManager.LanguageCode.fr:
-                        return fr;
+                        return fr ?? en;
                     case LocalizedContentManager.LanguageCode.ko:
-                        return ko;
+                        return ko ?? en;
                     case LocalizedContentManager.LanguageCode.it:
-                        return it;
+                        return it ?? en;
                     case LocalizedContentManager.LanguageCode.tr:
-                        return tr;
+                        return tr ?? en;
                     case LocalizedContentManager.LanguageCode.hu:
-                        return hu;
+                        return hu ?? en;
                     default:
-                        return en;
+                        return null;
                 }
             }
         }
