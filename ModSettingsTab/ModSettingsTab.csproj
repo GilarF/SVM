@@ -95,6 +95,18 @@
         <Content Include="data\I9N\SmapiIntegrations.json">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
+        <Content Include="i18n\de.json" />
+        <Content Include="i18n\default.json" />
+        <Content Include="i18n\es.json" />
+        <Content Include="i18n\fr.json" />
+        <Content Include="i18n\hu.json" />
+        <Content Include="i18n\it.json" />
+        <Content Include="i18n\ja.json" />
+        <Content Include="i18n\ko.json" />
+        <Content Include="i18n\pt.json" />
+        <Content Include="i18n\ru.json" />
+        <Content Include="i18n\tr.json" />
+        <Content Include="i18n\zh.json" />
       <Content Include="manifest.json" />
     </ItemGroup>
     <ItemGroup>

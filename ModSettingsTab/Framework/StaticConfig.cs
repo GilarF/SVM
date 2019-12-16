@@ -68,12 +68,12 @@ namespace ModSettingsTab.Framework
                     if (ModData.Api.ApiList.ContainsKey(uniqueId))
                         ModData.Api.ApiList[uniqueId].Send(_config, _changedValues);
                     _changedValues.Clear();
-                    Game1.addHUDMessage(new HUDMessage("Settings saved", 2));
+                    Game1.addHUDMessage(new HUDMessage(ModEntry.I18N.Get("StaticConfig.SuccessMessage"), 2));
                 }
                 catch (Exception ex)
                 {
                     ModEntry.Console.Log(ex.Message, LogLevel.Error);
-                    Game1.showRedMessage("Save error\n");
+                    Game1.showRedMessage(ModEntry.I18N.Get("StaticConfig.FailMessage"));
                 }
             };
             ParseProperties(_config);
