@@ -28,6 +28,14 @@ namespace ModSettingsTab.Framework
 
         private readonly Timer _saveTimer;
 
+        private string _oldValue;
+
+        private void Save()
+        {
+            _saveTimer.Stop();
+            if (!string.Equals(_oldValue, ToString())) _saveTimer.Start();
+        }
+
 
         public override string ToString()
         {
@@ -40,7 +48,7 @@ namespace ModSettingsTab.Framework
         {
             _config = config;
 
-            _saveTimer = new Timer(3000.0)
+            _saveTimer = new Timer(2500.0)
             {
                 Enabled = false,
                 AutoReset = false
@@ -51,7 +59,9 @@ namespace ModSettingsTab.Framework
                 {
                     using (var writer = File.CreateText(path))
                         await writer.WriteAsync(ToString());
-                    Game1.addHUDMessage(new HUDMessage($"Settings saved",2));
+                    _oldValue = null;
+                    ModData.NeedReload = true;
+                    Game1.addHUDMessage(new HUDMessage("Settings saved", 2));
                 }
                 catch (Exception ex)
                 {
@@ -104,10 +114,13 @@ namespace ModSettingsTab.Framework
             {
                 if (!_properties.ContainsKey(key))
                     return;
+                if (string.IsNullOrEmpty(_oldValue))
+                {
+                    _oldValue = ToString();
+                }
                 _config.SelectToken(key).Replace(value);
                 _properties[key] = _config.SelectToken(key);
-                _saveTimer.Stop();
-                _saveTimer.Start();
+                Save();
             }
         }
 

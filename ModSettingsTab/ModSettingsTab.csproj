@@ -91,9 +91,6 @@
         <Content Include="data\I9N\SmapiIntegrations.json">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <Content Include="data\Integrations.json">
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
       <Content Include="manifest.json" />
     </ItemGroup>
     <ItemGroup>
