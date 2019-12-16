@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using StardewModdingAPI;
 
-namespace ModSettingsTab
+namespace ModSettingsTab.Framework
 {
     /// <summary>
     /// main collection of modifications
@@ -18,14 +17,15 @@ namespace ModSettingsTab
         public ModList()
         {
             var path = Path.Combine(Constants.ExecutionPath,"Mods");
-            Parallel.ForEach(Directory.GetDirectories(path), directory =>
+            var directories = Directory.GetDirectories(path);
+            foreach (var directory in directories)
             {
                 try
                 {
                     var configPath = Path.Combine(directory, "config.json");
                     var manifestPath = Path.Combine(directory, "manifest.json");
                     // necessary files exist
-                    if (!File.Exists(configPath) || !File.Exists(manifestPath)) return;
+                    if (!File.Exists(configPath) || !File.Exists(manifestPath)) continue;
                     var uniqueId = JObject.Parse(File.ReadAllText(manifestPath))["UniqueID"].ToString();
                     // reading and parsing config.json
                     var jObj = JObject.Parse(File.ReadAllText(configPath));
@@ -36,7 +36,7 @@ namespace ModSettingsTab
                 {
                     ModEntry.Console.Log(e.Message, LogLevel.Warn);
                 }
-            });
+            }
         }
     }
 }

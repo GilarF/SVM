@@ -7,7 +7,7 @@ using System.Timers;
 using Newtonsoft.Json.Linq;
 using StardewModdingAPI;
 
-namespace ModSettingsTab
+namespace ModSettingsTab.Framework
 {
     /// <summary>
     /// modification settings (config.json)

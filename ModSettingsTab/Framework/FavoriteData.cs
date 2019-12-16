@@ -3,8 +3,7 @@ using System.Linq;
 using System.Timers;
 using Microsoft.Xna.Framework;
 
-
-namespace ModSettingsTab
+namespace ModSettingsTab.Framework
 {
     /// <summary>
     /// saves the mod to favorites
