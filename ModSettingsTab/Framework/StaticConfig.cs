@@ -6,6 +6,7 @@ using System.Linq;
 using System.Timers;
 using Newtonsoft.Json.Linq;
 using StardewModdingAPI;
+using StardewValley;
 
 namespace ModSettingsTab.Framework
 {
@@ -50,10 +51,12 @@ namespace ModSettingsTab.Framework
                 {
                     using (var writer = File.CreateText(path))
                         await writer.WriteAsync(ToString());
+                    Game1.addHUDMessage(new HUDMessage($"Settings saved",2));
                 }
                 catch (Exception ex)
                 {
                     ModEntry.Console.Log(ex.Message, LogLevel.Error);
+                    Game1.showRedMessage("Save error\n");
                 }
             };
             ParseProperties(_config);
