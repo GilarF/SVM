@@ -2,5 +2,6 @@
   "OptionsPage.ReloadIndicator": "Yeniden başlatma gerekir",
   "OptionsPage.ModSettingsTab": "Değiştirme Ayarları",
   "StaticConfig.SuccessMessage": "Ayarlar kaydedildi",
-  "StaticConfig.FailMessage": "Hata Kaydet"
+  "StaticConfig.FailMessage": "Hata Kaydet",
+  "OptionsList.NewValue": "Yeni bir değer girin"
 }
