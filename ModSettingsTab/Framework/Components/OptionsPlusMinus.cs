@@ -9,8 +9,8 @@ namespace ModSettingsTab.Framework.Components
 {
     public class OptionsPlusMinus : OptionsElement
     {
-        private static readonly Rectangle MinusButtonSource = new Rectangle(177, 345, 7, 8);
-        private static readonly Rectangle PlusButtonSource = new Rectangle(184, 345, 7, 8);
+        private static readonly Rectangle MinusButtonSource = new Rectangle(27, 236, 10, 11);
+        private static readonly Rectangle PlusButtonSource = new Rectangle(36, 236, 10, 11);
         private readonly List<string> _options;
         private int _selectedOption;
         private static bool _snapZoomPlus;
@@ -25,18 +25,20 @@ namespace ModSettingsTab.Framework.Components
             StaticConfig config,
             Point slotSize,
             List<string> plusMinusOptions)
-            : base(name, modId, label, config, 32, slotSize.Y / 2, 56, 32)
+            : base(name, modId, label, config, 32, slotSize.Y / 2-10, 56, 44)
         {
             _options = plusMinusOptions;
             _selectedOption = plusMinusOptions.FindIndex(s => s == config[name].ToString());
-            var bWidth = Bounds.X + _options
+            _minusButton = new Rectangle(Bounds.X, Bounds.Y, MinusButtonSource.Width*4, Bounds.Height);
+            
+            var bWidth = _options
                             .Select(displayOption => (int) Game1.smallFont.MeasureString(displayOption).X + 28)
                             .Concat(new[] {(int) Game1.smallFont.MeasureString(_options[0]).X + 28})
                             .Max();
-            Bounds.Width += bWidth;
-            _minusButton = new Rectangle(Bounds.X, Bounds.Y, 28, 32);
-            _plusButton = new Rectangle(Bounds.Right - 32, Bounds.Y, 28, 32);
-            InfoIconBounds = new Rectangle(bWidth,-8,0,0);
+            _plusButton = new Rectangle(Bounds.X +_minusButton.Width+ bWidth, Bounds.Y, PlusButtonSource.Width*4, Bounds.Height);
+            Bounds.Width =  _minusButton.Width + bWidth + _plusButton.Width;
+            Offset.Y = 8;
+            InfoIconBounds = new Rectangle(bWidth+40,0,0,0);
         }
 
         public override void ReceiveLeftClick(int x, int y)
@@ -44,7 +46,7 @@ namespace ModSettingsTab.Framework.Components
             if (GreyedOut || _options.Count <= 0)
                 return;
             var selected1 = _selectedOption;
-            if (_minusButton.Contains(x, y) && (uint) _selectedOption > 0U)
+            if (_minusButton.Contains(x, y) &&  _selectedOption > 0)
             {
                 --_selectedOption;
                 _snapZoomMinus = true;
@@ -86,16 +88,16 @@ namespace ModSettingsTab.Framework.Components
         public override void Draw(SpriteBatch b, int slotX, int slotY)
         {
             base.Draw(b, slotX, slotY);
-            b.Draw(Game1.mouseCursors,
+            b.Draw(ModData.Tabs,
                 new Vector2(slotX + _minusButton.X, slotY + _minusButton.Y),
                 MinusButtonSource,
                 Color.White * (GreyedOut ? 0.33f : 1f) * (_selectedOption == 0 ? 0.5f : 1f), 0.0f, Vector2.Zero, 4f,
                 SpriteEffects.None, 0.4f);
             b.DrawString(Game1.smallFont,
                 _selectedOption >= _options.Count || _selectedOption == -1 ? "" : _options[_selectedOption],
-                new Vector2(slotX + _minusButton.X + _minusButton.Width + 4,
-                    slotY + _minusButton.Y), GreyedOut ? Game1.textColor * 0.33f : Game1.textColor);
-            b.Draw(Game1.mouseCursors,
+                new Vector2(slotX + _minusButton.X + _minusButton.Width +4,
+                    slotY + Bounds.Y + 10), GreyedOut ? Game1.textColor * 0.33f : Game1.textColor);
+            b.Draw(ModData.Tabs,
                 new Vector2(slotX + _plusButton.X, slotY + _plusButton.Y),
                 PlusButtonSource,
                 Color.White * (GreyedOut ? 0.33f : 1f) * (_selectedOption == _options.Count - 1 ? 0.5f : 1f),
