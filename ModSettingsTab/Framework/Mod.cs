@@ -44,7 +44,7 @@ namespace ModSettingsTab.Framework
             var lang = LocalizedContentManager.CurrentLanguageCode;
             var uniqueId = Manifest.UniqueID;
             var uI9NPath = Path.Combine(folder, "settingsTab.json");
-            var nI9NPath = Path.Combine(folder, $"data/I9N/{uniqueId}.json");
+            var nI9NPath = Path.Combine(ModEntry.Helper.DirectoryPath, $"data/I9N/{uniqueId}.json");
             ModIntegrationSettings uI9N = null, nI9N = null;
 
             try
@@ -76,7 +76,7 @@ namespace ModSettingsTab.Framework
                 Options.Add(option);
             }
         }
-
+        
         public static OptionsElement CreateOption(
             string name,
             string uniqueId,
@@ -175,6 +175,14 @@ namespace ModSettingsTab.Framework
             }
         }
 
+        /// <summary>
+        /// defines the desired type of option
+        /// </summary>
+        /// <param name="t"></param>
+        /// <param name="floatOnly"></param>
+        /// <param name="numbersOnly"></param>
+        /// <param name="asString"></param>
+        /// <returns></returns>
         private static ParamType ConvertType(JToken t, out bool floatOnly, out bool numbersOnly, out bool asString)
         {
             floatOnly = false;
@@ -228,6 +236,12 @@ namespace ModSettingsTab.Framework
                 }
             }
         }
+        /// <summary>
+        /// reads a button from a string
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="btn"></param>
+        /// <returns></returns>
         private static bool ButtonTryParse(string str, out SButton btn)
         {
             if (!str.Contains(",") && Enum.TryParse<SButton>(str.Trim(), true, out var result))
