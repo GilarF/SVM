@@ -99,6 +99,9 @@
         <Content Include="data\I9N\GilarF.ModSettingsTab.json">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
+        <Content Include="data\I9N\Pathoschild.DebugMode.json">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
         <Content Include="data\I9N\SmapiIntegration.json">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
