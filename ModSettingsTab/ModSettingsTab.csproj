@@ -118,6 +118,7 @@
         <Content Include="i18n\tr.json" />
         <Content Include="i18n\zh.json" />
       <Content Include="manifest.json" />
+      <Content Include="schema.json" />
     </ItemGroup>
     <ItemGroup>
       <Folder Include="_releases" />
