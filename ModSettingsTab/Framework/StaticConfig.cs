@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Timers;
-using ModSettingsTab.Events;
+using ModSettingsTabApi.Events;
 using Newtonsoft.Json.Linq;
 using StardewModdingAPI;
 using StardewValley;

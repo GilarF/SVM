@@ -1,7 +1,7 @@
 using System;
-using ModSettingsTab.Events;
+using ModSettingsTabApi.Events;
 
-namespace ModSettingsTab.Framework.Interfaces
+namespace ModSettingsTabApi.Framework.Interfaces
 {
     public interface ISettingsTabApi
     {

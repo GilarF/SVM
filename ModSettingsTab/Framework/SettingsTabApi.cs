@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using ModSettingsTab.Events;
-using ModSettingsTab.Framework.Interfaces;
+using ModSettingsTabApi.Events;
+using ModSettingsTabApi.Framework.Interfaces;
 
 namespace ModSettingsTab.Framework
 {

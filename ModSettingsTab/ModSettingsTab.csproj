@@ -38,7 +38,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Api.cs" />
-    <Compile Include="Events\OptionsChangedEventArgs.cs" />
     <Compile Include="Framework\Components\FilterTextBox.cs" />
     <Compile Include="Framework\Components\OptionsCheckbox.cs" />
     <Compile Include="Framework\Components\OptionsDropDown.cs" />
@@ -66,7 +65,6 @@
     <Compile Include="Framework\Interfaces\IOptionPlusMinus.cs" />
     <Compile Include="Framework\Interfaces\IOptionSlider.cs" />
     <Compile Include="Framework\Interfaces\IOptionTextBox.cs" />
-    <Compile Include="Framework\Interfaces\ISettingsTabApi.cs" />
     <Compile Include="Framework\Mod.cs" />
     <Compile Include="Framework\ModList.cs" />
     <Compile Include="Framework\SettingsTabApi.cs" />
@@ -121,6 +119,12 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\IModTabSettingsApi\ModSettingsTabApi.csproj">
+      <Project>{e6bb97fc-afcf-4283-9cfb-ac30c0b5e56d}</Project>
+      <Name>ModSettingsTabApi</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Pathoschild.Stardew.ModBuildConfig.3.0.0\build\Pathoschild.Stardew.ModBuildConfig.targets" Condition="Exists('..\packages\Pathoschild.Stardew.ModBuildConfig.3.0.0\build\Pathoschild.Stardew.ModBuildConfig.targets')" />

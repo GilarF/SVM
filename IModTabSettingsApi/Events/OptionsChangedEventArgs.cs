@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ModSettingsTab.Events
+namespace ModSettingsTabApi.Events
 {
     public class Value
     {
