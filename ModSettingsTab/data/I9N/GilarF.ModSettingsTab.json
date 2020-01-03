@@ -34,7 +34,10 @@
         "th": "แสดงการแจ้งเตือนบันทึกที่ประสบความสำเร็จ"
       },
       "Type": "CheckBox",
-      "Label": "Show saving notify"
+      "Label": {
+        "en": "Show the save notification",
+        "fr": "Afficher la notification d'enregistrement" 
+      }
     },
     {
       "Name": "ShowReloadIcon",
@@ -54,7 +57,10 @@
         "th": "แสดงไอคอนเมื่อจำเป็นต้องรีบูต"
       },
       "Type": "CheckBox",
-      "Label": "Show reload icon"
+      "Label": {
+        "en": "Show the reload icon",
+        "fr": "Afficher l'icône de rechargement"
+      }
     }
   ]
 }
