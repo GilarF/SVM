@@ -9,9 +9,13 @@ namespace ModSettingsTab.Framework
     {
         public event EventHandler<OptionsChangedEventArgs> OptionsChanged;
 
-        public void Send(object sender,Dictionary<string, Value> options)
+        public bool Send(object sender,Dictionary<string, Value> options)
         {
-            OptionsChanged?.Invoke(sender, new OptionsChangedEventArgs(options));
+            var eventArgs = new OptionsChangedEventArgs(options);
+
+            OptionsChanged?.Invoke(sender, eventArgs);
+
+            return eventArgs.Reloaded;
         }
     }
 }

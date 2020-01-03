@@ -64,9 +64,11 @@ namespace ModSettingsTab.Framework
                 {
                     using (var writer = File.CreateText(path))
                         await writer.WriteAsync(ToString());
-                    ModData.NeedReload = true;
+
                     if (ModData.Api.ApiList.ContainsKey(uniqueId))
-                        ModData.Api.ApiList[uniqueId].Send(_config, _changedValues);
+                        ModData.NeedReload = !ModData.Api.ApiList[uniqueId].Send(_config, _changedValues) || ModData.NeedReload;
+                    else
+                        ModData.NeedReload = true;
                     _changedValues.Clear();
                     if (ModData.Config.ShowSavingNotify) 
                         Game1.addHUDMessage(new HUDMessage(ModEntry.I18N.Get("StaticConfig.SuccessMessage"), 2));
