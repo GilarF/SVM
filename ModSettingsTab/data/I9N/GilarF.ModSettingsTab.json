@@ -1,4 +1,5 @@
 {
+  "$schema": "https://raw.githubusercontent.com/GilarF/SVM/develop/ModSettingsTab/schema.json",
   "Description": {
     "en": "Replaces the standard settings tab",
     "zh": "取代標准設定標籤",

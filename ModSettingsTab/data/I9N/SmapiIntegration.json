@@ -1,4 +1,5 @@
 {
+  "$schema": "https://raw.githubusercontent.com/GilarF/SVM/develop/ModSettingsTab/schema.json",
   "Description": {
     "en": "The mod loader for Stardew Valley",
     "zh": "Stardew Valley的mod loader",

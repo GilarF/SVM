@@ -1,4 +1,5 @@
 {
+  "$schema": "https://raw.githubusercontent.com/GilarF/SVM/develop/ModSettingsTab/schema.json",
   "Description": {
     "en": "Enables an overlay which provides debug information and unlocks the game's debug hotkeys.",
     "zh": "取代標准設定標籤",
