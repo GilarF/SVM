@@ -99,22 +99,22 @@ namespace ModSettingsTab.Menu
             _pagesCollections.Add(SmapiOptionsTab, new SmapiOptionsPage(x, y, width, height));
 
             // -------- favorite mod tab ---------
-            InitFavoriteTabs();
-            ModData.UpdateFavoriteMod = InitFavoriteTabs;
+            UpdateFavoriteTabs();
+            FavoriteData.UpdateMod = UpdateFavoriteTabs;
             ResetTab(_savedTab);
         }
 
-        private void InitFavoriteTabs()
+        private void UpdateFavoriteTabs()
         {
             _favoriteSideTabs.Clear();
             _favoritePagesCollections.Clear();
             if (_currentTab > 1) ResetTab(1);
-            var fModCount = ModData.FavoriteMod.Count;
+            var fModCount = FavoriteData.ModList.Count;
             if (fModCount == 0) return;
 
             for (int i = fModCount, c = 0; i > 0; i--, c++)
             {
-                var manifest = ModData.FavoriteMod[i - 1].Manifest;
+                var manifest = FavoriteData.ModList[i - 1].Manifest;
                 var favoriteModComponent = new ClickableTextureComponent("",
                     new Rectangle(
                         xPositionOnScreen - 48,
@@ -122,7 +122,7 @@ namespace ModSettingsTab.Menu
                         FavoriteTabSize * c,
                         64, FavoriteTabSize), "",
                     manifest.Name, ModData.Tabs,
-                    ModData.FavoriteTabSource[manifest.UniqueID], 2f)
+                    FavoriteData.FavoriteTabSource[manifest.UniqueID], 2f)
                 {
                     myID = RegionFavoriteOptionsMod + c,
                     upNeighborID = RegionFavoriteOptionsMod + c - 1,

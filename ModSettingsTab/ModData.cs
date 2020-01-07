@@ -1,13 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ModSettingsTab.Framework;
 using ModSettingsTab.Framework.Integration;
-using StardewModdingAPI;
-using Mod = ModSettingsTab.Framework.Mod;
-using OptionsElement = ModSettingsTab.Framework.Components.OptionsElement;
+using ModSettingsTab.Framework.Components;
 
 namespace ModSettingsTab
 {
@@ -33,25 +30,13 @@ namespace ModSettingsTab
 
         public static SmapiIntegration SMAPI;
 
-        /// <summary>
-        /// list of favorite mod options
-        /// </summary>
-        public static readonly List<Mod> FavoriteMod;
         public static readonly Texture2D Tabs;
-        public static Dictionary<string,Rectangle> FavoriteTabSource;
-        public static Queue<Rectangle> FreeFavoriteTabSource;
-
-        public delegate void Update();
-
-        public static Update UpdateFavoriteMod;
 
         static ModData()
         {
             Api = new Api();
             Config = Helper.ReadConfig<TabConfig>();
-            FavoriteMod = new List<Mod>();
             Tabs = Helper.Content.Load<Texture2D>("assets/Tabs.png");
-            FavoriteTabSource = new Dictionary<string, Rectangle>();
         }
 
         /// <summary>
@@ -63,15 +48,6 @@ namespace ModSettingsTab
             Helper.Console.Info($"Load {ModList.Count} mods and {Options.Count} Options");
         }
 
-        /// <summary>
-        /// asynchronously updates the list of settings of selected mods
-        /// </summary>
-        public static async void UpdateFavoriteOptionsAsync()
-        {
-            await Task.Run(LoadFavoriteOptions);
-            UpdateFavoriteMod();
-        }
-
         private static Task LoadOptions()
         {
             return Task.Run(() =>
@@ -79,24 +55,8 @@ namespace ModSettingsTab
                 ModList = new ModList();
                 SMAPI = new SmapiIntegration();
                 Options = ModList.SelectMany(mod => mod.Value.Options).ToList();
-                LoadFavoriteOptions();
+                FavoriteData.LoadOptions();
             });
-        }
-
-        private static void LoadFavoriteOptions()
-        {
-            FavoriteMod.Clear();
-            foreach (var id in FavoriteData.Favorite)
-            {
-                FavoriteMod.Add(ModList[id]);
-            }
-            for (var i = FavoriteMod.Count; i > 0 ; i--)
-            {
-                var id = FavoriteMod[i-1].Manifest.UniqueID;
-                if (!FavoriteTabSource.ContainsKey(id))
-                    FavoriteTabSource.Add(id, FreeFavoriteTabSource.Dequeue());
-            }
-            
         }
     }
 }
