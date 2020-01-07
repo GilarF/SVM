@@ -70,8 +70,9 @@
     <Compile Include="Framework\SettingsTabApi.cs" />
     <Compile Include="Framework\StaticConfig.cs" />
     <Compile Include="Menu\BaseOptionsModPage.cs" />
+    <Compile Include="Menu\BaseOptionsPage.cs" />
     <Compile Include="Menu\FavoriteOptionsModPage.cs" />
-    <Compile Include="Menu\OptionsPage.cs" />
+    <Compile Include="Menu\GameOptionsPage.cs" />
     <Compile Include="Menu\OptionsModPage.cs" />
     <Compile Include="Menu\SmapiOptionsPage.cs" />
     <Compile Include="ModData.cs" />

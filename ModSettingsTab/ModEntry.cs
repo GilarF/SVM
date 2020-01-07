@@ -31,7 +31,7 @@ namespace ModSettingsTab
         private static void MenuChanged(object sender, MenuChangedEventArgs e)
         {
             if (!(e.NewMenu is GameMenu menu)) return;
-            menu.pages[GameMenu.optionsTab] = new Menu.OptionsPage(
+            menu.pages[GameMenu.optionsTab] = new Menu.GameOptionsPage(
                 menu.xPositionOnScreen,
                 menu.yPositionOnScreen,
                 menu.width + ModData.Offset,
