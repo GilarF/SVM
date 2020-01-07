@@ -5,6 +5,9 @@ using Microsoft.Xna.Framework.Graphics;
 using ModSettingsTab.Framework;
 using ModSettingsTab.Framework.Integration;
 using ModSettingsTab.Framework.Components;
+using StardewValley;
+// ReSharper disable InconsistentNaming
+// ReSharper disable CollectionNeverUpdated.Global
 
 namespace ModSettingsTab
 {
@@ -37,12 +40,18 @@ namespace ModSettingsTab
             Api = new Api();
             Config = Helper.ReadConfig<TabConfig>();
             Tabs = Helper.Content.Load<Texture2D>("assets/Tabs.png");
+
+            Helper.Events.GameLoop.GameLaunched += (sender, args) =>
+            {
+                Init();
+                LocalizedContentManager.OnLanguageChange += code => Init();
+            };
         }
 
         /// <summary>
         /// initialization of master data
         /// </summary>
-        public static async void Init()
+        private static async void Init()
         {
             await LoadOptions();
             Helper.Console.Info($"Load {ModList.Count} mods and {Options.Count} Options");

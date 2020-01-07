@@ -6,7 +6,6 @@ using System.Linq;
 using System.Timers;
 using ModSettingsTabApi.Events;
 using Newtonsoft.Json.Linq;
-using StardewModdingAPI;
 using StardewValley;
 
 namespace ModSettingsTab.Framework

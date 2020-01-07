@@ -1,7 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using StardewModdingAPI;
+﻿using StardewModdingAPI;
 using StardewModdingAPI.Events;
-using StardewValley;
 using StardewValley.Menus;
 
 namespace ModSettingsTab
@@ -17,11 +15,6 @@ namespace ModSettingsTab
             
             ModData.Api.GetMod("GilarF.ModSettingsTab").OptionsChanged += (o, eventArgs) =>
                 ModData.Config = Helper.ReadConfig<TabConfig>();
-            
-            Helper.Events.GameLoop.GameLaunched += (sender, args) => ModData.Init();
-            Helper.Events.GameLoop.GameLaunched += (sender, args) =>
-                LocalizedContentManager.OnLanguageChange += code => ModData.Init();
-            
         }
 
         public override object GetApi()
