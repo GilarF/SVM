@@ -46,7 +46,7 @@ namespace ModSettingsTab.Framework.Components
         {
             if (GreyedOut || _listening || !_buttonBounds.Contains(x, y))
                 return;
-            ModEntry.Helper.Events.Input.ButtonPressed +=
+            Helper.Events.Input.ButtonPressed +=
                 OptionsInputOnButtonPressed;
             _listening = true;
             Game1.playSound("breathin");
@@ -56,15 +56,15 @@ namespace ModSettingsTab.Framework.Components
 
         private void OptionsInputOnButtonPressed(object sender, ButtonPressedEventArgs e)
         {
-            ModEntry.Helper.Input.Suppress(e.Button);
+            Helper.Input.Suppress(e.Button);
             if (GreyedOut || !_listening)
-                ModEntry.Helper.Events.Input.ButtonPressed -=
+                Helper.Events.Input.ButtonPressed -=
                     OptionsInputOnButtonPressed;
             else if (e.Button == SButton.Escape)
             {
                 Game1.playSound("bigDeSelect");
                 _listening = false;
-                ModEntry.Helper.Events.Input.ButtonPressed -=
+                Helper.Events.Input.ButtonPressed -=
                     OptionsInputOnButtonPressed;
                 GameMenu.forcePreventClose = false;
             }
@@ -74,7 +74,7 @@ namespace ModSettingsTab.Framework.Components
                 Button = e.Button;
                 Game1.playSound("coin");
                 _listening = false;
-                ModEntry.Helper.Events.Input.ButtonPressed -= OptionsInputOnButtonPressed;
+                Helper.Events.Input.ButtonPressed -= OptionsInputOnButtonPressed;
                 GameMenu.forcePreventClose = false;
             }
             else

@@ -112,7 +112,7 @@ namespace ModSettingsTab.Framework.Components
             if (_plusButtonBounds.Contains(x, y))
             {
                 _gm = Game1.activeClickableMenu;
-                Game1.activeClickableMenu = new PopupTextBox(PopupEnter, ModEntry.I18N.Get("OptionsList.NewValue"), _numbersOnly);
+                Game1.activeClickableMenu = new PopupTextBox(PopupEnter, Helper.I18N.Get("OptionsList.NewValue"), _numbersOnly);
             }
         }
 

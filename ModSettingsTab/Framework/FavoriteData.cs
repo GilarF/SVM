@@ -35,7 +35,7 @@ namespace ModSettingsTab.Framework
             };
             SaveTimer.Elapsed += (t, e) =>
             {
-                ModEntry.Helper.Data.WriteJsonFile("data/favorite.json",
+                Helper.Data.WriteJsonFile("data/favorite.json",
                     new SaveData
                     {
                         List = Favorite.ToList(),
@@ -53,7 +53,7 @@ namespace ModSettingsTab.Framework
                 new Rectangle(0, 176, 32, 24),
             };
 
-            var data = ModEntry.Helper.Data.ReadJsonFile<SaveData>("data/favorite.json");
+            var data = Helper.Data.ReadJsonFile<SaveData>("data/favorite.json");
             if (data == null)
             {
                 Favorite = new Queue<string>();
@@ -64,7 +64,7 @@ namespace ModSettingsTab.Framework
             // check if all mods are loaded
             for (var i = data.List.Count - 1; i >= 0; i--)
             {
-                if (ModEntry.Helper.ModRegistry.IsLoaded(data.List[i])) continue;
+                if (Helper.ModRegistry.IsLoaded(data.List[i])) continue;
                 data.Bookmarks.Remove(data.List[i]);
                 data.List.RemoveAt(i);
             }

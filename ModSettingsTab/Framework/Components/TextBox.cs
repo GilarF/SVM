@@ -19,13 +19,13 @@ namespace ModSettingsTab.Framework.Components
 
         static TextBox()
         {
-            ModEntry.Helper.Events.Input.ButtonPressed += (sender, e) =>
+            Helper.Events.Input.ButtonPressed += (sender, e) =>
             {
                 if (Game1.activeClickableMenu is GameMenu && e.Button == SButton.MouseLeft)
                     GlobalUpdate();
                 if (e.Button != Game1.options.menuButton[0].ToSButton() || Game1.keyboardDispatcher.Subscriber == null)
                     return;
-                ModEntry.Helper.Input.Suppress(!Game1.options.gamepadControls ? e.Button : Buttons.B.ToSButton());
+                Helper.Input.Suppress(!Game1.options.gamepadControls ? e.Button : Buttons.B.ToSButton());
             };
         }
 

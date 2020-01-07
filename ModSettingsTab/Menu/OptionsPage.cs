@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using ModSettingsTab.Framework;
 using StardewValley;
 using StardewValley.Menus;
 
@@ -41,7 +42,7 @@ namespace ModSettingsTab.Menu
                 "",
                 new Rectangle(xPositionOnScreen + width - ModData.Offset, yPositionOnScreen + height - 20, 44, 56),
                 "",
-                ModEntry.I18N.Get("OptionsPage.ReloadIndicator"),
+                Helper.I18N.Get("OptionsPage.ReloadIndicator"),
                 Game1.mouseCursors,
                 new Rectangle(383, 493, 11, 14),
                 4f);
@@ -70,7 +71,7 @@ namespace ModSettingsTab.Menu
                     yPositionOnScreen + DistanceFromMenuBottomBeforeNewPage + TabHeight,
                     64, 64),
                 "",
-                ModEntry.I18N.Get("OptionsPage.ModSettingsTab"), ModData.Tabs,
+                Helper.I18N.Get("OptionsPage.ModSettingsTab"), ModData.Tabs,
                 new Rectangle(0, 0, 64, 64), 1f)
             {
                 myID = RegionOptionsMod,

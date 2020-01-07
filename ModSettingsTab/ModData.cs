@@ -48,9 +48,9 @@ namespace ModSettingsTab
         static ModData()
         {
             Api = new Api();
-            Config = ModEntry.Helper.ReadConfig<TabConfig>();
+            Config = Helper.ReadConfig<TabConfig>();
             FavoriteMod = new List<Mod>();
-            Tabs = ModEntry.Helper.Content.Load<Texture2D>("assets/Tabs.png");
+            Tabs = Helper.Content.Load<Texture2D>("assets/Tabs.png");
             FavoriteTabSource = new Dictionary<string, Rectangle>();
         }
 
@@ -60,8 +60,7 @@ namespace ModSettingsTab
         public static async void Init()
         {
             await LoadOptions();
-            ModEntry.Console.Log($"Load {ModList.Count} mods and {Options.Count} Options",
-                LogLevel.Info);
+            Helper.Console.Info($"Load {ModList.Count} mods and {Options.Count} Options");
         }
 
         /// <summary>

@@ -33,7 +33,7 @@ namespace ModSettingsTab.Framework
         public Mod(string uniqueId, string directory, StaticConfig config)
         {
             Options = new List<OptionsElement>();
-            Manifest = ModEntry.Helper.ModRegistry.Get(uniqueId).Manifest;
+            Manifest = Helper.ModRegistry.Get(uniqueId).Manifest;
             _staticConfig = config;
             InitOptions(directory);
             Favorite = FavoriteData.IsFavorite(Manifest.UniqueID);
@@ -44,7 +44,7 @@ namespace ModSettingsTab.Framework
             var lang = LocalizedContentManager.CurrentLanguageCode;
             var uniqueId = Manifest.UniqueID;
             var uI9NPath = Path.Combine(folder, "settingsTab.json");
-            var nI9NPath = Path.Combine(ModEntry.Helper.DirectoryPath, $"data/I9N/{uniqueId}.json");
+            var nI9NPath = Path.Combine(Helper.DirectoryPath, $"data/I9N/{uniqueId}.json");
             ModIntegrationSettings uI9N = null, nI9N = null;
 
             try
@@ -58,7 +58,7 @@ namespace ModSettingsTab.Framework
             }
             catch (Exception e)
             {
-                ModEntry.Console.Log(e.Message);
+                Helper.Console.Warn(e.Message);
             }
 
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.Remoting.Messaging;
 using Newtonsoft.Json.Linq;
 using StardewModdingAPI;
 
@@ -34,7 +35,7 @@ namespace ModSettingsTab.Framework
                 }
                 catch (Exception e)
                 {
-                    ModEntry.Console.Log(e.Message, LogLevel.Warn);
+                    Helper.Console.Warn(e.Message);
                 }
             }
         }

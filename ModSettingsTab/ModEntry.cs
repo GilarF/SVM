@@ -9,31 +9,9 @@ namespace ModSettingsTab
     // ReSharper disable once ClassNeverInstantiated.Global
     public class ModEntry : Mod
     {
-        /// <summary>
-        /// SMAPI helper
-        /// </summary>
-        public new static IModHelper Helper;
-
-        /// <summary>
-        /// SMAPI monitor
-        /// see: https://stardewvalleywiki.com/Modding:Modder_Guide/APIs/Logging
-        /// </summary>
-        public static IMonitor Console;
-
-        /// <summary>
-        /// SMAPI internationalization helper
-        /// </summary>
-        public static ITranslationHelper I18N;
-
-        /// <summary>
-        /// mod entry point
-        /// </summary>
-        /// <param name="helper"></param>
         public override void Entry(IModHelper helper)
         {
-            Helper = helper;
-            Console = Monitor;
-            I18N = helper.Translation;
+            Framework.Helper.Init(helper,Monitor);
 
             Helper.Events.Display.MenuChanged += MenuChanged;
             
