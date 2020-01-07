@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ModSettingsTab.Framework;
 using ModSettingsTab.Framework.Integration;
 using ModSettingsTab.Framework.Components;
+using ModSettingsTab.Menu;
 using StardewValley;
 // ReSharper disable InconsistentNaming
 // ReSharper disable CollectionNeverUpdated.Global
@@ -33,18 +34,19 @@ namespace ModSettingsTab
 
         public static SmapiIntegration SMAPI;
 
-        public static readonly Texture2D Tabs;
+        public static readonly Texture2D Texture;
 
         static ModData()
         {
             Api = new Api();
             Config = Helper.ReadConfig<TabConfig>();
-            Tabs = Helper.Content.Load<Texture2D>("assets/Tabs.png");
+            Texture = Helper.Content.Load<Texture2D>("assets/Texture.png");
 
             Helper.Events.GameLoop.GameLaunched += (sender, args) =>
             {
                 Init();
                 LocalizedContentManager.OnLanguageChange += code => Init();
+                TitleOptionsButton.UpdatePosition();
             };
         }
 

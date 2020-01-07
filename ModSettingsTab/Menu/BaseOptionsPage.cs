@@ -49,7 +49,7 @@ namespace ModSettingsTab.Menu
                     yPositionOnScreen + DistanceFromMenuBottomBeforeNewPage + TabHeight,
                     64, 64),
                 "",
-                Helper.I18N.Get("OptionsPage.ModSettingsTab"), ModData.Tabs,
+                Helper.I18N.Get("OptionsPage.ModSettingsTab"), ModData.Texture,
                 new Rectangle(0, 0, 64, 64), 1f)
             {
                 myID = RegionOptionsMod,
@@ -65,7 +65,7 @@ namespace ModSettingsTab.Menu
                     xPositionOnScreen - 48,
                     yPositionOnScreen + height - DistanceFromMenuBottomBeforeNewPage,
                     64, 64), "",
-                "SMAPI", ModData.Tabs,
+                "SMAPI", ModData.Texture,
                 new Rectangle(0, 64, 64, 64),
                 1f)
             {
@@ -94,7 +94,7 @@ namespace ModSettingsTab.Menu
                         yPositionOnScreen + DistanceFromMenuBottomBeforeNewPage + TabHeight * 2 + 16 +
                         FavoriteTabSize * c,
                         64, FavoriteTabSize), "",
-                    manifest.Name, ModData.Tabs,
+                    manifest.Name, ModData.Texture,
                     FavoriteData.FavoriteTabSource[manifest.UniqueID], 2f)
                 {
                     myID = RegionFavoriteOptionsMod + c,

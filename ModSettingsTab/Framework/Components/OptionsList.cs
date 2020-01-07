@@ -148,7 +148,7 @@ namespace ModSettingsTab.Framework.Components
             base.Draw(b, slotX, slotY);
             var num = GreyedOut ? 0.33f : 1f;
             //draw minus
-            b.Draw(ModData.Tabs,
+            b.Draw(ModData.Texture,
                 new Vector2(slotX + _minusButtonBounds.X, slotY + _minusButtonBounds.Y),
                 MinusButtonSource,
                 Color.White * num, 0.0f, Vector2.Zero, 4f,
@@ -200,7 +200,7 @@ namespace ModSettingsTab.Framework.Components
             }
 
             //draw plus
-            b.Draw(ModData.Tabs,
+            b.Draw(ModData.Texture,
                 new Vector2(slotX + _plusButtonBounds.X - 9 * 4, slotY + _plusButtonBounds.Y),
                 DropDownButtonSource,
                 Color.White * num, 0.0f, Vector2.Zero, 4f,
