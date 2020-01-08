@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Input;
 using StardewValley;
 using StardewValley.BellsAndWhistles;
 using StardewValley.Menus;
+// ReSharper disable SwitchStatementMissingSomeCases
 
 namespace ModSettingsTab.Framework.Components
 {
@@ -71,8 +72,6 @@ namespace ModSettingsTab.Framework.Components
                 _doneEnter(sender.Text);
                 _textBox.Selected = false;
             }
-            else
-                Game1.exitActiveMenu();
         }
 
         public override void receiveGamePadButton(Buttons b)

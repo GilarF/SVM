@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using ModSettingsTab.Framework;
 using StardewValley;
 using StardewValley.Menus;
@@ -31,6 +32,13 @@ namespace ModSettingsTab.Menu
             UpdateFavoriteTabs();
             FavoriteData.UpdateMod = UpdateFavoriteTabs;
             ResetTab(SavedTab);
+        }
+
+        public override void draw(SpriteBatch b)
+        {
+            b.End();
+            b.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend, SamplerState.PointClamp);
+            base.draw(b);
         }
     }
 }

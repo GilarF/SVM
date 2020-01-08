@@ -49,7 +49,7 @@ namespace ModSettingsTab.Menu
             if (e.Button != SButton.MouseLeft && e.Button != SButton.ControllerA) return;
             if (!ShouldDrawButton() ||
                 !Button.containsPoint((int) e.Cursor.ScreenPixels.X, (int) e.Cursor.ScreenPixels.Y)) return;
-            //TitleMenu.subMenu = new TitleOptionsPage();
+            TitleMenu.subMenu = new TitleOptionsPage();
             Game1.playSound("newArtifact");
         }
 

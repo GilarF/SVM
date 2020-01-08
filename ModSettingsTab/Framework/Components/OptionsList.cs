@@ -55,6 +55,7 @@ namespace ModSettingsTab.Framework.Components
 
             Bounds.Width = _minusButtonBounds.Width + _dropDownBounds.Width + _plusButtonBounds.Width;
 
+            
             Offset.Y = 8;
             InfoIconBounds = new Rectangle(Bounds.Width - 40, 0, 0, 0);
         }
@@ -77,13 +78,21 @@ namespace ModSettingsTab.Framework.Components
 
         private void PopupEnter(string s)
         {
-            Game1.exitActiveMenu();
-            Game1.activeClickableMenu = _gm;
+            if (Game1.gameMode == 0)
+            {
+                TitleMenu.subMenu = _gm;
+            }
+            else
+            {
+                Game1.exitActiveMenu();
+                Game1.activeClickableMenu = _gm;
+            }
+
             _gm = null;
             _clicked = false;
 
-            (((GameMenu) Game1.activeClickableMenu).pages[GameMenu.optionsTab] as GameOptionsPage)
-                ?.SetScrollBarToCurrentIndex();
+//            (((GameMenu) Game1.activeClickableMenu).pages[GameMenu.optionsTab] as GameOptionsPage)
+//                ?.SetScrollBarToCurrentIndex();
             if (string.IsNullOrEmpty(s)) return;
             _dropDownOptions.Add(s);
             _selectedOption = _dropDownOptions.Count - 1;
@@ -109,10 +118,18 @@ namespace ModSettingsTab.Framework.Components
                 return;
             }
 
-            if (_plusButtonBounds.Contains(x, y))
+            if (!_plusButtonBounds.Contains(x, y)) return;
+            if (Game1.gameMode == 0)
+            {
+                _gm = TitleMenu.subMenu;
+                TitleMenu.subMenu =
+                    new PopupTextBox(PopupEnter, Helper.I18N.Get("OptionsList.NewValue"), _numbersOnly);
+            }
+            else
             {
                 _gm = Game1.activeClickableMenu;
-                Game1.activeClickableMenu = new PopupTextBox(PopupEnter, Helper.I18N.Get("OptionsList.NewValue"), _numbersOnly);
+                Game1.activeClickableMenu =
+                    new PopupTextBox(PopupEnter, Helper.I18N.Get("OptionsList.NewValue"), _numbersOnly);
             }
         }
 
@@ -164,9 +181,9 @@ namespace ModSettingsTab.Framework.Components
                 {
                     if (index == _selectedOption)
                         b.Draw(Game1.staminaRect,
-                            new Rectangle(slotX + _dropDownBounds.X+4,
-                                slotY + Bounds.Y+4 + index * Bounds.Height, _dropDownBounds.Width - 9 * 4-8,
-                                Bounds.Height-8), new Rectangle(0, 0, 1, 1), Color.Wheat, 0.0f,
+                            new Rectangle(slotX + _dropDownBounds.X + 4,
+                                slotY + Bounds.Y + 4 + index * Bounds.Height, _dropDownBounds.Width - 9 * 4 - 8,
+                                Bounds.Height - 8), new Rectangle(0, 0, 1, 1), Color.Wheat, 0.0f,
                             Vector2.Zero, SpriteEffects.None, 0.71f);
                     b.DrawString(Game1.smallFont, _dropDownOptions[index],
                         new Vector2(slotX + _dropDownBounds.X + 8,
@@ -178,7 +195,7 @@ namespace ModSettingsTab.Framework.Components
             {
                 b.Draw(Game1.staminaRect,
                     new Rectangle(slotX + _dropDownBounds.X + 4,
-                        slotY + Bounds.Y , _dropDownBounds.Width - 9 * 4-8,
+                        slotY + Bounds.Y, _dropDownBounds.Width - 9 * 4 - 8,
                         Bounds.Height), new Rectangle(0, 0, 1, 1), Color.Brown, 0.0f,
                     Vector2.Zero, SpriteEffects.None, 0.71f);
                 b.DrawString(Game1.smallFont, _dropDownOptions[_selectedOption],

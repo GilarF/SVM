@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Input;
 using ModSettingsTab.Framework;
 using StardewValley;
 using StardewValley.Menus;
+
 // ReSharper disable MemberCanBePrivate.Global
 
 namespace ModSettingsTab.Menu
@@ -182,7 +183,6 @@ namespace ModSettingsTab.Menu
 
         protected void ResetTab(int index)
         {
-            //if (index >= SideTabs.Count + FavoriteSideTabs.Count) index = 0;
             if (CurrentTab < SideTabs.Count + FavoriteSideTabs.Count)
             {
                 if (CurrentTab < SideTabs.Count)
@@ -219,13 +219,13 @@ namespace ModSettingsTab.Menu
         {
             base.performHoverAction(x, y);
             HoverText = "";
-
-
+            
             if (CurrentTab < SideTabs.Count)
                 PagesCollections[CurrentTab].performHoverAction(x, y);
             else
                 FavoritePagesCollections[CurrentTab - SideTabs.Count].performHoverAction(x, y);
-            if (ReloadIndicator.containsPoint(x, y))
+            
+            if (ModData.NeedReload && ReloadIndicator.containsPoint(x, y))
             {
                 HoverText = ReloadIndicator.hoverText;
                 return;
@@ -275,6 +275,7 @@ namespace ModSettingsTab.Menu
             base.receiveKeyPress(key);
         }
 
+        // ReSharper disable once UnusedMember.Global
         public void SetScrollBarToCurrentIndex()
         {
             if (CurrentTab < SideTabs.Count)
@@ -286,21 +287,16 @@ namespace ModSettingsTab.Menu
 
         public override void draw(SpriteBatch b)
         {
-            //base.draw(b);
             if (ShouldDrawCloseButton) upperRightCloseButton.draw(b);
             foreach (var sideTab in SideTabs)
                 sideTab.draw(b);
             foreach (var sideTab in FavoriteSideTabs)
                 sideTab.draw(b);
             if (ModData.NeedReload && ModData.Config.ShowReloadIcon) ReloadIndicator.draw(b);
-            b.End();
-            b.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied, SamplerState.PointClamp);
             if (CurrentTab < SideTabs.Count)
                 PagesCollections[CurrentTab].draw(b);
             else
                 FavoritePagesCollections[CurrentTab - SideTabs.Count].draw(b);
-            b.End();
-            b.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp);
             if (HoverText.Equals(""))
                 return;
             drawHoverText(b, HoverText, Game1.smallFont);
