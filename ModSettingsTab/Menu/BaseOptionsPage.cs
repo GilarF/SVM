@@ -127,7 +127,7 @@ namespace ModSettingsTab.Menu
             base.receiveScrollWheelAction(direction);
             if (CurrentTab < SideTabs.Count)
                 PagesCollections[CurrentTab].receiveScrollWheelAction(direction);
-            else
+            else if (CurrentTab < SideTabs.Count + FavoriteSideTabs.Count)
                 FavoritePagesCollections[CurrentTab - SideTabs.Count].receiveScrollWheelAction(direction);
         }
 
@@ -139,7 +139,8 @@ namespace ModSettingsTab.Menu
             snapCursorToCurrentSnappedComponent();
             if (CurrentTab < SideTabs.Count)
                 PagesCollections[CurrentTab].snapToDefaultClickableComponent();
-            else FavoritePagesCollections[CurrentTab - SideTabs.Count].snapToDefaultClickableComponent();
+            else if (CurrentTab < SideTabs.Count + FavoriteSideTabs.Count) 
+                FavoritePagesCollections[CurrentTab - SideTabs.Count].snapToDefaultClickableComponent();
         }
 
         public override void leftClickHeld(int x, int y)
@@ -147,7 +148,7 @@ namespace ModSettingsTab.Menu
             base.leftClickHeld(x, y);
             if (CurrentTab < SideTabs.Count)
                 PagesCollections[CurrentTab].leftClickHeld(x, y);
-            else
+            else if (CurrentTab < SideTabs.Count + FavoriteSideTabs.Count)
                 FavoritePagesCollections[CurrentTab - SideTabs.Count].leftClickHeld(x, y);
         }
 
@@ -160,7 +161,7 @@ namespace ModSettingsTab.Menu
             {
                 if (CurrentTab < SideTabs.Count)
                     PagesCollections[CurrentTab].receiveLeftClick(x, y, playSound);
-                else
+                else if (CurrentTab < SideTabs.Count + FavoriteSideTabs.Count)
                     FavoritePagesCollections[CurrentTab - SideTabs.Count].receiveLeftClick(x, y, playSound);
                 return;
             }
@@ -181,7 +182,7 @@ namespace ModSettingsTab.Menu
             }
         }
 
-        protected void ResetTab(int index)
+        protected virtual void ResetTab(int index)
         {
             if (CurrentTab < SideTabs.Count + FavoriteSideTabs.Count)
             {
@@ -195,7 +196,7 @@ namespace ModSettingsTab.Menu
             {
                 SideTabs[index].bounds.X += WidthToMoveActiveTab;
             }
-            else
+            else if (index < SideTabs.Count + FavoriteSideTabs.Count)
             {
                 FavoriteSideTabs[index - SideTabs.Count].bounds.X += WidthToMoveActiveTab;
             }
@@ -211,7 +212,7 @@ namespace ModSettingsTab.Menu
             if (x < xPositionOnScreen - borderWidth) return;
             if (CurrentTab < SideTabs.Count)
                 PagesCollections[CurrentTab].receiveRightClick(x, y, playSound);
-            else
+            else if (CurrentTab < SideTabs.Count + FavoriteSideTabs.Count)
                 FavoritePagesCollections[CurrentTab - SideTabs.Count].receiveRightClick(x, y, playSound);
         }
 
@@ -222,7 +223,7 @@ namespace ModSettingsTab.Menu
             
             if (CurrentTab < SideTabs.Count)
                 PagesCollections[CurrentTab].performHoverAction(x, y);
-            else
+            else if (CurrentTab < SideTabs.Count + FavoriteSideTabs.Count)
                 FavoritePagesCollections[CurrentTab - SideTabs.Count].performHoverAction(x, y);
             
             if (ModData.NeedReload && ReloadIndicator.containsPoint(x, y))
@@ -254,7 +255,7 @@ namespace ModSettingsTab.Menu
             base.releaseLeftClick(x, y);
             if (CurrentTab < SideTabs.Count)
                 PagesCollections[CurrentTab].releaseLeftClick(x, y);
-            else
+            else if (CurrentTab < SideTabs.Count + FavoriteSideTabs.Count)
                 FavoritePagesCollections[CurrentTab - SideTabs.Count].releaseLeftClick(x, y);
         }
 
@@ -262,7 +263,7 @@ namespace ModSettingsTab.Menu
         {
             if (CurrentTab < SideTabs.Count)
                 PagesCollections[CurrentTab].snapCursorToCurrentSnappedComponent();
-            else
+            else if (CurrentTab < SideTabs.Count + FavoriteSideTabs.Count)
                 FavoritePagesCollections[CurrentTab - SideTabs.Count].snapCursorToCurrentSnappedComponent();
         }
 
@@ -270,7 +271,7 @@ namespace ModSettingsTab.Menu
         {
             if (CurrentTab < SideTabs.Count)
                 PagesCollections[CurrentTab].receiveKeyPress(key);
-            else
+            else  if (CurrentTab < SideTabs.Count + FavoriteSideTabs.Count)
                 FavoritePagesCollections[CurrentTab - SideTabs.Count].receiveKeyPress(key);
             base.receiveKeyPress(key);
         }
@@ -280,7 +281,7 @@ namespace ModSettingsTab.Menu
         {
             if (CurrentTab < SideTabs.Count)
                 ((BaseOptionsModPage) PagesCollections[CurrentTab]).SetScrollBarToCurrentIndex();
-            else
+            else if (CurrentTab < SideTabs.Count + FavoriteSideTabs.Count)
                 ((BaseOptionsModPage) FavoritePagesCollections[CurrentTab - SideTabs.Count])
                     .SetScrollBarToCurrentIndex();
         }
@@ -295,7 +296,7 @@ namespace ModSettingsTab.Menu
             if (ModData.NeedReload && ModData.Config.ShowReloadIcon) ReloadIndicator.draw(b);
             if (CurrentTab < SideTabs.Count)
                 PagesCollections[CurrentTab].draw(b);
-            else
+            else if (CurrentTab < SideTabs.Count + FavoriteSideTabs.Count)
                 FavoritePagesCollections[CurrentTab - SideTabs.Count].draw(b);
             if (HoverText.Equals(""))
                 return;

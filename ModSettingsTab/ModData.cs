@@ -7,6 +7,7 @@ using ModSettingsTab.Framework.Integration;
 using ModSettingsTab.Framework.Components;
 using ModSettingsTab.Menu;
 using StardewValley;
+
 // ReSharper disable InconsistentNaming
 // ReSharper disable CollectionNeverUpdated.Global
 
@@ -57,6 +58,7 @@ namespace ModSettingsTab
         {
             await LoadOptions();
             Helper.Console.Info($"Load {ModList.Count} mods and {Options.Count} Options");
+            ModManager.LoadOptions();
         }
 
         private static Task LoadOptions()
@@ -65,7 +67,7 @@ namespace ModSettingsTab
             {
                 ModList = new ModList();
                 SMAPI = new SmapiIntegration();
-                Options = ModList.SelectMany(mod => mod.Value.Options).ToList();
+                Options = ModList.Where(mod => !mod.Value.Disabled && mod.Value.Options != null).SelectMany(mod => mod.Value.Options).ToList();
                 FavoriteData.LoadOptions();
             });
         }

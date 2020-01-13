@@ -43,7 +43,7 @@ namespace ModSettingsTab.Framework
         {
             FavoriteTabSource = new Dictionary<string, Rectangle>();
             ModList = new List<Mod>();
-            SaveTimer = new Timer(2000.0)
+            SaveTimer = new Timer(1200.0)
             {
                 Enabled = false,
                 AutoReset = false
@@ -141,9 +141,7 @@ namespace ModSettingsTab.Framework
                 // add a free bookmark
                 FavoriteTabSource.Add(uniqueId, FreeFavoriteTabSource.Dequeue());
             }
-
-            SaveTimer.Stop();
-            SaveTimer.Start();
+            SaveTimer.Reset();
         }
 
         /// <summary>

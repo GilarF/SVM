@@ -48,7 +48,7 @@ namespace ModSettingsTab.Framework.Components
                     {
                         case FilterType.Mod:
                             optionsModPage.Options =
-                                options.Where(o => ModData.ModList[o.ModId].Manifest.Name
+                                options.Where(o => ModData.ModList[o.ModId].Name
                                         .Trim().ToLower().Contains(searchText))
                                     .ToList();
                             break;

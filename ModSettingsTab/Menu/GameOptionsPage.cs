@@ -6,7 +6,7 @@ using StardewValley.Menus;
 
 namespace ModSettingsTab.Menu
 {
-    public class GameOptionsPage : BaseOptionsPage
+    public sealed class GameOptionsPage : BaseOptionsPage
     {
         public GameOptionsPage(int x, int y, int width, int height) : base(x, y, width, height)
         {
@@ -27,7 +27,7 @@ namespace ModSettingsTab.Menu
                 rightNeighborID = 0
             };
             SideTabs.Insert(0, originalOptionsComponent);
-            PagesCollections.Insert(0, new StardewValley.Menus.OptionsPage(x, y, width, height));
+            PagesCollections.Insert(0, new OptionsPage(x, y, width, height));
             // -------- favorite mod tab ---------
             UpdateFavoriteTabs();
             FavoriteData.UpdateMod = UpdateFavoriteTabs;

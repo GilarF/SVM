@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ModSettingsTab.Menu;
 using Newtonsoft.Json.Linq;
 using StardewValley;
 using StardewValley.Menus;
@@ -90,9 +89,6 @@ namespace ModSettingsTab.Framework.Components
 
             _gm = null;
             _clicked = false;
-
-//            (((GameMenu) Game1.activeClickableMenu).pages[GameMenu.optionsTab] as GameOptionsPage)
-//                ?.SetScrollBarToCurrentIndex();
             if (string.IsNullOrEmpty(s)) return;
             _dropDownOptions.Add(s);
             _selectedOption = _dropDownOptions.Count - 1;

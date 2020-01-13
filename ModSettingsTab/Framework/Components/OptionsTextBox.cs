@@ -10,7 +10,7 @@ namespace ModSettingsTab.Framework.Components
     public class OptionsTextBox : OptionsElement
     {
         private bool NumAsString { get; }
-        private static readonly Texture2D TextBoxTexture = Game1.content.Load<Texture2D>("LooseSprites\\textBox");
+        public static readonly Texture2D TextBoxTexture = Game1.content.Load<Texture2D>("LooseSprites\\textBox");
         private readonly TextBox _textBox;
 
         public OptionsTextBox(

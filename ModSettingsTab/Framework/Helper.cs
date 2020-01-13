@@ -1,5 +1,8 @@
+using System;
+using System.Timers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Newtonsoft.Json.Linq;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
 
@@ -31,24 +34,24 @@ namespace ModSettingsTab.Framework
         public static IMonitor Console { get; private set; }
         public static IModRegistry ModRegistry { get; private set; }
 
-        public static void Error(this IMonitor console, string message)
+        public static void Error(this IMonitor console, object message)
         {
-            console.Log(message, LogLevel.Error);
+            console.Log(message.ToString(), LogLevel.Error);
         }
 
-        public static void Info(this IMonitor console, string message)
+        public static void Info(this IMonitor console, object message)
         {
-            console.Log(message, LogLevel.Info);
+            console.Log(message.ToString(), LogLevel.Info);
         }
 
-        public static void Warn(this IMonitor console, string message)
+        public static void Warn(this IMonitor console, object message)
         {
-            console.Log(message, LogLevel.Warn);
+            console.Log(message.ToString(), LogLevel.Warn);
         }
 
-        public static void Alert(this IMonitor console, string message)
+        public static void Alert(this IMonitor console, object message)
         {
-            console.Log(message, LogLevel.Alert);
+            console.Log(message.ToString(), LogLevel.Alert);
         }
 
         public static IReflectedField<T> GetReflectedField<T>(object obj, string fieldName)
@@ -170,6 +173,17 @@ namespace ModSettingsTab.Framework
         public static T ReadConfig<T>() where T : class, new()
         {
             return _helper.ReadConfig<T>();
+        }
+
+        public static void Reset(this Timer timer)
+        {
+            timer.Stop();
+            timer.Start();
+        }
+        public static string Get(this JObject obj, string fieldName)
+        {
+            var jToken = obj.GetValue(fieldName, StringComparison.InvariantCultureIgnoreCase);
+            return jToken == null ? "" : jToken.Value<string>();
         }
     }
 }
