@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ModSettingsTab.Events
+namespace ModSettingsTabApi.Events
 {
     public class Value
     {
@@ -11,10 +11,12 @@ namespace ModSettingsTab.Events
     public class OptionsChangedEventArgs : EventArgs
     {
         public Dictionary<string, Value> Options;
+        public bool Reloaded { get; set; }
 
         public OptionsChangedEventArgs(Dictionary<string, Value> options)
         {
             Options = options;
+            Reloaded = false;
         }
     }
 }
