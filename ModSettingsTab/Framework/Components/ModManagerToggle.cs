@@ -36,9 +36,9 @@ namespace ModSettingsTab.Framework.Components
             Name = ModData.ModList[ModId].Name;
             var version = ModData.ModList[ModId].Version;
             var length = Name.Length;
-            Label = length * 2 <= 32 || length <= 25
+            Label = length * 2 <= 64 || length <= 57
                 ? $"{Name} v.{version}"
-                : $"{Name.Substring(0, 25)}... v{version}";
+                : $"{Name.Substring(0, 57)}... v{version}";
             InfoIconBounds = new Rectangle(0, -8, 0, 0);
             _disable = ModData.ModList[ModId].Disabled;
         }
