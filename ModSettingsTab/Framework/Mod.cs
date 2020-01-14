@@ -22,7 +22,7 @@ namespace ModSettingsTab.Framework
         private bool _disabled;
 
         private static readonly Regex Reg =
-            new Regex(@"(?<path>.*)(?<=[\\\/])(?<hide>\.*)(?<dir>[\w.\- \/]+)$", RegexOptions.Multiline);
+            new Regex(@"(?<path>.*)(?<=[\\\/])(?<hide>\.*)(?<dir>[\w.\-\[\] \/]+)$", RegexOptions.Multiline);
 
         public IManifest Manifest { get; }
 

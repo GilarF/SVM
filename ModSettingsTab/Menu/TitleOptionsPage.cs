@@ -13,7 +13,6 @@ namespace ModSettingsTab.Menu
         private readonly List<ClickableTextureComponent> _topTabs = new List<ClickableTextureComponent>();
         private readonly List<IClickableMenu> _modManagerPagesCollections = new List<IClickableMenu>();
         private const int RegionModManagerTab = 5000;
-
         public TitleOptionsPage() : base(
             (int) ((Game1.viewport.Width * 1.1f - (800 + borderWidth * 2 + ModData.Offset)) / 2f),
             (int) ((Game1.viewport.Height * 1.1f - (600 + borderWidth * 2)) / 2f - 48),
@@ -142,6 +141,15 @@ namespace ModSettingsTab.Menu
             base.leftClickHeld((int) (x * 1.1f), (int) (y * 1.1f));
         }
 
+        public override void receiveScrollWheelAction(int direction)
+        {
+            if (CurrentTab < SideTabs.Count + FavoriteSideTabs.Count + _topTabs.Count
+                && CurrentTab >= SideTabs.Count + FavoriteSideTabs.Count)
+                _modManagerPagesCollections[CurrentTab - SideTabs.Count - FavoriteSideTabs.Count]
+                    .receiveScrollWheelAction(direction);
+            base.receiveScrollWheelAction(direction);
+        }
+        
         public override void receiveLeftClick(int x, int y, bool playSound = true)
         {
             if (GameMenu.forcePreventClose)
