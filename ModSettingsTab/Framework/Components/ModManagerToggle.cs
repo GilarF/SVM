@@ -32,7 +32,7 @@ namespace ModSettingsTab.Framework.Components
                 64, 
                 34)
         {
-            ModPack = modPack;
+            ModPack = modPack ?? new List<string>();
             Name = ModData.ModList[ModId].Name;
             var version = ModData.ModList[ModId].Version;
             var length = Name.Length;
