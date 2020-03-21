@@ -1,13 +1,13 @@
 {
-  "OptionsPage.ReloadIndicator": "Нужна перезагрузка",
+  "OptionsPage.ReloadIndicator": "Необходима перезагрузка игры.",
   "OptionsPage.ModSettingsTab": "Настройки модификаций",
-  "StaticConfig.SuccessMessage": "Настройки сохранены",
-  "StaticConfig.FailMessage": "Ошибка сохранения",
+  "StaticConfig.SuccessMessage": "Настройки сохранены.",
+  "StaticConfig.FailMessage": "Ошибка сохранения.",
   "OptionsList.NewValue" : "Введите новое значение",
-  "Mod.Disabled.Error": "Не удалось переключить мод",
+  "Mod.Disabled.Error": "Не удалось переключить мод.",
   "ModManager.AddModPack": "Добавить новый модпак",
   "ModManager.HoverSetUp.Title": "Переключить модпак",
-  "ModManager.HoverSetUp.Description": "другие моды, не включенные в пакет модов, будут отключены",
+  "ModManager.HoverSetUp.Description": "Другие моды, не включённые в их общий пакет, будут отключены.",
   "ModManager.Toggle.Label": "Текущий модпак",
   "ModManager.Add.NameTextBox": "Название модпака"
 }
